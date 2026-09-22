@@ -1,6 +1,6 @@
 <template>
   <span
-    class="inline-block px-2.5 py-1 text-xs font-medium rounded-full border border-ink/10 dark:border-mist/15 text-slate dark:text-mist/80 bg-ink/[0.03] dark:bg-mist/[0.05] hover:border-teal/50 hover:text-teal transition-colors"
+    class="inline-block border border-white/30 bg-white/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:border-teal hover:bg-teal hover:text-ink"
   >
     {{ label }}
   </span>

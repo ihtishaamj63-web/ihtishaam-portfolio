@@ -16,16 +16,14 @@
       <h1 class="font-heading text-3xl md:text-4xl font-bold mb-3">{{ project.title }}</h1>
       <p class="text-lg text-slate dark:text-mist/70 mb-5">{{ project.tagline }}</p>
 
-      <div class="flex flex-wrap items-center gap-4 mb-8">
-        <StatusDot :status="health.status.value" :label="statusLabel" />
-        <span class="text-xs text-slate dark:text-mist/50">Role: {{ project.role }}</span>
-      </div>
+      <div class="mb-8 flex flex-wrap items-center gap-4"><span class="text-sm font-medium text-teal">Role: {{ project.role }}</span></div>
 
       <div class="flex flex-wrap gap-2 mb-8">
         <BaseButton v-if="project.live" :href="project.live">Live demo</BaseButton>
         <BaseButton v-if="project.github" :href="project.github" variant="ghost">GitHub repo</BaseButton>
-        <BaseButton v-if="project.api" :href="project.api" variant="ghost">API health</BaseButton>
       </div>
+
+      <p v-if="project.status" class="mb-8 max-w-2xl border-l-2 border-amber bg-amber/10 px-4 py-3 text-sm leading-relaxed text-ink dark:text-mist"><span class="font-semibold">Deployment note:</span> {{ project.status }}</p>
 
       <section class="mb-10 rounded-2xl border border-teal/20 bg-teal/[.04] p-6 dark:bg-teal/10">
         <p class="text-xs font-semibold uppercase tracking-[.16em] text-teal mb-3">Impact story</p>
@@ -72,17 +70,8 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import BaseButton from '@/components/ui/BaseButton.vue'
 import TechPill from '@/components/ui/TechPill.vue'
-import StatusDot from '@/components/ui/StatusDot.vue'
-import { useHealthCheck } from '@/composables/useHealthCheck'
 import { projects } from '@/data/projects'
 
 const route = useRoute()
 const project = computed(() => projects.find((p) => p.slug === route.params.slug))
-const health = useHealthCheck(project.value?.api || '')
-
-const statusLabel = computed(() => {
-  if (health.status.value === 'up') return 'Backend online'
-  if (health.status.value === 'checking') return 'Checking backend…'
-  return project.value?.status || 'Backend offline'
-})
 </script>

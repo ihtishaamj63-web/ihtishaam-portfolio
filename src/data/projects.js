@@ -6,7 +6,6 @@ export const projects = [
     description:
       'A production-ready HR management system built to replace disconnected spreadsheets with a secure, scalable platform. Centralises employee records, attendance tracking, payroll processing, leave workflows, and performance reviews behind a JWT-authenticated API with strict role-based access control.',
     role: 'Tech Lead & Full-Stack Developer',
-    team: ['Zahraa Moerat', 'Owam Gobinca', 'Migcobo Macilikishe'],
     tech: ['Vue 3', 'Vite', 'Bootstrap 5', 'Axios', 'Node.js', 'Express', 'JWT', 'bcryptjs', 'MySQL', 'Render', 'Aiven'],
     features: [
       'Role-based access control — HR vs employee data isolation',
@@ -23,7 +22,7 @@ export const projects = [
     github: 'https://github.com/ihtishaamj63-web',
     live: 'https://hr-project-2-moderntech-solutions-1.onrender.com',
     api: 'https://hr-project-2-moderntech-solutions.onrender.com',
-    status: 'Backend paused — free tier expired. Frontend still viewable.',
+    status: 'The hosted service is currently resting on its free-tier plan; the frontend remains available to explore.',
     highlights: [
       'Led integration branch and reviewed all team code for MVC compliance',
       'Built core backend: server setup, DB config, middleware, auth system',
@@ -38,7 +37,6 @@ export const projects = [
     description:
       'Street committees pool household contributions through the platform to fund professional weekly cleanup crews for their zones. Features live activation tracking, photo proof of work, PayFast payments, and transparent payment records — all built on a Vue 3 + Express + MySQL stack.',
     role: 'Project Manager — Payments, pricing, checkout, resident dashboard, deployment, integration',
-    team: ['Krishendree Kistensamy', 'Sibongile Mpeta', 'Mubaarik Davids'],
     tech: ['Vue 3', 'Vite', 'Vue Router', 'Leaflet.js', 'SweetAlert2', 'Node.js', 'Express', 'MySQL', 'PayFast', 'Nodemailer', 'Brevo SMTP', 'Railway', 'Render'],
     features: [
       'Tiered zone subscriptions (small / medium / large) with per-household share calculation',
@@ -55,7 +53,7 @@ export const projects = [
     github: 'https://github.com/ihtishaamj63-web/CleanSpaces',
     live: 'https://cleanspaces.onrender.com',
     api: 'https://cleanspaces-production.up.railway.app/api/health',
-    status: 'Backend paused — free tier expired. Frontend still viewable.',
+    status: 'The hosted service is currently resting on its free-tier plan; the frontend remains available to explore.',
     highlights: [
       'Designed and built the payment flow — PayFast sandbox integration with MD5 signatures',
       'Built the resident dashboard with live activation tracking',

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-surface dark:bg-ink text-ink dark:text-mist transition-colors duration-300">
+  <div class="min-h-screen bg-surface text-ink">
     <AppHeader />
     <RouterView v-slot="{ Component }">
       <Transition name="page" mode="out-in">

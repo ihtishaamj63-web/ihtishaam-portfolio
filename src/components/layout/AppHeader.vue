@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 z-50 backdrop-blur-md bg-surface/80 dark:bg-ink/80 border-b border-ink/10 dark:border-mist/10">
+  <header class="sticky top-0 z-50 border-b-2 border-ink bg-white">
     <div class="container flex items-center justify-between h-16">
       <RouterLink to="/" class="font-heading font-bold text-xl tracking-tight">
         Ihtishaam Johnson<span class="text-teal">.</span>
@@ -10,18 +10,10 @@
           v-for="link in links"
           :key="link.href"
           :href="link.href"
-          class="relative px-3 py-2 text-sm font-medium text-slate dark:text-mist/80 hover:text-teal transition-colors"
+          class="relative px-3 py-2 text-sm font-bold uppercase tracking-wide text-ink hover:bg-ink hover:text-white transition-colors"
         >
           {{ link.label }}
         </a>
-        <button
-          @click="toggleTheme"
-          class="ml-2 p-2 rounded-md hover:bg-ink/5 dark:hover:bg-mist/10 transition-colors"
-          aria-label="Toggle theme"
-        >
-          <svg v-if="dark" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
-          <svg v-else class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
-        </button>
       </nav>
 
       <button
@@ -37,14 +29,14 @@
     </div>
 
     <Transition name="menu">
-      <div v-if="menuOpen" class="md:hidden border-t border-ink/10 dark:border-mist/10 bg-surface dark:bg-ink">
+      <div v-if="menuOpen" class="md:hidden border-t-2 border-ink bg-white">
         <nav class="container py-4 flex flex-col gap-1">
           <a
             v-for="link in links"
             :key="link.href"
             :href="link.href"
             @click="menuOpen = false"
-            class="px-3 py-3 text-sm font-medium rounded-md hover:bg-ink/5 dark:hover:bg-mist/10"
+            class="px-3 py-3 text-sm font-bold uppercase tracking-wide hover:bg-ink hover:text-white"
           >
             {{ link.label }}
           </a>
@@ -56,7 +48,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useTheme } from '@/composables/useTheme'
 
 const links = [
   { href: '#about', label: 'Story' },
@@ -66,7 +57,6 @@ const links = [
 ]
 
 const menuOpen = ref(false)
-const { dark, toggle: toggleTheme } = useTheme()
 </script>
 
 <style scoped>
