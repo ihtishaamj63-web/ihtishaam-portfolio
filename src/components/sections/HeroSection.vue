@@ -1,15 +1,113 @@
 <template>
-  <section class="relative isolate overflow-hidden bg-ink py-28 text-white md:py-40">
-    <svg class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-50" viewBox="0 0 1200 720" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <g fill="none" stroke="#14b8a6" stroke-width="5">
-        <path d="M730 -30 C530 80 930 160 730 270 S530 460 730 570 S930 680 730 790" />
-        <path d="M900 -30 C1100 80 700 160 900 270 S1100 460 900 570 S700 680 900 790" />
-      </g>
-      <g stroke="#ffffff" stroke-width="2" opacity=".7"><path d="M775 5h80M715 82h200M688 162h254M705 244h210M770 326h92M710 407h212M688 488h256M716 570h200M778 651h76" /></g>
-      <g fill="#14b8a6"><circle cx="730" cy="-30" r="9"/><circle cx="900" cy="-30" r="9"/><circle cx="730" cy="270" r="9"/><circle cx="900" cy="270" r="9"/><circle cx="730" cy="570" r="9"/><circle cx="900" cy="570" r="9"/></g>
-    </svg>
-    <div class="container relative"><p class="mb-5 text-sm font-black uppercase tracking-[.22em] text-teal">Full-stack developer × scientist</p><h1 class="max-w-5xl font-heading text-5xl font-black uppercase leading-[.95] tracking-tight md:text-8xl"><span v-for="(ch, i) in nameChars" :key="i" class="inline-block" :style="{ animation: `fadeUp 600ms ${i * 40}ms cubic-bezier(.2,.7,.2,1) both` }">{{ ch === ' ' ? '\u00A0' : ch }}</span></h1><p class="mt-8 text-2xl font-bold text-white md:text-3xl">Code that respects <Transition name="word" mode="out-in"><span :key="word" class="text-teal">{{ word }}</span></Transition>.</p><p class="mt-7 max-w-2xl text-lg leading-relaxed text-white/80">Full-stack developer with a BSc in Biodiversity &amp; Conservation Biology. I build systems the way nature builds ecosystems: with rigor, adaptation, and respect for interdependence.</p><div class="mt-9 flex flex-wrap gap-3"><BaseButton href="#projects" class="!rounded-none !bg-teal !px-7 !py-3 !font-black !uppercase !tracking-wide hover:!bg-white hover:!text-ink">See what I’ve built</BaseButton><BaseButton href="#about" variant="ghost" class="!rounded-none !border-white !text-white !font-black !uppercase !tracking-wide hover:!bg-white hover:!text-ink">Read my story</BaseButton></div></div>
+  <section class="hero relative overflow-hidden bg-[#eef9f7] text-deep-blue">
+    <div class="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
+    <div
+      class="container relative grid min-h-[calc(100vh-4rem)] items-center gap-12 py-20 lg:grid-cols-[.9fr_1.1fr] lg:py-24"
+    >
+      <div class="relative z-10 max-w-2xl">
+        <p
+          class="eyebrow mb-6 flex items-center gap-3 text-sm font-black uppercase tracking-[.2em] text-ocean-blue"
+        >
+          <span
+            class="h-2 w-2 rounded-full bg-teal-bright shadow-[0_0_0_6px_rgba(29,209,161,.15)]"
+          />
+          Genetics / systems / software
+        </p>
+        <h1
+          class="font-heading text-6xl font-black leading-[.86] tracking-[-.04em] md:text-8xl lg:text-9xl"
+        >
+          Ihtishaam<br /><span class="text-ocean-blue">Johnson.</span>
+        </h1>
+        <p class="mt-8 max-w-xl text-2xl font-bold leading-tight text-deep-blue md:text-3xl">
+          I build digital systems that make complexity easier to understand.
+        </p>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-700">
+          Full-stack developer with a BSc in Biodiversity &amp; Conservation Biology. I bring
+          field-science curiosity, sharp systems thinking, and a little cinematic energy to every
+          build.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <BaseButton
+            href="#projects"
+            class="!rounded-full !bg-deep-blue !px-7 !py-3 !font-black !uppercase !tracking-wide !text-white hover:!bg-ocean-blue hover:!shadow-[0_10px_24px_rgba(0,26,51,.2)]"
+            >Explore projects</BaseButton
+          >
+          <BaseButton
+            href="#about"
+            variant="ghost"
+            class="!rounded-full !border-deep-blue !px-7 !py-3 !font-black !uppercase !tracking-wide !text-deep-blue hover:!bg-white"
+            >Meet the person</BaseButton
+          >
+        </div>
+        <div
+          class="mt-12 flex flex-wrap gap-6 text-xs font-black uppercase tracking-[.16em] text-ocean-blue/70"
+        >
+          <span>01 / Observe</span><span>02 / Map</span><span>03 / Build</span>
+        </div>
+      </div>
+      <div class="relative min-h-[22rem] lg:min-h-[38rem]">
+        <div
+          class="dna-frame absolute inset-0 overflow-hidden rounded-[2rem] bg-deep-blue shadow-[16px_16px_0_#1dd1a1] transition-transform duration-700 hover:rotate-1 hover:scale-[1.015]"
+        >
+          <img
+            src="/images/dna-helix.jpg"
+            alt="DNA double helix"
+            class="dna-image h-full w-full object-contain p-5 md:p-10"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-cyan-glow/10 via-transparent to-deep-blue/45"
+          />
+          <div
+            class="absolute left-6 top-6 rounded-full border border-white/30 bg-deep-blue/70 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-white backdrop-blur-sm"
+          >
+            Specimen 001 / DNA
+          </div>
+          <div
+            class="absolute bottom-6 right-6 max-w-[12rem] text-right text-xs font-bold uppercase leading-relaxed tracking-[.12em] text-white/70"
+          >
+            From living systems to usable software
+          </div>
+        </div>
+        <div
+          class="absolute -bottom-8 -left-5 hidden w-36 rotate-[-6deg] rounded-xl border border-white/70 bg-white p-3 shadow-xl sm:block"
+        >
+          <img src="/images/shark.jpg" alt="Shark silhouette" class="h-20 w-full object-cover" />
+          <p class="mt-2 text-[9px] font-black uppercase tracking-[.16em] text-deep-blue">
+            Field note / adaptation
+          </p>
+        </div>
+        <span
+          class="absolute -right-3 -top-5 h-20 w-20 rounded-full border border-ocean-blue/20 bg-teal-bright/30"
+          aria-hidden="true"
+        />
+      </div>
+    </div>
   </section>
 </template>
-<script setup>import { onMounted, onUnmounted, ref } from 'vue'; import BaseButton from '@/components/ui/BaseButton.vue'; const nameChars = 'Ihtishaam Johnson'.split(''); const words = ['complexity', 'interdependence', 'evidence']; const word = ref(words[0]); let timer; onMounted(() => { let i = 0; timer = setInterval(() => { i = (i + 1) % words.length; word.value = words[i] }, 3800) }); onUnmounted(() => clearInterval(timer))</script>
-<style scoped>.word-enter-active,.word-leave-active { transition: opacity 700ms ease; }.word-enter-from,.word-leave-to { opacity: 0; } @media (prefers-reduced-motion: reduce) { .word-enter-active,.word-leave-active { transition: none; } }</style>
+
+<script setup>
+import BaseButton from '@/components/ui/BaseButton.vue'
+</script>
+
+<style scoped>
+.hero-mesh {
+  background-image:
+    linear-gradient(rgba(10, 63, 90, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 63, 90, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(90deg, black, transparent 75%);
+}
+.dna-image {
+  filter: saturate(1.2) contrast(1.08) drop-shadow(0 0 24px rgba(0, 217, 255, 0.32));
+  transition: transform 700ms ease;
+}
+.dna-frame:hover .dna-image {
+  transform: scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dna-image,
+  .dna-frame {
+    transition: none;
+  }
+}
+</style>

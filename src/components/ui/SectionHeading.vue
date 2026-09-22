@@ -1,11 +1,14 @@
 <template>
   <div class="mb-12">
-    <p v-if="eyebrow" class="text-teal text-sm font-semibold uppercase tracking-widest mb-3 flex items-center gap-3">
-      <span class="w-8 h-px bg-teal" />
+    <p
+      v-if="eyebrow"
+      class="mb-3 flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-cyan-glow"
+    >
+      <span class="h-px w-8 bg-cyan-glow" />
       {{ eyebrow }}
     </p>
-    <h2 class="text-3xl md:text-4xl font-bold text-ink dark:text-mist mb-3">{{ title }}</h2>
-    <p v-if="subtitle" class="text-base leading-relaxed text-slate dark:text-mist/80 max-w-2xl">{{ subtitle }}</p>
+    <h2 class="mb-3 text-3xl font-bold text-white md:text-4xl">{{ title }}</h2>
+    <p v-if="subtitle" class="max-w-2xl text-base leading-relaxed text-white/70">{{ subtitle }}</p>
   </div>
 </template>
 
@@ -13,6 +16,6 @@
 defineProps({
   eyebrow: String,
   title: { type: String, required: true },
-  subtitle: String
+  subtitle: String,
 })
 </script>

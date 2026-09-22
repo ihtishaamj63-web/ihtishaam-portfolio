@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-surface text-ink">
+  <div class="min-h-screen bg-paper text-ink">
     <AppHeader />
     <RouterView v-slot="{ Component }">
       <Transition name="page" mode="out-in">
@@ -18,7 +18,9 @@ import AppFooter from '@/components/layout/AppFooter.vue'
 <style>
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 300ms ease, transform 300ms ease;
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
 }
 .page-enter-from {
   opacity: 0;

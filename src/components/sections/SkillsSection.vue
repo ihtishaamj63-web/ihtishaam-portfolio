@@ -1,6 +1,41 @@
 <template>
-  <section id="skills" class="py-24 bg-[#e1ebec]"><div class="container"><SectionHeading eyebrow="Skills" title="A focused toolkit." subtitle="The languages, tools, and scientific practices I bring to a build." />
-    <div class="grid gap-5 md:grid-cols-2"><article v-for="group in skills" :key="group.category" class="group relative overflow-hidden rounded-2xl border border-ink/15 bg-surface p-7 shadow-sm transition-all duration-300 hover:-translate-y-2 hover:border-teal hover:shadow-xl hover:shadow-ink/15"><svg class="absolute -right-3 -top-3 h-20 w-20 text-teal/10 transition-transform duration-500 group-hover:rotate-12 group-hover:scale-125" viewBox="0 0 70 70" fill="none" aria-hidden="true"><path d="M35 70V0M35 48C12 42 9 25 14 12c20 7 24 21 21 36Zm0-21c24-8 27-25 22-39-20 8-25 22-22 39Z" stroke="currentColor" stroke-width="2"/></svg><h3 class="relative font-heading text-xl font-semibold text-ink">{{ group.category }}</h3><ul class="relative mt-5 grid gap-4"><li v-for="s in group.items" :key="s.name" class="border-l-2 border-teal/25 pl-4 transition-colors group-hover:border-amber"><span class="text-base font-semibold text-ink">{{ s.name }}</span><p v-if="s.note" class="mt-1 text-sm leading-relaxed text-slate">{{ s.note }}</p></li></ul></article></div>
-  </div></section>
+  <section id="skills" class="bg-gradient-to-b from-deep-blue to-[#0d5270] py-28 text-white">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Capabilities"
+        title="A focused toolkit."
+        subtitle="Languages, systems, and scientific habits for building in deep water."
+      />
+      <div class="grid gap-5 md:grid-cols-2">
+        <article
+          v-for="(group, index) in skills"
+          :key="group.category"
+          class="group relative overflow-hidden rounded-xl border-2 border-cyan-glow/30 bg-ocean-blue/30 p-7 shadow-none transition-all duration-500 hover:-translate-y-2 hover:bg-ocean-blue/55 hover:border-cyan-glow hover:shadow-[0_0_25px_rgba(0,217,255,.28)]"
+        >
+          <span
+            class="absolute right-5 top-5 h-3 w-3 rounded-full bg-cyan-glow shadow-[0_0_14px_rgba(0,217,255,.8)] transition-colors group-hover:bg-teal-bright"
+          />
+          <h3
+            class="relative font-heading text-xl font-semibold uppercase tracking-wider text-cyan-glow group-hover:text-teal-bright"
+          >
+            {{ group.category }}
+          </h3>
+          <ul class="relative mt-5 grid gap-4">
+            <li
+              v-for="s in group.items"
+              :key="s.name"
+              class="border-l-2 border-cyan-glow/25 pl-4 transition-colors group-hover:border-teal-bright"
+            >
+              <span class="text-base font-semibold text-white/90">{{ s.name }}</span>
+              <p v-if="s.note" class="mt-1 text-sm leading-relaxed text-white/65">{{ s.note }}</p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
 </template>
-<script setup>import SectionHeading from '@/components/ui/SectionHeading.vue'; import { skills } from '@/data/skills'</script>
+<script setup>
+import SectionHeading from '@/components/ui/SectionHeading.vue'
+import { skills } from '@/data/skills'
+</script>
