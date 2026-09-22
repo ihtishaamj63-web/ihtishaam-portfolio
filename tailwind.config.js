@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#0a192f',
-        slate: '#475569',
-        mist: '#e6f1ff',
-        teal: { DEFAULT: '#14b8a6', dark: '#0f766e' },
-        amber: '#f59e0b',
-        surface: '#ffffff',
-        'surface-dark': '#0b1220'
+        ink: '#17352b',
+        slate: '#52645a',
+        mist: '#edf3e9',
+        teal: { DEFAULT: '#3d7861', dark: '#285440' },
+        amber: '#b96543',
+        surface: '#f7f4eb',
+        'surface-dark': '#10271f'
       },
       fontFamily: {
         heading: ['Poppins', 'sans-serif'],

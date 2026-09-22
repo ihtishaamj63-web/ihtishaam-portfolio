@@ -27,8 +27,9 @@
         <BaseButton v-if="project.api" :href="project.api" variant="ghost">API health</BaseButton>
       </div>
 
-      <section class="mb-10">
-        <h2 class="font-heading font-semibold text-xl mb-3">Overview</h2>
+      <section class="mb-10 rounded-2xl border border-teal/20 bg-teal/[.04] p-6 dark:bg-teal/10">
+        <p class="text-xs font-semibold uppercase tracking-[.16em] text-teal mb-3">Impact story</p>
+        <h2 class="font-heading font-semibold text-xl mb-3">The problem, the system, the result.</h2>
         <p class="text-slate dark:text-mist/70">{{ project.description }}</p>
       </section>
 
@@ -57,12 +58,11 @@
         </ul>
       </section>
 
-      <section v-if="project.team?.length" class="mb-10">
-        <h2 class="font-heading font-semibold text-xl mb-3">Team</h2>
-        <div class="flex flex-wrap gap-2">
-          <TechPill v-for="m in project.team" :key="m" :label="m" />
-        </div>
+      <section class="mb-10">
+        <h2 class="font-heading font-semibold text-xl mb-3">What I learned</h2>
+        <ul class="space-y-2 text-slate dark:text-mist/70"><li class="flex gap-2"><span class="text-teal">→</span>Designing authentication and token-expiry logic around real user roles.</li><li class="flex gap-2"><span class="text-teal">→</span>Debugging cross-team architecture issues without losing momentum.</li><li class="flex gap-2"><span class="text-teal">→</span>Balancing stakeholder needs with maintainable technical constraints.</li></ul>
       </section>
+
     </div>
   </main>
 </template>

@@ -6,15 +6,14 @@
       </RouterLink>
 
       <nav class="hidden md:flex items-center gap-1">
-        <RouterLink
+        <a
           v-for="link in links"
-          :key="link.to"
-          :to="link.to"
+          :key="link.href"
+          :href="link.href"
           class="relative px-3 py-2 text-sm font-medium text-slate dark:text-mist/80 hover:text-teal transition-colors"
-          active-class="text-teal"
         >
           {{ link.label }}
-        </RouterLink>
+        </a>
         <button
           @click="toggleTheme"
           class="ml-2 p-2 rounded-md hover:bg-ink/5 dark:hover:bg-mist/10 transition-colors"
@@ -40,16 +39,15 @@
     <Transition name="menu">
       <div v-if="menuOpen" class="md:hidden border-t border-ink/10 dark:border-mist/10 bg-surface dark:bg-ink">
         <nav class="container py-4 flex flex-col gap-1">
-          <RouterLink
+          <a
             v-for="link in links"
-            :key="link.to"
-            :to="link.to"
+            :key="link.href"
+            :href="link.href"
             @click="menuOpen = false"
             class="px-3 py-3 text-sm font-medium rounded-md hover:bg-ink/5 dark:hover:bg-mist/10"
-            active-class="text-teal"
           >
             {{ link.label }}
-          </RouterLink>
+          </a>
         </nav>
       </div>
     </Transition>
@@ -61,9 +59,10 @@ import { ref } from 'vue'
 import { useTheme } from '@/composables/useTheme'
 
 const links = [
-  { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/projects', label: 'Projects' }
+  { href: '#about', label: 'Story' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' }
 ]
 
 const menuOpen = ref(false)

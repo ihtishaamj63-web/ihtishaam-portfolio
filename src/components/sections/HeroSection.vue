@@ -1,67 +1,29 @@
 <template>
-  <section class="relative overflow-hidden py-20 md:py-32">
-    <div
-      class="absolute inset-0 -z-10 opacity-40 dark:opacity-20"
-      style="background: linear-gradient(120deg, #14b8a6 0%, #0f766e 30%, #0a192f 60%, #14b8a6 100%); background-size: 300% 300%; animation: gradientShift 18s ease infinite;"
-    />
-    <div class="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(255,255,255,0.85)_70%)] dark:bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,25,47,0.85)_70%)]" />
-
+  <section class="hero relative isolate overflow-hidden py-24 md:py-36 lg:py-44">
+    <svg class="pointer-events-none absolute inset-0 -z-10 h-full w-full opacity-60 dark:opacity-40" viewBox="0 0 1200 680" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g fill="none" stroke="currentColor" class="text-teal/30" stroke-width="1"><path d="M-20 525 C160 440 190 590 350 470 S580 355 690 440 S900 580 1220 340" /><path d="M65 90 C190 185 240 115 355 230 S570 300 680 180 S930 40 1140 145" /><path d="M220 690 C275 510 425 580 475 375 S610 180 810 245 S1020 260 1180 70" /></g>
+      <g class="text-teal" fill="currentColor"><circle cx="185" cy="515" r="5" class="node-pulse" /><circle cx="350" cy="470" r="4" /><circle cx="690" cy="440" r="5" class="node-pulse delay" /><circle cx="930" cy="520" r="3" /><circle cx="355" cy="230" r="4" /><circle cx="680" cy="180" r="5" class="node-pulse slow" /><circle cx="810" cy="245" r="3" /><circle cx="1020" cy="260" r="5" /></g>
+      <g class="text-amber/45" fill="none" stroke="currentColor" stroke-width="2"><path d="M990 95c-42 28 42 47 0 76s42 47 0 76-42 47 0 76"/><path d="M1060 95c42 28-42 47 0 76s-42 47 0 76 42 47 0 76"/><path d="M1000 115h50m-50 76h50m-50 76h50m-50 76h50"/></g>
+      <path d="M140 145c25-20 41-17 61 2-22 3-35 12-47 30-3-14-10-23-14-32Z" class="text-ink/25 dark:text-mist/20" fill="currentColor"/>
+    </svg>
+    <div class="absolute inset-0 -z-20 bg-[radial-gradient(ellipse_at_55%_15%,rgba(61,120,97,.14),transparent_42%),linear-gradient(135deg,#e8e5d8_0%,#f7f4eb_55%,#e1ece3_100%)] dark:bg-[radial-gradient(ellipse_at_55%_15%,rgba(61,120,97,.2),transparent_42%),linear-gradient(135deg,#10271f,#17352b)]" />
     <div class="container relative">
-      <p class="text-teal font-medium mb-3">Hi, my name is</p>
-      <h1 class="font-heading text-4xl md:text-6xl lg:text-7xl font-extrabold mb-4">
-        <span
-          v-for="(ch, i) in nameChars"
-          :key="i"
-          class="inline-block"
-          :style="{ animation: `fadeUp 600ms ${i * 40}ms cubic-bezier(.2,.7,.2,1) both` }"
-        >{{ ch === ' ' ? '\u00A0' : ch }}</span>
-      </h1>
-      <h2 class="font-heading text-2xl md:text-3xl text-slate dark:text-mist/80 mb-6 h-10">
-        <span class="text-teal">{{ typed }}</span><span class="animate-pulse">|</span>
-      </h2>
-      <p class="max-w-2xl text-slate dark:text-mist/70 mb-8">
-        Full-stack developer with a BSc in Biodiversity &amp; Conservation Biology from UWC. I bring scientific rigor, data discipline, and systems thinking to every line of code — currently building at Life Choices Academy.
-      </p>
-      <div class="flex flex-wrap gap-3">
-        <BaseButton to="/projects">View projects</BaseButton>
-        <BaseButton to="/about" variant="ghost">About me</BaseButton>
-      </div>
+      <p class="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-teal">Science × software</p>
+      <h1 class="max-w-4xl font-heading text-5xl font-extrabold tracking-tight md:text-7xl"><span v-for="(ch, i) in nameChars" :key="i" class="inline-block" :style="{ animation: `fadeUp 600ms ${i * 40}ms cubic-bezier(.2,.7,.2,1) both` }">{{ ch === ' ' ? '\u00A0' : ch }}</span></h1>
+      <p class="mt-6 max-w-2xl text-xl leading-relaxed text-slate dark:text-mist/75 md:text-2xl">I solve problems at the intersection of science and software.</p>
+      <p class="mt-4 max-w-2xl leading-relaxed text-slate dark:text-mist/65">Full-stack developer with a BSc in Biodiversity. I bring scientific rigor, systems thinking, and data discipline to every project.</p>
+      <p class="mt-7 h-7 text-sm font-medium text-teal" aria-live="polite">I build <Transition name="word" mode="out-in"><span :key="word">{{ word }}</span></Transition> systems.</p>
+      <div class="mt-8 flex flex-wrap gap-3"><BaseButton href="#projects">See what I’ve built</BaseButton><BaseButton href="#about" variant="ghost">Read my story</BaseButton></div>
+      <a href="#featured-work" class="mt-14 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.16em] text-slate hover:text-teal dark:text-mist/60">Scroll to explore <span aria-hidden="true">↓</span></a>
     </div>
   </section>
 </template>
-
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
-
-const nameChars = 'Ihtishaam Johnson.'.split('')
-const phrases = [
-  'I build things for the web.',
-  'Data-driven. Detail-obsessed.',
-  'Science meets software.'
-]
-const typed = ref('')
-let phraseIdx = 0, charIdx = 0, deleting = false, timer
-
-function tick() {
-  const current = phrases[phraseIdx]
-  if (!deleting) {
-    typed.value = current.slice(0, ++charIdx)
-    if (charIdx === current.length) {
-      deleting = true
-      timer = setTimeout(tick, 1800)
-      return
-    }
-  } else {
-    typed.value = current.slice(0, --charIdx)
-    if (charIdx === 0) {
-      deleting = false
-      phraseIdx = (phraseIdx + 1) % phrases.length
-    }
-  }
-  timer = setTimeout(tick, deleting ? 35 : 65)
-}
-
-onMounted(() => { timer = setTimeout(tick, 800) })
-onUnmounted(() => clearTimeout(timer))
+const nameChars = 'Ihtishaam Johnson.'.split(''); const words = ['reliable', 'resilient', 'thoughtful']; const word = ref(words[0]); let timer
+onMounted(() => { let i = 0; timer = setInterval(() => { i = (i + 1) % words.length; word.value = words[i] }, 3800) }); onUnmounted(() => clearInterval(timer))
 </script>
+<style scoped>
+.node-pulse { animation: nodePulse 5s ease-in-out infinite; transform-origin: center; }.delay { animation-delay: 1.2s; }.slow { animation-duration: 7s; } @keyframes nodePulse { 50% { opacity: .35; transform: scale(1.7); } }.word-enter-active,.word-leave-active { transition: opacity 800ms ease; }.word-enter-from,.word-leave-to { opacity: 0; } @media (prefers-reduced-motion: reduce) { .node-pulse { animation: none; }.word-enter-active,.word-leave-active { transition: none; } }
+</style>

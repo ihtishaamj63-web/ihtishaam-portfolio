@@ -5,7 +5,7 @@
       {{ eyebrow }}
     </p>
     <h2 class="text-3xl md:text-4xl font-bold text-ink dark:text-mist mb-3">{{ title }}</h2>
-    <p v-if="subtitle" class="text-slate dark:text-mist/70 max-w-2xl">{{ subtitle }}</p>
+    <p v-if="subtitle" class="text-base leading-relaxed text-slate dark:text-mist/80 max-w-2xl">{{ subtitle }}</p>
   </div>
 </template>
 

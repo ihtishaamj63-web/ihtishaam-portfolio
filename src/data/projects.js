@@ -1,8 +1,8 @@
 export const projects = [
   {
     slug: 'moderntech-hr',
-    title: 'ModernTech Solutions — HR Management System',
-    tagline: 'Full-stack HR platform with role-based access, payroll, and attendance tracking.',
+    title: 'HR Platform for 50+ Employees',
+    tagline: 'Replaced disconnected spreadsheets with a unified dashboard. Led the team as tech lead.',
     description:
       'A production-ready HR management system built to replace disconnected spreadsheets with a secure, scalable platform. Centralises employee records, attendance tracking, payroll processing, leave workflows, and performance reviews behind a JWT-authenticated API with strict role-based access control.',
     role: 'Tech Lead & Full-Stack Developer',
@@ -33,8 +33,8 @@ export const projects = [
   },
   {
     slug: 'cleanspaces',
-    title: 'CleanSpaces',
-    tagline: 'Community-powered cleanup subscription platform for the Cape Flats.',
+    title: 'Community Cleanup Platform',
+    tagline: 'Residents pooled resources to fund professional cleanups. I built payments and activation tracking.',
     description:
       'Street committees pool household contributions through the platform to fund professional weekly cleanup crews for their zones. Features live activation tracking, photo proof of work, PayFast payments, and transparent payment records — all built on a Vue 3 + Express + MySQL stack.',
     role: 'Project Manager — Payments, pricing, checkout, resident dashboard, deployment, integration',

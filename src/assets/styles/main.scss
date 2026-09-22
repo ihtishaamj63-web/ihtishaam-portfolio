@@ -11,6 +11,9 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   margin: 0;
+  line-height: 1.6;
+  background-image: radial-gradient(rgba(61, 120, 97, 0.08) 0.7px, transparent 0.7px);
+  background-size: 12px 12px;
 }
 h1, h2, h3, h4 {
   font-family: 'Poppins', sans-serif;

@@ -1,5 +1,6 @@
 <template>
-  <section class="py-20">
+  <section id="about" class="relative overflow-hidden py-24">
+    <svg class="pointer-events-none absolute left-0 top-12 hidden h-[32rem] w-48 text-teal/15 lg:block" viewBox="0 0 160 520" fill="none" aria-hidden="true"><path d="M82 520C82 360 77 234 86 0M80 360c-42-18-52-55-50-85 37 4 55 32 50 85Zm2-115c40-18 50-51 47-80-35 3-51 29-47 80Zm1 218c40-20 47-53 43-79-35 5-48 30-43 79Z" stroke="currentColor" stroke-width="2"/><path d="M82 137c-23-20-30-47-23-68 27 9 36 33 23 68Z" fill="currentColor"/></svg>
     <div class="container">
       <SectionHeading
         eyebrow="About"
@@ -18,7 +19,7 @@
             />
           </div>
         </div>
-        <div class="space-y-4 text-slate dark:text-mist/70">
+        <div class="space-y-5 text-base leading-relaxed text-slate dark:text-mist/80 md:text-lg">
           <p>
             I'm <strong class="text-ink dark:text-mist">Ihtishaam Johnson</strong> — a full-stack developer with a BSc in Biodiversity &amp; Conservation Biology from the University of the Western Cape. That background isn't a detour; it's the foundation. Years of collecting, cleaning, and interpreting complex ecological datasets taught me the discipline that makes good software: rigor, structure, and a refusal to hand-wave over messy details.
           </p>
@@ -28,9 +29,7 @@
           <p>
             I hold three Cisco Networking Academy certifications (Python Essentials 1, Introduction to Cybersecurity, Introduction to Data Science), and I'm currently going deeper into security, data science, and modern JavaScript.
           </p>
-          <BaseButton href="https://your-host.example/cv.pdf" variant="ghost" class="mt-2">
-            Download CV
-          </BaseButton>
+          <p class="border-l-2 border-amber pl-4 text-sm italic text-ink dark:text-mist">From organisms to ecosystems, conservation biology is the study of relationships. That lens is central to how I build software.</p>
         </div>
       </div>
     </div>
@@ -39,5 +38,4 @@
 
 <script setup>
 import SectionHeading from '@/components/ui/SectionHeading.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
 </script>

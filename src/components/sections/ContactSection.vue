@@ -1,47 +1,6 @@
 <template>
-  <section class="py-20">
-    <div class="container max-w-3xl text-center">
-      <SectionHeading
-        eyebrow="Contact"
-        title="Let's build something."
-        subtitle="Open to opportunities, collaborations, and interesting problems."
-      />
-      <div class="flex flex-col items-center gap-4">
-        <a
-          href="mailto:ihtishaamj63@gmail.com"
-          class="text-2xl md:text-3xl font-heading font-bold text-ink dark:text-mist hover:text-teal transition-colors"
-        >
-          ihtishaamj63@gmail.com
-        </a>
-        <button
-          @click="copy"
-          class="text-sm text-slate dark:text-mist/60 hover:text-teal transition-colors"
-        >
-          {{ copied ? 'Copied!' : 'Click to copy' }}
-        </button>
-        <div class="flex gap-3 mt-4">
-          <BaseButton href="https://github.com/ihtishaamj63-web">GitHub</BaseButton>
-          <BaseButton href="https://linkedin.com/" variant="ghost">LinkedIn</BaseButton>
-        </div>
-      </div>
-    </div>
-  </section>
+  <section id="contact" class="py-24"><div class="container"><div class="relative overflow-hidden rounded-[2rem] border border-teal/25 bg-[#e5ede1] px-6 py-12 dark:bg-[#17352b] md:px-14 md:py-16">
+    <svg class="absolute bottom-0 right-0 h-full w-2/3 text-teal/20" viewBox="0 0 600 360" fill="none" aria-hidden="true"><path d="M620 354C500 310 540 195 423 207S300 55 197 117 100 30-10 60" stroke="currentColor" stroke-width="1.5"/><path d="M620 292C510 248 484 150 392 160S286 278 175 203 68 175-10 184" stroke="currentColor" stroke-width="1.5"/><circle cx="423" cy="207" r="7" fill="currentColor"/><circle cx="197" cy="117" r="7" fill="currentColor"/><circle cx="175" cy="203" r="7" fill="currentColor"/></svg>
+    <div class="relative max-w-2xl"><p class="text-xs font-semibold uppercase tracking-[.22em] text-amber">Field notes welcome</p><h2 class="mt-4 font-heading text-3xl md:text-5xl">Have a complex problem worth mapping?</h2><p class="mt-5 max-w-xl leading-relaxed text-slate dark:text-mist/70">I’m open to developer opportunities and collaborations where careful thinking, clear systems, and useful software matter.</p><div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4"><a href="mailto:ihtishaamj63@gmail.com" class="border-b border-teal pb-1 font-heading text-lg font-semibold text-ink transition-colors hover:text-teal dark:text-mist">ihtishaamj63@gmail.com</a><a href="https://github.com/ihtishaamj63-web" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-teal hover:text-teal-dark">GitHub ↗</a><a href="https://linkedin.com/" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-teal hover:text-teal-dark">LinkedIn ↗</a></div></div>
+  </div></div></section>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import SectionHeading from '@/components/ui/SectionHeading.vue'
-import BaseButton from '@/components/ui/BaseButton.vue'
-
-const copied = ref(false)
-
-async function copy() {
-  try {
-    await navigator.clipboard.writeText('ihtishaamj63@gmail.com')
-    copied.value = true
-    setTimeout(() => (copied.value = false), 2000)
-  } catch {
-    /* clipboard unavailable — ignore */
-  }
-}
-</script>

@@ -1,33 +1,6 @@
 <template>
-  <section class="py-20 bg-ink/[0.02] dark:bg-mist/[0.02]">
-    <div class="container">
-      <SectionHeading
-        eyebrow="Certifications"
-        title="Verified training."
-        subtitle="Cisco Networking Academy certifications earned through Life Choices Academy."
-      />
-      <div class="grid md:grid-cols-3 gap-5">
-        <a
-          v-for="c in certifications"
-          :key="c.name"
-          :href="c.file"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="rounded-2xl border border-ink/10 dark:border-mist/10 bg-surface dark:bg-surface-dark p-6 hover:border-teal/40 hover:shadow-md transition-all"
-        >
-          <div class="flex items-start justify-between mb-3">
-            <svg class="w-8 h-8 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
-            <span class="text-[10px] uppercase tracking-wider text-teal font-semibold">Verified</span>
-          </div>
-          <h3 class="font-heading font-semibold mb-1">{{ c.name }}</h3>
-          <p class="text-xs text-slate dark:text-mist/60">{{ c.issuer }}</p>
-        </a>
-      </div>
-    </div>
-  </section>
+  <section id="training" class="py-24 bg-ink/[0.02] dark:bg-mist/[0.02]"><div class="container"><SectionHeading eyebrow="Training record" title="Verified learning, in the field." subtitle="Cisco Networking Academy training connected to the systems I build." /><p class="-mt-7 mb-6 text-sm text-slate dark:text-mist/70">Browse the record <span aria-hidden="true">→</span></p>
+    <div class="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5 pr-6"><a v-for="c in certifications" :key="c.name" :href="c.file" target="_blank" rel="noopener noreferrer" class="min-w-[19rem] max-w-[19rem] snap-start rounded-2xl border border-ink/10 bg-surface p-6 transition-all hover:border-teal/40 hover:shadow-md dark:border-mist/10 dark:bg-surface-dark"><div class="mb-4 flex items-start justify-between"><svg class="h-9 w-9 text-teal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 15 8l6 .8-4.4 4.3 1 6.1-5.6-3-5.6 3 1-6.1L3 8.8 9 8l3-6Z"/></svg><span class="text-xs font-semibold uppercase tracking-wider text-amber">Verified</span></div><h3 class="font-heading text-lg font-semibold">{{ c.name }}</h3><p class="mt-2 text-sm text-slate dark:text-mist/70">{{ c.issuer }} · {{ c.date }}</p><p class="mt-4 text-sm leading-relaxed text-slate dark:text-mist/80"><span class="font-semibold text-teal">Applied in:</span> {{ c.applied }}</p></a></div>
+  </div></section>
 </template>
-
-<script setup>
-import SectionHeading from '@/components/ui/SectionHeading.vue'
-import { certifications } from '@/data/certifications'
-</script>
+<script setup>import SectionHeading from '@/components/ui/SectionHeading.vue'; import { certifications } from '@/data/certifications'</script>

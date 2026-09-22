@@ -26,8 +26,10 @@
         <article
           v-for="p in filtered"
           :key="p.slug"
-          class="group relative rounded-2xl border border-ink/10 dark:border-mist/10 bg-surface dark:bg-surface-dark p-6 hover:border-teal/40 hover:shadow-lg transition-all"
+          class="group relative rounded-2xl border border-ink/10 dark:border-mist/10 bg-surface dark:bg-surface-dark p-6 hover:-translate-y-3 hover:border-teal/40 hover:bg-teal/[.03] hover:shadow-2xl hover:shadow-teal/10 transition-all duration-300"
         >
+          <ProjectVisual :kind="p.slug" />
+          <p class="text-xs font-semibold uppercase tracking-[.14em] text-teal mb-2">{{ p.role }}</p>
           <h3 class="font-heading font-bold text-xl mb-2">{{ p.title }}</h3>
           <p class="text-sm text-slate dark:text-mist/70 mb-4">{{ p.tagline }}</p>
           <div class="flex flex-wrap gap-1.5 mb-5">
@@ -51,6 +53,7 @@ import { ref, computed } from 'vue'
 import SectionHeading from '@/components/ui/SectionHeading.vue'
 import TechPill from '@/components/ui/TechPill.vue'
 import BaseButton from '@/components/ui/BaseButton.vue'
+import ProjectVisual from '@/components/ui/ProjectVisual.vue'
 import { projects } from '@/data/projects'
 
 const filter = ref('all')
