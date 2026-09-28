@@ -1,0 +1,2091 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+src/
+  assets/
+    styles/
+      _animations.scss
+      _variables.scss
+      main.scss
+  components/
+    layout/
+      AppFooter.vue
+      AppHeader.vue
+    sections/
+      AboutSection.vue
+      CertificationsSection.vue
+      ContactSection.vue
+      HeroSection.vue
+      ProjectsSection.vue
+      SkillsSection.vue
+      WhyScienceSection.vue
+    ui/
+      BaseButton.vue
+      ProjectVisual.vue
+      SectionHeading.vue
+      StatusDot.vue
+      TechPill.vue
+  composables/
+    useHealthCheck.js
+    useScrollReveal.js
+    useTheme.js
+  data/
+    certifications.js
+    education.js
+    projects.js
+    skills.js
+  router/
+    index.js
+  views/
+    AboutView.vue
+    HomeView.vue
+    NotFoundView.vue
+    ProjectDetailView.vue
+    ProjectsView.vue
+    SkillsView.vue
+  App.vue
+  main.js
+.editorconfig
+.gitattributes
+.gitignore
+.oxlintrc.json
+.prettierrc.json
+eslint.config.js
+index.html
+jsconfig.json
+package.json
+postcss.config.js
+README.md
+tailwind.config.js
+vite.config.js
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="src/components/ui/BaseButton.vue">
+<template>
+  <component
+    :is="tag"
+    :href="href"
+    :to="to"
+    :disabled="disabled"
+    :target="external ? '_blank' : undefined"
+    :rel="external ? 'noopener noreferrer' : undefined"
+    class="inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+    :class="[sizeClass, variantClass]"
+  >
+    <slot />
+  </component>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { RouterLink } from 'vue-router'
+
+const props = defineProps({
+  variant: { type: String, default: 'primary' },
+  size: { type: String, default: 'md' },
+  href: String,
+  to: [String, Object],
+  disabled: Boolean
+})
+
+const tag = computed(() => {
+  if (props.to) return RouterLink
+  if (props.href) return 'a'
+  return 'button'
+})
+const external = computed(() => !!props.href && !props.to)
+
+const sizeClass = computed(() => ({
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-7 py-3 text-base'
+}[props.size]))
+
+const variantClass = computed(() => ({
+  primary: 'bg-teal text-white hover:bg-teal-dark shadow-sm hover:shadow-md',
+  ghost: 'border border-ink/20 dark:border-mist/20 text-ink dark:text-mist hover:border-teal hover:text-teal',
+  link: 'text-teal hover:text-teal-dark underline-offset-4 hover:underline'
+}[props.variant]))
+</script>
+</file>
+
+<file path="src/components/ui/StatusDot.vue">
+<template>
+  <span class="inline-flex items-center gap-2 text-xs font-medium">
+    <span
+      class="w-2 h-2 rounded-full"
+      :class="{
+        'bg-teal animate-[pulseDot_2s_ease-in-out_infinite]': status === 'up',
+        'bg-amber animate-[pulseDot_2s_ease-in-out_infinite]': status === 'checking',
+        'bg-red-500': status === 'down'
+      }"
+    />
+    <span :class="{
+      'text-teal': status === 'up',
+      'text-amber': status === 'checking',
+      'text-red-500': status === 'down'
+    }">{{ label }}</span>
+  </span>
+</template>
+
+<script setup>
+defineProps({
+  status: { type: String, default: 'checking' },
+  label: { type: String, default: '' }
+})
+</script>
+</file>
+
+<file path="src/composables/useHealthCheck.js">
+import { ref } from 'vue'
+
+export function useHealthCheck(url) {
+  const status = ref('checking')
+
+  async function check() {
+    if (!url) { status.value = 'down'; return }
+    try {
+      const controller = new AbortController()
+      const timer = setTimeout(() => controller.abort(), 6000)
+      const res = await fetch(url, { method: 'GET', signal: controller.signal })
+      clearTimeout(timer)
+      status.value = res.ok ? 'up' : 'down'
+    } catch (e) {
+      status.value = 'down'
+    }
+  }
+
+  check()
+  return { status, check }
+}
+</file>
+
+<file path="src/composables/useScrollReveal.js">
+import { onMounted, onUnmounted, ref } from 'vue'
+
+export function useScrollReveal(options = { threshold: 0.15 }) {
+  const el = ref(null)
+  let observer = null
+
+  onMounted(() => {
+    if (!el.value) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) {
+      el.value.classList.add('is-visible')
+      return
+    }
+    observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    }, options)
+    observer.observe(el.value)
+  })
+
+  onUnmounted(() => {
+    if (observer) observer.disconnect()
+  })
+
+  return { el }
+}
+</file>
+
+<file path="src/composables/useTheme.js">
+import { ref, onMounted } from 'vue'
+
+export function useTheme() {
+  const dark = ref(false)
+
+  function apply(value) {
+    dark.value = value
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', value)
+    }
+  }
+
+  function toggle() {
+    const next = !dark.value
+    apply(next)
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('portfolio-theme', next ? 'dark' : 'light')
+    }
+  }
+
+  onMounted(() => {
+    const stored = window.localStorage.getItem('portfolio-theme')
+    if (stored) return apply(stored === 'dark')
+    apply(window.matchMedia('(prefers-color-scheme: dark)').matches)
+  })
+
+  return { dark, toggle }
+}
+</file>
+
+<file path="src/data/education.js">
+export const education = [
+  {
+    title: 'BSc Biodiversity & Conservation Biology',
+    org: 'University of the Western Cape',
+    status: 'Graduated',
+    blurb: 'Trained in data collection, statistical analysis, and scientific reporting. Developed the discipline to work with complex, messy real-world datasets — a skill that translates directly to writing clean, logical code.'
+  },
+  {
+    title: 'Full-Stack Development',
+    org: 'Life Choices Academy',
+    status: 'In progress',
+    blurb: 'Immersive training in HTML, CSS, JavaScript, Python, Node.js, Vue, MySQL, and modern web workflows. Building real projects with version control, code review, and collaborative team structures.'
+  },
+  {
+    title: 'Pelican Park High School',
+    org: 'Cape Town, South Africa',
+    status: 'First in class',
+    blurb: 'Finished first in my year with outstanding results in English, Science, and History — the early discipline that still drives how I approach every problem today.'
+  }
+]
+</file>
+
+<file path="src/views/NotFoundView.vue">
+<template>
+  <main class="min-h-[70vh] flex items-center justify-center">
+    <div class="text-center">
+      <h1 class="font-heading text-7xl font-extrabold text-teal mb-4 animate-pulse">404</h1>
+      <p class="text-slate dark:text-mist/70 mb-6">That page doesn't exist.</p>
+      <BaseButton to="/">Back home</BaseButton>
+    </div>
+  </main>
+</template>
+
+<script setup>
+import BaseButton from '@/components/ui/BaseButton.vue'
+</script>
+</file>
+
+<file path="src/main.js">
+import { createApp } from 'vue'
+import App from './App.vue'
+import router from './router'
+import './assets/styles/main.scss'
+
+const app = createApp(App)
+app.use(router)
+app.mount('#app')
+</file>
+
+<file path=".editorconfig">
+[*.{js,jsx,mjs,cjs,ts,tsx,mts,cts,vue,css,scss,sass,less,styl}]
+charset = utf-8
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+end_of_line = lf
+max_line_length = 100
+</file>
+
+<file path=".gitattributes">
+* text=auto eol=lf
+</file>
+
+<file path=".gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+.DS_Store
+dist
+dist-ssr
+coverage
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+*.tsbuildinfo
+
+.eslintcache
+
+# Cypress
+/cypress/videos/
+/cypress/screenshots/
+
+# Vitest
+__screenshots__/
+
+# Vite
+*.timestamp-*-*.mjs
+</file>
+
+<file path=".oxlintrc.json">
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "unicorn", "oxc", "vue"],
+  "env": {
+    "browser": true
+  },
+  "categories": {
+    "correctness": "error"
+  }
+}
+</file>
+
+<file path=".prettierrc.json">
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  "semi": false,
+  "singleQuote": true,
+  "printWidth": 100
+}
+</file>
+
+<file path="eslint.config.js">
+import { defineConfig, globalIgnores } from 'eslint/config'
+import globals from 'globals'
+import js from '@eslint/js'
+import pluginVue from 'eslint-plugin-vue'
+import pluginOxlint from 'eslint-plugin-oxlint'
+import skipFormatting from 'eslint-config-prettier/flat'
+
+export default defineConfig([
+  {
+    name: 'app/files-to-lint',
+    files: ['**/*.{vue,js,mjs,jsx}'],
+  },
+
+  globalIgnores(['**/dist/**', '**/dist-ssr/**', '**/coverage/**']),
+
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+    },
+  },
+
+  js.configs.recommended,
+  ...pluginVue.configs['flat/essential'],
+
+  ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
+
+  skipFormatting,
+])
+</file>
+
+<file path="jsconfig.json">
+{
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "exclude": ["node_modules", "dist"]
+}
+</file>
+
+<file path="package.json">
+{
+  "name": "ihtishaam-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@vueuse/core": "^11.0.0",
+    "gsap": "^3.12.5",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.1.4",
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "sass": "^1.77.0",
+    "tailwindcss": "^3.4.4",
+    "vite": "^5.4.0"
+  }
+}
+</file>
+
+<file path="postcss.config.js">
+export default {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {}
+  }
+}
+</file>
+
+<file path="README.md">
+# ihtishaam-portfolio
+
+This template should help get you started developing with Vue 3 in Vite.
+
+## Recommended IDE Setup
+
+[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+
+## Recommended Browser Setup
+
+- Chromium-based browsers (Chrome, Edge, Brave, etc.):
+  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
+  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
+- Firefox:
+  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
+  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vite.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint
+```
+</file>
+
+<file path="vite.config.js">
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import { fileURLToPath, URL } from 'node:url'
+
+export default defineConfig({
+  plugins: [vue()],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  }
+})
+</file>
+
+<file path="src/assets/styles/_animations.scss">
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.1;
+  }
+  10% {
+    opacity: 0.45;
+  }
+  50% {
+    transform: translateY(-100px) translateX(35px);
+    opacity: 0.25;
+  }
+  90% {
+    opacity: 0.1;
+  }
+}
+@keyframes fadeUpGlow {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+@keyframes fadeRotate {
+  0%,
+  5% {
+    opacity: 1;
+  }
+  20%,
+  25%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes pulseGlow {
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(0, 217, 255, 0.5);
+  }
+  50% {
+    text-shadow: 0 0 22px rgba(0, 217, 255, 0.9);
+  }
+}
+@keyframes glowBorder {
+  0%,
+  100% {
+    border-color: rgba(0, 217, 255, 0.2);
+  }
+  50% {
+    border-color: rgba(0, 217, 255, 0.65);
+  }
+}
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes pulseDot {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.3);
+  }
+}
+@keyframes sheen {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 700ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+</file>
+
+<file path="src/components/layout/AppFooter.vue">
+<template>
+  <footer class="bg-deep-blue py-10 text-white/60">
+    <div class="container flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-sm">&copy; {{ year }} Ihtishaam Johnson</p>
+      <div class="flex items-center gap-5">
+        <a
+          href="https://github.com/ihtishaamj63-web"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="GitHub"
+          class="hover:text-teal transition-colors"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2.2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1.1-.7.1-.7.1-.7 1.2.1 1.9 1.3 1.9 1.3 1.1 1.9 2.9 1.3 3.6 1 .1-.8.4-1.3.8-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.3-3.3-.2-.3-.6-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.3 2.9.1 3.2.8.9 1.3 2 1.3 3.3 0 4.7-2.8 5.7-5.5 6 .4.4.8 1 .8 2v3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"
+            />
+          </svg>
+        </a>
+        <a
+          href="https://linkedin.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          class="hover:text-teal transition-colors"
+        >
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 1 1 8.25 6.5 1.75 1.75 0 0 1 6.5 8.25zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0 0 13 14.19a.66.66 0 0 0 0 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 0 1 2.7-1.4c1.55 0 3.36.86 3.36 3.66z"
+            />
+          </svg>
+        </a>
+        <a
+          href="mailto:ihtishaamj63@gmail.com"
+          aria-label="Email"
+          class="hover:text-teal transition-colors"
+        >
+          <svg
+            class="w-5 h-5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m22 7-10 6L2 7" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+</template>
+
+<script setup>
+const year = new Date().getFullYear()
+</script>
+</file>
+
+<file path="src/components/ui/ProjectVisual.vue">
+<template>
+  <div
+    class="project-visual group/visual relative mb-6 h-44 overflow-hidden border border-cyan-glow/25 bg-deep-blue/70 transition-colors duration-500 group-hover:border-teal-bright group-hover:bg-ocean-blue/60"
+  >
+    <img
+      :src="backgroundImage"
+      alt=""
+      class="absolute inset-0 h-full w-full object-cover opacity-25 mix-blend-screen transition-all duration-700 group-hover/visual:scale-110 group-hover/visual:opacity-40"
+      aria-hidden="true"
+    />
+    <div class="absolute inset-0 bg-deep-blue/65" aria-hidden="true" />
+    <svg
+      v-if="kind === 'cleanspaces'"
+      viewBox="0 0 500 210"
+      class="h-full w-full transition-transform duration-700 group-hover/visual:scale-105"
+      aria-label="Community cleanup network map"
+      role="img"
+    >
+      <path
+        d="M0 155 95 120l90 20 98-65 107 29 120-54M22 67l92 36 71-20 85 31 102-67 114 47"
+        fill="none"
+        stroke="#1dd1a1"
+        stroke-width="1"
+        opacity=".6"
+      />
+      <g fill="none" stroke="#00d9ff" stroke-width="2">
+        <path d="M72 151 148 92l87 41 86-84 93 67" />
+        <path d="M148 92 183 44m52 89 67-26m-67 26 34 49m86-133 54-45" />
+      </g>
+      <g fill="#0a8ca8">
+        <circle cx="72" cy="151" r="8" />
+        <circle cx="148" cy="92" r="8" />
+        <circle cx="235" cy="133" r="8" />
+        <circle cx="321" cy="49" r="8" />
+        <circle cx="414" cy="116" r="8" />
+      </g>
+      <g fill="#e8d7c3">
+        <circle cx="183" cy="44" r="5" />
+        <circle cx="269" cy="169" r="5" />
+        <circle cx="375" cy="-1" r="5" />
+      </g>
+      <path d="M357 153c-8-18 1-34 14-43 8 16 4 33-14 43Z" fill="#1dd1a1" />
+      <path
+        d="M357 153c3-16 8-29 14-43m-14 43c-7-9-11-16-12-23"
+        stroke="#ffffff"
+        stroke-width="1.5"
+      />
+      <g fill="#b5d0de" font-family="Inter, sans-serif" font-size="11">
+        <text x="27" y="188">RESIDENTS</text>
+        <text x="194" y="119">60% ACTIVE</text>
+        <text x="350" y="138">CLEAN ZONE</text>
+      </g>
+    </svg>
+    <svg
+      v-else
+      viewBox="0 0 500 210"
+      class="h-full w-full transition-transform duration-700 group-hover/visual:scale-105"
+      aria-label="Connected people and permissions network"
+      role="img"
+    >
+      <g fill="none" stroke="#00d9ff" stroke-width="2" opacity=".75">
+        <path
+          d="M250 42 130 100l-34 67M250 42l120 58 34 67M130 100l120 43 120-43M96 167l154-24 154 24"
+        />
+        <path d="M250 42v101" />
+      </g>
+      <g fill="#0a8ca8">
+        <circle cx="250" cy="42" r="18" />
+        <circle cx="130" cy="100" r="13" />
+        <circle cx="370" cy="100" r="13" />
+        <circle cx="96" cy="167" r="12" />
+        <circle cx="250" cy="143" r="14" />
+        <circle cx="404" cy="167" r="12" />
+      </g>
+      <g fill="#ffffff" font-family="Inter, sans-serif" font-size="10" text-anchor="middle">
+        <text x="250" y="46">CORE</text>
+        <text x="130" y="104">PEOPLE</text>
+        <text x="370" y="104">ROLES</text>
+        <text x="96" y="171">TIME</text>
+        <text x="250" y="147">DATA</text>
+        <text x="404" y="171">PAY</text>
+      </g>
+      <circle
+        cx="250"
+        cy="143"
+        r="27"
+        fill="none"
+        stroke="#1dd1a1"
+        stroke-width="2"
+        stroke-dasharray="3 5"
+      />
+      <text x="205" y="195" fill="#b5d0de" font-family="Inter, sans-serif" font-size="11">
+        INTERDEPENDENT SYSTEM
+      </text>
+    </svg>
+  </div>
+</template>
+<script setup>
+import { computed } from 'vue'
+
+const props = defineProps({ kind: { type: String, required: true } })
+const backgroundImage = computed(() =>
+  props.kind === 'cleanspaces' ? '/images/shark.jpg' : '/images/dna-helix.jpg',
+)
+</script>
+</file>
+
+<file path="src/components/ui/TechPill.vue">
+<template>
+  <span
+    class="inline-block border border-white/30 bg-white/10 px-2.5 py-1 text-xs font-bold uppercase tracking-wide text-white transition-colors hover:border-teal hover:bg-teal hover:text-ink"
+  >
+    {{ label }}
+  </span>
+</template>
+
+<script setup>
+defineProps({ label: { type: String, required: true } })
+</script>
+</file>
+
+<file path="src/data/certifications.js">
+export const certifications = [
+  {
+    name: 'Introduction to Cybersecurity',
+    issuer: 'Cisco Networking Academy via Life Choices Academy',
+    date: '26 Aug 2026',
+    applied: 'JWT authentication, rate limiting, and input validation in the HR Platform',
+    file: 'https://your-host.example/cybersecurity.pdf'
+  },
+  {
+    name: 'Python Essentials 1',
+    issuer: 'Cisco Networking Academy',
+    date: '01 Sep 2026',
+    applied: 'Data validation logic and CLI tool building',
+    file: 'https://your-host.example/python-essentials-1.pdf'
+  },
+  {
+    name: 'Introduction to Data Science',
+    issuer: 'Cisco Networking Academy via Life Choices Academy',
+    date: '23 Aug 2026',
+    applied: 'Attendance analysis, payroll calculations, and data modelling',
+    file: 'https://your-host.example/data-science.pdf'
+  }
+]
+</file>
+
+<file path="src/data/skills.js">
+export const skills = [
+  {
+    category: 'Languages',
+    type: 'practical',
+    items: [
+      { name: 'Python', note: 'Data validation and CLI tools; Cisco Python Essentials 1' },
+      { name: 'JavaScript', note: 'Interactive interfaces and framework work' },
+      { name: 'HTML5 / CSS3', note: 'Semantic, responsive interfaces and motion' },
+      { name: 'Node.js', note: 'Express middleware and REST APIs' },
+      { name: 'SQL / MySQL', note: 'Schema design and complex queries' }
+    ]
+  },
+  {
+    category: 'Frameworks & Runtimes',
+    type: 'practical',
+    items: [
+      { name: 'Vue 3', note: 'Composition API, routing, state management' },
+      { name: 'REST API design', note: 'Clear endpoints, errors, and HTTP semantics' },
+      { name: 'Git & GitHub', note: 'Collaborative workflow and code review' }
+    ]
+  },
+  {
+    category: 'Data & Science',
+    type: 'data',
+    items: [
+      { name: 'Systems thinking', note: 'Mapping interdependency and decomposing complexity' },
+      { name: 'Data collection & cleaning', note: 'Field-research rigor and validation logic' },
+      { name: 'Statistical analysis', note: 'Descriptive statistics and data interpretation' },
+      { name: 'Scientific reporting', note: 'Clear findings and durable documentation' }
+    ]
+  },
+  {
+    category: 'Security & Systems',
+    type: 'infrastructure',
+    items: [
+      { name: 'JWT authentication', note: 'Token expiry and role-based guards' },
+      { name: 'Security fundamentals', note: 'Cisco Introduction to Cybersecurity' }
+    ]
+  }
+]
+</file>
+
+<file path="src/router/index.js">
+import { createRouter, createWebHistory } from 'vue-router'
+
+const routes = [
+  { path: '/', name: 'home', component: () => import('@/views/HomeView.vue') },
+  { path: '/about', name: 'about', component: () => import('@/views/AboutView.vue') },
+  { path: '/skills', name: 'skills', component: () => import('@/views/SkillsView.vue') },
+  { path: '/projects', name: 'projects', component: () => import('@/views/ProjectsView.vue') },
+  { path: '/projects/:slug', name: 'project-detail', component: () => import('@/views/ProjectDetailView.vue') },
+  { path: '/:pathMatch(.*)*', name: 'not-found', component: () => import('@/views/NotFoundView.vue') }
+]
+
+const router = createRouter({
+  history: createWebHistory(),
+  routes,
+  scrollBehavior() {
+    return { top: 0 }
+  }
+})
+
+export default router
+</file>
+
+<file path="src/views/AboutView.vue">
+<template><main id="main-content" class="pt-10"><div class="container"><SectionHeading eyebrow="About" title="A scientist who ships software." subtitle="Where I've come from, what I bring, and how it all fits together." /></div>
+  <section class="py-10"><div class="container grid items-start gap-10 md:grid-cols-[1fr_1.5fr]"><div class="flex justify-center md:justify-start"><div class="relative"><div class="absolute -inset-3 translate-x-3 translate-y-3 rounded-2xl border-2 border-teal/40"/><img src="https://i.ibb.co/qYwYwTzr/ihtishaam.jpg" alt="Ihtishaam Johnson" class="relative h-64 w-64 rounded-2xl object-cover shadow-lg md:h-72 md:w-72"/><p class="mt-5 text-center text-xs uppercase tracking-[.14em] text-teal">Cape Town, South Africa</p></div></div><div class="space-y-4 leading-relaxed text-slate dark:text-mist/70"><p>I'm <strong class="text-ink dark:text-mist">Ihtishaam Johnson</strong>, a full-stack developer based in Cape Town. I spent years studying biodiversity at UWC — fieldwork, data collection, and statistical analysis. That foundation taught me rigorous thinking: how to work with messy, complex systems, find patterns in noise, and document clearly.</p><p>Now I apply those same skills to software. I build systems that are reliable, maintainable, and thoughtful — because code is just another ecosystem. It grows or it decays.</p><div class="grid gap-3 border-l-2 border-teal/40 py-1 pl-5 text-sm"><p class="mb-0"><strong class="text-ink dark:text-mist">Tech lead, HR Platform:</strong> Led a team of four through a full-stack employee, payroll, and attendance system.</p><p class="mb-0"><strong class="text-ink dark:text-mist">CleanSpaces:</strong> Shipped PayFast payment integration and activation tracking for a community cleanup platform.</p><p class="mb-0"><strong class="text-ink dark:text-mist">Practice:</strong> Bring data validation, testing, and clear documentation to every build.</p></div><p>Science and code are not separate for me. They are the same problem solved two ways.</p></div></div></section>
+  <section class="py-16 bg-ink/[0.02] dark:bg-mist/[0.02]"><div class="container"><SectionHeading eyebrow="Education" title="Where I've learned." /><div class="max-w-3xl"><div v-for="(e, i) in education" :key="e.title" class="relative pb-10 pl-10 last:pb-0"><div v-if="i < education.length - 1" class="absolute bottom-0 left-3 top-2 w-px bg-teal/30"/><div class="absolute left-0 top-1 flex h-6 w-6 items-center justify-center rounded-full border-2 border-teal bg-surface dark:bg-surface-dark"><div class="h-2 w-2 rounded-full bg-teal"/></div><span class="text-xs font-semibold uppercase tracking-wider text-teal">{{ e.status }}</span><h3 class="mt-1 font-heading text-lg font-bold">{{ e.title }}</h3><p class="mb-2 text-sm text-slate dark:text-mist/60">{{ e.org }}</p><p class="text-sm text-slate dark:text-mist/70">{{ e.blurb }}</p></div></div></div></section><ContactSection /></main></template>
+<script setup>import SectionHeading from '@/components/ui/SectionHeading.vue'; import ContactSection from '@/components/sections/ContactSection.vue'; import { education } from '@/data/education'</script>
+</file>
+
+<file path="src/views/ProjectsView.vue">
+<template>
+  <main id="main-content" class="pt-10 pb-20">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Projects"
+        title="Everything I've built."
+        subtitle="Full-stack applications — filter by technology."
+      />
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        <button
+          @click="filter = 'all'"
+          class="px-3 py-1.5 rounded-full text-xs font-medium border transition-colors"
+          :class="filter === 'all' ? 'bg-teal text-white border-teal' : 'border-ink/15 dark:border-mist/20 text-slate dark:text-mist/70 hover:border-teal hover:text-teal'"
+        >All</button>
+        <button
+          v-for="t in allTech"
+          :key="t"
+          @click="filter = t"
+          class="px-3 py-1.5 rounded-full text-xs font-medium border transition-colors"
+          :class="filter === t ? 'bg-teal text-white border-teal' : 'border-ink/15 dark:border-mist/20 text-slate dark:text-mist/70 hover:border-teal hover:text-teal'"
+        >{{ t }}</button>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <article
+          v-for="p in filtered"
+          :key="p.slug"
+          class="group relative rounded-2xl border border-ink/10 dark:border-mist/10 bg-surface dark:bg-surface-dark p-6 hover:-translate-y-3 hover:border-teal/40 hover:bg-teal/[.03] hover:shadow-2xl hover:shadow-teal/10 transition-all duration-300"
+        >
+          <ProjectVisual :kind="p.slug" />
+          <p class="text-xs font-semibold uppercase tracking-[.14em] text-teal mb-2">{{ p.role }}</p>
+          <h3 class="font-heading font-bold text-xl mb-2">{{ p.title }}</h3>
+          <p class="text-sm text-slate dark:text-mist/70 mb-4">{{ p.tagline }}</p>
+          <div class="flex flex-wrap gap-1.5 mb-5">
+            <TechPill v-for="t in p.tech" :key="t" :label="t" />
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <BaseButton :to="`/projects/${p.slug}`" size="sm">View details</BaseButton>
+            <BaseButton v-if="p.github" :href="p.github" size="sm" variant="ghost">GitHub</BaseButton>
+          </div>
+        </article>
+      </div>
+      <p v-if="!filtered.length" class="text-center text-slate dark:text-mist/60 py-10">
+        No projects match that filter.
+      </p>
+    </div>
+  </main>
+</template>
+
+<script setup>
+import { ref, computed } from 'vue'
+import SectionHeading from '@/components/ui/SectionHeading.vue'
+import TechPill from '@/components/ui/TechPill.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import ProjectVisual from '@/components/ui/ProjectVisual.vue'
+import { projects } from '@/data/projects'
+
+const filter = ref('all')
+const allTech = computed(() => {
+  const set = new Set()
+  projects.forEach((p) => p.tech.forEach((t) => set.add(t)))
+  return [...set].sort()
+})
+const filtered = computed(() =>
+  filter.value === 'all' ? projects : projects.filter((p) => p.tech.includes(filter.value))
+)
+</script>
+</file>
+
+<file path="src/views/SkillsView.vue">
+<template>
+  <main id="main-content" class="pt-10"><SkillsSection /></main>
+</template>
+<script setup>
+import SkillsSection from '@/components/sections/SkillsSection.vue'
+</script>
+</file>
+
+<file path="index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ihtishaam Johnson — Full-Stack Developer & Data-Driven Problem Solver based in Cape Town."
+    />
+    <meta name="theme-color" content="#eef9f7" />
+    <meta property="og:title" content="Ihtishaam Johnson | Full-Stack Developer" />
+    <meta
+      property="og:description"
+      content="Full-Stack Developer with a BSc in Biodiversity & Conservation Biology. Building clean, data-driven web applications."
+    />
+    <meta property="og:type" content="website" />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230a192f'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins,sans-serif' font-weight='700' font-size='16' fill='%2314b8a6'%3EIJ%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>Ihtishaam Johnson | Full-Stack Developer</title>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
+</file>
+
+<file path="src/assets/styles/main.scss">
+@use './variables' as *;
+@use './animations' as *;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  margin: 0;
+  line-height: 1.6;
+  color: var(--mist);
+  background-color: var(--paper);
+  background-image: radial-gradient(rgba(10, 63, 90, 0.1) 0.7px, transparent 0.7px);
+  background-size: 20px 20px;
+}
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 0;
+}
+p {
+  margin: 0 0 1rem;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: var(--cyan-glow);
+  color: var(--dark-navy);
+}
+
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--dark-navy);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--ocean-blue);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--cyan-glow);
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 0;
+  background: var(--ink);
+  color: var(--mist);
+  padding: 0.75rem 1rem;
+  z-index: 1000;
+  transition: top 200ms;
+}
+.skip-link:focus {
+  top: 0;
+}
+</file>
+
+<file path="src/components/sections/CertificationsSection.vue">
+<template>
+  <section id="training" class="bg-dark-navy py-28 text-white">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Training record"
+        title="Verified learning, in the field."
+        subtitle="Cisco Networking Academy training connected to the systems I build."
+      />
+      <p class="-mt-7 mb-6 text-sm text-white/60">
+        Browse the record <span aria-hidden="true">→</span>
+      </p>
+      <div class="flex snap-x snap-mandatory gap-5 overflow-x-auto pb-5 pr-6">
+        <a
+          v-for="c in certifications"
+          :key="c.name"
+          :href="c.file"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="min-w-[19rem] max-w-[19rem] snap-start rounded-xl border border-cyan-glow/25 bg-ocean-blue/35 p-6 transition-all hover:-translate-y-2 hover:border-cyan-glow hover:shadow-[0_0_24px_rgba(0,217,255,.25)]"
+          ><div class="mb-4 flex items-start justify-between">
+            <svg
+              class="h-9 w-9 text-cyan-glow"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M12 2 15 8l6 .8-4.4 4.3 1 6.1-5.6-3-5.6 3 1-6.1L3 8.8 9 8l3-6Z" /></svg
+            ><span class="text-xs font-semibold uppercase tracking-wider text-teal-bright"
+              >Verified</span
+            >
+          </div>
+          <h3 class="font-heading text-lg font-semibold text-white">{{ c.name }}</h3>
+          <p class="mt-2 text-sm text-white/60">{{ c.issuer }} · {{ c.date }}</p>
+          <p class="mt-4 text-sm leading-relaxed text-white/70">
+            <span class="font-semibold text-cyan-glow">Applied in:</span> {{ c.applied }}
+          </p></a
+        >
+      </div>
+    </div>
+  </section>
+</template>
+<script setup>
+import SectionHeading from '@/components/ui/SectionHeading.vue'
+import { certifications } from '@/data/certifications'
+</script>
+</file>
+
+<file path="src/components/sections/ContactSection.vue">
+<template>
+  <section
+    id="contact"
+    class="relative overflow-hidden bg-gradient-to-b from-ocean-blue to-deep-blue py-28 text-white"
+  >
+    <div class="container">
+      <div
+        class="relative overflow-hidden rounded-2xl border border-cyan-glow/35 bg-dark-navy/45 px-6 py-12 shadow-[0_0_30px_rgba(0,217,255,.12)] md:px-14 md:py-16"
+      >
+        <svg
+          class="absolute bottom-0 right-0 h-full w-2/3 text-teal/20"
+          viewBox="0 0 600 360"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M620 354C500 310 540 195 423 207S300 55 197 117 100 30-10 60"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+          <path
+            d="M620 292C510 248 484 150 392 160S286 278 175 203 68 175-10 184"
+            stroke="currentColor"
+            stroke-width="1.5"
+          />
+          <circle cx="423" cy="207" r="7" fill="currentColor" />
+          <circle cx="197" cy="117" r="7" fill="currentColor" />
+          <circle cx="175" cy="203" r="7" fill="currentColor" />
+        </svg>
+        <div class="relative max-w-2xl">
+          <p class="text-xs font-semibold uppercase tracking-[.22em] text-cyan-glow">
+            Surface break / contact
+          </p>
+          <h2 class="mt-4 font-heading text-3xl text-white md:text-5xl">
+            Let’s create something alive.
+          </h2>
+          <p class="mt-5 max-w-xl leading-relaxed text-white/70">
+            I’m open to developer opportunities and collaborations where careful thinking, clear
+            systems, and useful software matter.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+            <a
+              href="mailto:ihtishaamj63@gmail.com"
+              class="border-b border-cyan-glow pb-1 font-heading text-lg font-semibold text-cyan-glow transition-colors hover:text-white"
+              >ihtishaamj63@gmail.com</a
+            ><a
+              href="https://github.com/ihtishaamj63-web"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm font-semibold text-teal-bright hover:text-white"
+              >GitHub ↗</a
+            ><a
+              href="https://linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-sm font-semibold text-teal-bright hover:text-white"
+              >LinkedIn ↗</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+</file>
+
+<file path="src/components/sections/WhyScienceSection.vue">
+<template>
+  <section class="bg-ocean-blue py-28 text-white">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Why science + code"
+        title="The same habits, applied to a new medium."
+        subtitle="Ecology, genetics, and conservation taught me to work across scales — from a single observation to a living system."
+      />
+      <div class="grid gap-5 md:grid-cols-3">
+        <article
+          v-for="item in items"
+          :key="item.title"
+          class="group relative overflow-hidden rounded-xl border border-teal-bright/35 bg-deep-blue/45 p-6 shadow-none transition-all duration-500 hover:-translate-y-2 hover:border-teal-bright hover:bg-deep-blue/75 hover:shadow-[0_0_24px_rgba(29,209,161,.28)]"
+        >
+          <span
+            class="mb-5 flex h-9 w-9 items-center justify-center rounded-full border border-cyan-glow/60 text-cyan-glow transition-all group-hover:rotate-12 group-hover:bg-cyan-glow/10"
+            >{{ item.index }}</span
+          >
+          <h3 class="font-heading text-lg text-white">{{ item.title }}</h3>
+          <p class="mt-3 text-base leading-relaxed text-white/70">{{ item.text }}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</template>
+<script setup>
+import SectionHeading from '@/components/ui/SectionHeading.vue'
+const items = [
+  {
+    index: '01',
+    title: 'Rigor without shortcuts',
+    text: 'Field research taught me to validate every assumption. That shows up in strict input validation, error handling, and testing.',
+  },
+  {
+    index: '02',
+    title: 'Systems, not silos',
+    text: 'Ecology is interconnection. I design APIs and architecture with the same care for what each part changes downstream.',
+  },
+  {
+    index: '03',
+    title: 'Clarity is a feature',
+    text: 'Scientific writing demands precision. I document decisions so the next person can understand, maintain, and extend the work.',
+  },
+]
+</script>
+</file>
+
+<file path="src/components/ui/SectionHeading.vue">
+<template>
+  <div class="mb-12">
+    <p
+      v-if="eyebrow"
+      class="mb-3 flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-cyan-glow"
+    >
+      <span class="h-px w-8 bg-cyan-glow" />
+      {{ eyebrow }}
+    </p>
+    <h2 class="mb-3 text-3xl font-bold text-white md:text-4xl">{{ title }}</h2>
+    <p v-if="subtitle" class="max-w-2xl text-base leading-relaxed text-white/70">{{ subtitle }}</p>
+  </div>
+</template>
+
+<script setup>
+defineProps({
+  eyebrow: String,
+  title: { type: String, required: true },
+  subtitle: String,
+})
+</script>
+</file>
+
+<file path="src/data/projects.js">
+export const projects = [
+  {
+    slug: 'moderntech-hr',
+    title: 'HR Platform for 50+ Employees',
+    tagline: 'Replaced disconnected spreadsheets with a unified dashboard. Led the team as tech lead.',
+    description:
+      'A production-ready HR management system built to replace disconnected spreadsheets with a secure, scalable platform. Centralises employee records, attendance tracking, payroll processing, leave workflows, and performance reviews behind a JWT-authenticated API with strict role-based access control.',
+    role: 'Tech Lead & Full-Stack Developer',
+    tech: ['Vue 3', 'Vite', 'Bootstrap 5', 'Axios', 'Node.js', 'Express', 'JWT', 'bcryptjs', 'MySQL', 'Render', 'Aiven'],
+    features: [
+      'Role-based access control — HR vs employee data isolation',
+      'JWT authentication with bcrypt hashing and auth rate limiting',
+      'Dynamic dashboard with payroll summaries and weekly attendance charts',
+      'Automated payroll calculations (Tax, UIF, Medical Aid, Pension)',
+      'Digital payslips with PDF export',
+      'Leave workflow: submit, approve, deny, cancel, reverse',
+      '14-day attendance charts + calendar modal for historical views',
+      'Performance reviews with strict validation and PDF reports',
+      'Dark mode toggle across all pages'
+    ],
+    screenshots: [],
+    github: 'https://github.com/ihtishaamj63-web',
+    live: 'https://hr-project-2-moderntech-solutions-1.onrender.com',
+    api: 'https://hr-project-2-moderntech-solutions.onrender.com',
+    status: 'The hosted service is currently resting on its free-tier plan; the frontend remains available to explore.',
+    highlights: [
+      'Led integration branch and reviewed all team code for MVC compliance',
+      'Built core backend: server setup, DB config, middleware, auth system',
+      'Developed attendance tracking and time-off management modules',
+      'Managed cloud deployment (Render + Aiven MySQL)'
+    ]
+  },
+  {
+    slug: 'cleanspaces',
+    title: 'Community Cleanup Platform',
+    tagline: 'Residents pooled resources to fund professional cleanups. I built payments and activation tracking.',
+    description:
+      'Street committees pool household contributions through the platform to fund professional weekly cleanup crews for their zones. Features live activation tracking, photo proof of work, PayFast payments, and transparent payment records — all built on a Vue 3 + Express + MySQL stack.',
+    role: 'Project Manager — Payments, pricing, checkout, resident dashboard, deployment, integration',
+    tech: ['Vue 3', 'Vite', 'Vue Router', 'Leaflet.js', 'SweetAlert2', 'Node.js', 'Express', 'MySQL', 'PayFast', 'Nodemailer', 'Brevo SMTP', 'Railway', 'Render'],
+    features: [
+      'Tiered zone subscriptions (small / medium / large) with per-household share calculation',
+      'PayFast payments — card and Instant EFT with MD5 signature generation',
+      'ITN webhook handling and redirect-based payment completion',
+      'Live activation tracking toward 60% household participation threshold',
+      'Proof of work — before/after photos with drag-to-compare slider',
+      'Cleanup requests reported by residents with photo evidence',
+      'Admin operations: zone approvals, crew management, payroll, reports',
+      'Moderated reviews — publicly submitted, admin-approved',
+      'JWT authentication with resident/admin guards on frontend and backend'
+    ],
+    screenshots: [],
+    github: 'https://github.com/ihtishaamj63-web/CleanSpaces',
+    live: 'https://cleanspaces.onrender.com',
+    api: 'https://cleanspaces-production.up.railway.app/api/health',
+    status: 'The hosted service is currently resting on its free-tier plan; the frontend remains available to explore.',
+    highlights: [
+      'Designed and built the payment flow — PayFast sandbox integration with MD5 signatures',
+      'Built the resident dashboard with live activation tracking',
+      'Configured pricing tiers as a single source of truth in config/plans.js',
+      'Managed deployment: Railway (backend + DB), Render (frontend)'
+    ]
+  }
+]
+</file>
+
+<file path="src/views/HomeView.vue">
+<template>
+  <main id="main-content">
+    <HeroSection />
+    <AboutSection />
+    <ProjectsSection />
+    <WhyScienceSection />
+    <SkillsSection />
+    <ContactSection />
+  </main>
+</template>
+
+<script setup>
+import HeroSection from '@/components/sections/HeroSection.vue'
+import AboutSection from '@/components/sections/AboutSection.vue'
+import ProjectsSection from '@/components/sections/ProjectsSection.vue'
+import WhyScienceSection from '@/components/sections/WhyScienceSection.vue'
+import SkillsSection from '@/components/sections/SkillsSection.vue'
+import ContactSection from '@/components/sections/ContactSection.vue'
+</script>
+</file>
+
+<file path="src/views/ProjectDetailView.vue">
+<template>
+  <main id="main-content" class="pt-10 pb-20">
+    <div v-if="!project" class="container py-20 text-center">
+      <h1 class="font-heading text-2xl mb-4">Project not found</h1>
+      <BaseButton to="/projects">Back to projects</BaseButton>
+    </div>
+
+    <div v-else class="container max-w-4xl">
+      <RouterLink
+        to="/projects"
+        class="text-sm text-teal hover:underline inline-flex items-center gap-1 mb-6"
+      >
+        ← Back to projects
+      </RouterLink>
+
+      <h1 class="font-heading text-3xl md:text-4xl font-bold mb-3">{{ project.title }}</h1>
+      <p class="text-lg text-slate dark:text-mist/70 mb-5">{{ project.tagline }}</p>
+
+      <div class="mb-8 flex flex-wrap items-center gap-4"><span class="text-sm font-medium text-teal">Role: {{ project.role }}</span></div>
+
+      <div class="flex flex-wrap gap-2 mb-8">
+        <BaseButton v-if="project.live" :href="project.live">Live demo</BaseButton>
+        <BaseButton v-if="project.github" :href="project.github" variant="ghost">GitHub repo</BaseButton>
+      </div>
+
+      <p v-if="project.status" class="mb-8 max-w-2xl border-l-2 border-amber bg-amber/10 px-4 py-3 text-sm leading-relaxed text-ink dark:text-mist"><span class="font-semibold">Deployment note:</span> {{ project.status }}</p>
+
+      <section class="mb-10 rounded-2xl border border-teal/20 bg-teal/[.04] p-6 dark:bg-teal/10">
+        <p class="text-xs font-semibold uppercase tracking-[.16em] text-teal mb-3">Impact story</p>
+        <h2 class="font-heading font-semibold text-xl mb-3">The problem, the system, the result.</h2>
+        <p class="text-slate dark:text-mist/70">{{ project.description }}</p>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="font-heading font-semibold text-xl mb-3">Tech stack</h2>
+        <div class="flex flex-wrap gap-2">
+          <TechPill v-for="t in project.tech" :key="t" :label="t" />
+        </div>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="font-heading font-semibold text-xl mb-3">Key features</h2>
+        <ul class="space-y-2 text-slate dark:text-mist/70">
+          <li v-for="f in project.features" :key="f" class="flex gap-2">
+            <span class="text-teal shrink-0">→</span>{{ f }}
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="font-heading font-semibold text-xl mb-3">My contribution</h2>
+        <ul class="space-y-2 text-slate dark:text-mist/70">
+          <li v-for="h in project.highlights" :key="h" class="flex gap-2">
+            <span class="text-teal shrink-0">•</span>{{ h }}
+          </li>
+        </ul>
+      </section>
+
+      <section class="mb-10">
+        <h2 class="font-heading font-semibold text-xl mb-3">What I learned</h2>
+        <ul class="space-y-2 text-slate dark:text-mist/70"><li class="flex gap-2"><span class="text-teal">→</span>Designing authentication and token-expiry logic around real user roles.</li><li class="flex gap-2"><span class="text-teal">→</span>Debugging cross-team architecture issues without losing momentum.</li><li class="flex gap-2"><span class="text-teal">→</span>Balancing stakeholder needs with maintainable technical constraints.</li></ul>
+      </section>
+
+    </div>
+  </main>
+</template>
+
+<script setup>
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import TechPill from '@/components/ui/TechPill.vue'
+import { projects } from '@/data/projects'
+
+const route = useRoute()
+const project = computed(() => projects.find((p) => p.slug === route.params.slug))
+</script>
+</file>
+
+<file path="src/App.vue">
+<template>
+  <div class="min-h-screen bg-paper text-ink">
+    <AppHeader />
+    <RouterView v-slot="{ Component }">
+      <Transition name="page" mode="out-in">
+        <component :is="Component" />
+      </Transition>
+    </RouterView>
+    <AppFooter />
+  </div>
+</template>
+
+<script setup>
+import AppHeader from '@/components/layout/AppHeader.vue'
+import AppFooter from '@/components/layout/AppFooter.vue'
+</script>
+
+<style>
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(12px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active {
+    transition: opacity 200ms ease;
+  }
+  .page-enter-from,
+  .page-leave-to {
+    transform: none;
+  }
+}
+</style>
+</file>
+
+<file path="src/assets/styles/_variables.scss">
+:root {
+  --deep-blue: #001a33;
+  --ocean-blue: #0a3f5a;
+  --cyan-glow: #00d9ff;
+  --teal-bright: #1dd1a1;
+  --dark-navy: #000d1a;
+  --sand: #e8d7c3;
+  --ink: #000d1a;
+  --slate: #b5d0de;
+  --mist: #ffffff;
+  --teal: #00d9ff;
+  --teal-dark: #0a8ca8;
+  --amber: #e8d7c3;
+  --surface: #0a3f5a;
+  --surface-dark: #000d1a;
+  --paper: #eef9f7;
+  --paper-strong: #ffffff;
+  --seafoam: #d9f3ee;
+  --water-surface: rgba(10, 63, 90, 0.3);
+  --glow-soft: rgba(0, 217, 255, 0.1);
+  --glow-strong: rgba(0, 217, 255, 0.3);
+  --r-sm: 8px;
+  --r-md: 14px;
+  --r-lg: 22px;
+  --shadow-sm: 0 1px 3px rgba(10, 25, 47, 0.06);
+  --shadow-md: 0 8px 24px rgba(10, 25, 47, 0.08);
+  --shadow-lg: 0 20px 48px rgba(10, 25, 47, 0.12);
+}
+</file>
+
+<file path="src/components/layout/AppHeader.vue">
+<template>
+  <header
+    class="sticky top-0 z-50 border-b border-ocean-blue/10 bg-paper/90 text-deep-blue backdrop-blur-md"
+  >
+    <div class="container flex items-center justify-between h-16">
+      <RouterLink to="/" class="font-heading text-xl font-bold tracking-tight">
+        Ihtishaam Johnson<span class="text-teal-bright">.</span>
+      </RouterLink>
+
+      <nav class="hidden md:flex items-center gap-1">
+        <a
+          v-for="link in links"
+          :key="link.href"
+          :href="link.href"
+          class="relative px-3 py-2 text-sm font-bold uppercase tracking-wide text-deep-blue/65 transition-colors hover:bg-seafoam hover:text-ocean-blue"
+        >
+          {{ link.label }}
+        </a>
+      </nav>
+
+      <button
+        @click="menuOpen = !menuOpen"
+        type="button"
+        :aria-expanded="menuOpen"
+        aria-controls="mobile-navigation"
+        class="rounded-md p-2 text-ocean-blue transition-colors hover:bg-seafoam md:hidden"
+        aria-label="Toggle menu"
+      >
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path v-if="!menuOpen" d="M3 6h18M3 12h18M3 18h18" />
+          <path v-else d="M6 6l12 12M6 18L18 6" />
+        </svg>
+      </button>
+    </div>
+
+    <Transition name="menu">
+      <div
+        v-if="menuOpen"
+        id="mobile-navigation"
+        class="relative z-50 border-t border-ocean-blue/10 bg-paper md:hidden"
+      >
+        <nav class="container py-4 flex flex-col gap-1">
+          <a
+            v-for="link in links"
+            :key="link.href"
+            :href="link.href"
+            @click="menuOpen = false"
+            class="px-3 py-3 text-sm font-bold uppercase tracking-wide text-deep-blue/80 hover:bg-seafoam hover:text-ocean-blue"
+          >
+            {{ link.label }}
+          </a>
+        </nav>
+      </div>
+    </Transition>
+  </header>
+</template>
+
+<script setup>
+import { ref } from 'vue'
+
+const links = [
+  { href: '#about', label: 'Story' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#contact', label: 'Contact' },
+]
+
+const menuOpen = ref(false)
+</script>
+
+<style scoped>
+.menu-enter-active,
+.menu-leave-active {
+  transition:
+    opacity 200ms ease,
+    max-height 300ms ease;
+  overflow: hidden;
+}
+.menu-enter-from,
+.menu-leave-to {
+  opacity: 0;
+  max-height: 0;
+}
+.menu-enter-to,
+.menu-leave-from {
+  opacity: 1;
+  max-height: 400px;
+}
+</style>
+</file>
+
+<file path="src/components/sections/AboutSection.vue">
+<template>
+  <section
+    id="about"
+    class="relative overflow-hidden bg-gradient-to-b from-ocean-blue via-[#0d5270] to-deep-blue py-28 text-white"
+  >
+    <div class="water-ripples pointer-events-none absolute inset-0 opacity-30" aria-hidden="true" />
+    <div class="container relative z-10">
+      <p class="text-sm font-black uppercase tracking-[.22em] text-cyan-glow">The discovery</p>
+      <h2
+        class="mt-4 max-w-4xl font-heading text-5xl font-black uppercase tracking-tight text-cyan-glow md:text-7xl"
+      >
+        Who I am.
+      </h2>
+      <div class="mt-16 grid items-start gap-14 md:grid-cols-[.8fr_1.2fr]">
+        <div class="group mx-auto md:mx-0">
+          <div class="relative inline-block">
+            <div
+              class="absolute -inset-4 rounded-2xl border-2 border-cyan-glow opacity-0 blur-sm transition-opacity duration-500 group-hover:opacity-100"
+            />
+            <img
+              src="/images/portrait.jpg"
+              alt="Ihtishaam Johnson"
+              class="relative h-80 w-80 rounded-2xl border-2 border-teal-bright object-cover shadow-[0_0_30px_rgba(0,217,255,.3)] transition-all duration-500 group-hover:scale-[1.02] group-hover:shadow-[0_0_50px_rgba(29,209,161,.5)]"
+              loading="lazy"
+            />
+            <span
+              class="absolute -bottom-4 -right-4 rounded-full border border-cyan-glow/60 bg-dark-navy px-4 py-2 text-xs font-bold uppercase tracking-wider text-cyan-glow"
+              >Field researcher / builder</span
+            >
+          </div>
+          <ul class="mt-12 space-y-3 text-sm text-white/70">
+            <li class="border-l-2 border-cyan-glow pl-4">
+              Biodiversity &amp; conservation biology
+            </li>
+            <li class="border-l-2 border-teal-bright pl-4">Full-stack development</li>
+            <li class="border-l-2 border-sand pl-4">Stories, animals, and systems</li>
+          </ul>
+        </div>
+        <div>
+          <div class="space-y-4 text-lg leading-relaxed text-white/85">
+            <p>
+              I spent years studying biodiversity. Ecosystems taught me that all complex systems
+              share principles: feedback loops, adaptation, and interdependence.
+            </p>
+            <p class="text-white/70">
+              Now I apply those same principles to code. Every project is an organism. Every
+              component has a role. The best systems, in nature and software, are those that adapt
+              and thrive.
+            </p>
+          </div>
+          <div class="mt-10 grid gap-4">
+            <article
+              v-for="interest in interests"
+              :key="interest.title"
+              class="group relative overflow-hidden rounded-xl border border-cyan-glow/35 bg-[#06334d] p-6 transition-all duration-500 hover:-translate-y-1 hover:border-cyan-glow hover:shadow-[0_0_22px_rgba(0,217,255,.25)]"
+            >
+              <div
+                class="absolute inset-y-0 right-0 w-1/2 bg-cover bg-center opacity-35 transition-opacity duration-500 group-hover:opacity-55"
+                :style="{ backgroundImage: `url(${interest.image})` }"
+                aria-hidden="true"
+              />
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-[#06334d] via-[#06334d]/95 to-transparent"
+                aria-hidden="true"
+              />
+              <div class="relative z-10 max-w-[75%]">
+                <h3 class="font-heading text-xl font-black" :class="interest.color">
+                  {{ interest.title }}
+                </h3>
+                <p class="mt-2 text-sm leading-relaxed text-white/90">{{ interest.text }}</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="mt-20 max-w-4xl">
+        <h3 class="mb-8 font-heading text-2xl font-black text-cyan-glow">
+          Education &amp; journey
+        </h3>
+        <div class="space-y-5 border-l border-cyan-glow/30 pl-6">
+          <article
+            v-for="(item, index) in education"
+            :key="item.title"
+            class="group relative rounded-xl border border-cyan-glow/25 bg-cyan-glow/5 p-6 transition-all duration-500 hover:border-cyan-glow hover:bg-cyan-glow/10 hover:shadow-[0_0_22px_rgba(0,217,255,.2)]"
+          >
+            <span
+              class="absolute -left-[2.05rem] top-7 h-3 w-3 rounded-full bg-cyan-glow shadow-[0_0_14px_rgba(0,217,255,.8)]"
+            />
+            <p class="text-xs font-bold uppercase tracking-wider text-teal-bright">
+              {{ item.status }} / 0{{ index + 1 }}
+            </p>
+            <h4 class="mt-2 font-heading text-xl font-black text-white">{{ item.title }}</h4>
+            <p class="mt-1 text-sm text-white/55">{{ item.org }}</p>
+            <p class="mt-3 text-sm leading-relaxed text-white/70">{{ item.blurb }}</p>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { education } from '@/data/education'
+
+const interests = [
+  {
+    title: 'Film obsessed',
+    text: 'Narrative structure, cinematography, and every detail serving the story.',
+    image: '/images/scorsese.jpg',
+    color: 'text-cyan-glow',
+  },
+  {
+    title: 'Manchester United',
+    text: 'Strategy, teamwork, synchronized execution, and shared goals.',
+    image: '/images/football.jpg',
+    color: 'text-teal-bright',
+  },
+  {
+    title: 'Paleontology',
+    text: 'Extinct systems, evolution, adaptation, and the evidence left behind.',
+    image: '/images/dino.jpg',
+    color: 'text-cyan-glow',
+  },
+  {
+    title: 'Conservation & biomes',
+    text: 'Habitats, species relationships, and the careful work of protecting living systems.',
+    image: '/images/biome.jpg',
+    color: 'text-teal-bright',
+  },
+]
+</script>
+
+<style scoped>
+.water-ripples {
+  background-image:
+    radial-gradient(
+      ellipse at 20% 20%,
+      transparent 0 16%,
+      rgba(0, 217, 255, 0.16) 16.5% 17%,
+      transparent 17.5% 35%
+    ),
+    radial-gradient(
+      ellipse at 80% 70%,
+      transparent 0 20%,
+      rgba(29, 209, 161, 0.12) 20.5% 21%,
+      transparent 21.5% 40%
+    );
+  background-size:
+    280px 180px,
+    360px 240px;
+}
+</style>
+</file>
+
+<file path="src/components/sections/HeroSection.vue">
+<template>
+  <section class="hero relative overflow-hidden bg-[#eef9f7] text-deep-blue">
+    <div class="hero-mesh pointer-events-none absolute inset-0" aria-hidden="true" />
+    <div
+      class="container relative grid min-h-[calc(100vh-4rem)] items-center gap-12 py-20 lg:grid-cols-[.9fr_1.1fr] lg:py-24"
+    >
+      <div class="relative z-10 max-w-2xl">
+        <p
+          class="eyebrow mb-6 flex items-center gap-3 text-sm font-black uppercase tracking-[.2em] text-ocean-blue"
+        >
+          <span
+            class="h-2 w-2 rounded-full bg-teal-bright shadow-[0_0_0_6px_rgba(29,209,161,.15)]"
+          />
+          Genetics / systems / software
+        </p>
+        <h1
+          class="font-heading text-6xl font-black leading-[.86] tracking-[-.04em] md:text-8xl lg:text-9xl"
+        >
+          Ihtishaam<br /><span class="text-ocean-blue">Johnson.</span>
+        </h1>
+        <p class="mt-8 max-w-xl text-2xl font-bold leading-tight text-deep-blue md:text-3xl">
+          I build digital systems that make complexity easier to understand.
+        </p>
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-slate-700">
+          Full-stack developer with a BSc in Biodiversity &amp; Conservation Biology. I bring
+          field-science curiosity, sharp systems thinking, and a little cinematic energy to every
+          build.
+        </p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <BaseButton
+            href="#projects"
+            class="!rounded-full !bg-deep-blue !px-7 !py-3 !font-black !uppercase !tracking-wide !text-white hover:!bg-ocean-blue hover:!shadow-[0_10px_24px_rgba(0,26,51,.2)]"
+            >Explore projects</BaseButton
+          >
+          <BaseButton
+            href="#about"
+            variant="ghost"
+            class="!rounded-full !border-deep-blue !px-7 !py-3 !font-black !uppercase !tracking-wide !text-deep-blue hover:!bg-white"
+            >Meet the person</BaseButton
+          >
+        </div>
+        <div
+          class="mt-12 flex flex-wrap gap-6 text-xs font-black uppercase tracking-[.16em] text-ocean-blue/70"
+        >
+          <span>01 / Observe</span><span>02 / Map</span><span>03 / Build</span>
+        </div>
+      </div>
+      <div class="relative min-h-[22rem] lg:min-h-[38rem]">
+        <div
+          class="dna-frame absolute inset-0 overflow-hidden rounded-[2rem] bg-deep-blue shadow-[16px_16px_0_#1dd1a1] transition-transform duration-700 hover:rotate-1 hover:scale-[1.015]"
+        >
+          <img
+            src="/images/dna-helix.jpg"
+            alt="DNA double helix"
+            class="dna-image h-full w-full object-contain p-5 md:p-10"
+          />
+          <div
+            class="absolute inset-0 bg-gradient-to-br from-cyan-glow/10 via-transparent to-deep-blue/45"
+          />
+          <div
+            class="absolute left-6 top-6 rounded-full border border-white/30 bg-deep-blue/70 px-4 py-2 text-[10px] font-black uppercase tracking-[.2em] text-white backdrop-blur-sm"
+          >
+            Specimen 001 / DNA
+          </div>
+          <div
+            class="absolute bottom-6 right-6 max-w-[12rem] text-right text-xs font-bold uppercase leading-relaxed tracking-[.12em] text-white/70"
+          >
+            From living systems to usable software
+          </div>
+        </div>
+        <div
+          class="absolute -bottom-8 -left-5 hidden w-36 rotate-[-6deg] rounded-xl border border-white/70 bg-white p-3 shadow-xl sm:block"
+        >
+          <img src="/images/shark.jpg" alt="Shark silhouette" class="h-20 w-full object-cover" />
+          <p class="mt-2 text-[9px] font-black uppercase tracking-[.16em] text-deep-blue">
+            Field note / adaptation
+          </p>
+        </div>
+        <span
+          class="absolute -right-3 -top-5 h-20 w-20 rounded-full border border-ocean-blue/20 bg-teal-bright/30"
+          aria-hidden="true"
+        />
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import BaseButton from '@/components/ui/BaseButton.vue'
+</script>
+
+<style scoped>
+.hero-mesh {
+  background-image:
+    linear-gradient(rgba(10, 63, 90, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 63, 90, 0.06) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(90deg, black, transparent 75%);
+}
+.dna-image {
+  filter: saturate(1.2) contrast(1.08) drop-shadow(0 0 24px rgba(0, 217, 255, 0.32));
+  transition: transform 700ms ease;
+}
+.dna-frame:hover .dna-image {
+  transform: scale(1.04);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dna-image,
+  .dna-frame {
+    transition: none;
+  }
+}
+</style>
+</file>
+
+<file path="src/components/sections/ProjectsSection.vue">
+<template>
+  <section
+    id="projects"
+    class="relative overflow-hidden bg-gradient-to-b from-deep-blue to-ocean-blue py-28 text-white"
+  >
+    <div class="container">
+      <SectionHeading
+        eyebrow="Projects"
+        title="Projects that matter."
+        subtitle="Systems built for people, communities, and the living complexity between them."
+      />
+      <div class="grid md:grid-cols-2 gap-6">
+        <article
+          v-for="(p, i) in projects"
+          :key="p.slug"
+          class="group relative overflow-hidden rounded-2xl border-2 border-cyan-glow/30 bg-ocean-blue/50 p-6 text-white shadow-none transition-all duration-500 hover:-translate-y-3 hover:border-cyan-glow hover:shadow-[0_0_30px_rgba(0,217,255,.35)] reveal"
+          :style="{ transitionDelay: i * 80 + 'ms' }"
+        >
+          <div
+            class="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-cyan-glow/10 to-transparent transition-transform duration-700 group-hover:translate-x-full pointer-events-none"
+          />
+          <div
+            class="absolute right-4 top-4 h-2 w-2 rounded-full bg-cyan-glow transition-all duration-300 group-hover:h-3 group-hover:w-3 group-hover:bg-teal-bright group-hover:shadow-[0_0_0_5px_rgba(0,217,255,.15)]"
+          />
+          <div class="relative">
+            <ProjectVisual :kind="p.slug" />
+            <p class="text-sm font-semibold uppercase tracking-[.1em] text-teal mb-2">
+              {{ p.role }}
+            </p>
+            <h3 class="font-heading font-black text-2xl mb-2">{{ p.title }}</h3>
+            <p class="text-base text-white/80 mb-5">{{ p.tagline }}</p>
+            <div class="flex flex-wrap gap-1.5 mb-5">
+              <TechPill v-for="t in p.tech.slice(0, 5)" :key="t" :label="t" />
+              <span v-if="p.tech.length > 5" class="text-sm text-white/70 self-center">
+                +{{ p.tech.length - 5 }}
+              </span>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <BaseButton
+                v-if="p.github"
+                :href="p.github"
+                size="sm"
+                variant="ghost"
+                class="hover:-translate-y-0.5"
+                >GitHub</BaseButton
+              >
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import SectionHeading from '@/components/ui/SectionHeading.vue'
+import TechPill from '@/components/ui/TechPill.vue'
+import BaseButton from '@/components/ui/BaseButton.vue'
+import ProjectVisual from '@/components/ui/ProjectVisual.vue'
+import { projects } from '@/data/projects'
+</script>
+</file>
+
+<file path="src/components/sections/SkillsSection.vue">
+<template>
+  <section id="skills" class="bg-gradient-to-b from-deep-blue to-[#0d5270] py-28 text-white">
+    <div class="container">
+      <SectionHeading
+        eyebrow="Capabilities"
+        title="A focused toolkit."
+        subtitle="Languages, systems, and scientific habits for building in deep water."
+      />
+      <div class="grid gap-5 md:grid-cols-2">
+        <article
+          v-for="(group, index) in skills"
+          :key="group.category"
+          class="group relative overflow-hidden rounded-xl border-2 border-cyan-glow/30 bg-ocean-blue/30 p-7 shadow-none transition-all duration-500 hover:-translate-y-2 hover:bg-ocean-blue/55 hover:border-cyan-glow hover:shadow-[0_0_25px_rgba(0,217,255,.28)]"
+        >
+          <span
+            class="absolute right-5 top-5 h-3 w-3 rounded-full bg-cyan-glow shadow-[0_0_14px_rgba(0,217,255,.8)] transition-colors group-hover:bg-teal-bright"
+          />
+          <h3
+            class="relative font-heading text-xl font-semibold uppercase tracking-wider text-cyan-glow group-hover:text-teal-bright"
+          >
+            {{ group.category }}
+          </h3>
+          <ul class="relative mt-5 grid gap-4">
+            <li
+              v-for="s in group.items"
+              :key="s.name"
+              class="border-l-2 border-cyan-glow/25 pl-4 transition-colors group-hover:border-teal-bright"
+            >
+              <span class="text-base font-semibold text-white/90">{{ s.name }}</span>
+              <p v-if="s.note" class="mt-1 text-sm leading-relaxed text-white/65">{{ s.note }}</p>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+</template>
+<script setup>
+import SectionHeading from '@/components/ui/SectionHeading.vue'
+import { skills } from '@/data/skills'
+</script>
+</file>
+
+<file path="tailwind.config.js">
+export default {
+  content: ['./index.html', './src/**/*.{vue,js}'],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'deep-blue': '#001a33',
+        'ocean-blue': '#0a3f5a',
+        'cyan-glow': '#00d9ff',
+        'teal-bright': '#1dd1a1',
+        'dark-navy': '#000d1a',
+        sand: '#e8d7c3',
+        ink: '#000d1a',
+        slate: '#b5d0de',
+        mist: '#ffffff',
+        teal: { DEFAULT: '#00d9ff', dark: '#0a8ca8' },
+        amber: '#e8d7c3',
+        surface: '#0a3f5a',
+        'surface-dark': '#000d1a',
+        paper: '#eef9f7',
+        'paper-strong': '#ffffff',
+        seafoam: '#d9f3ee',
+      },
+      fontFamily: {
+        heading: ['Space Grotesk', 'sans-serif'],
+        body: ['DM Sans', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [],
+}
+</file>
+
+</files>

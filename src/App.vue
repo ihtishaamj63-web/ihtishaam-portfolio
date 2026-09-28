@@ -1,43 +1,60 @@
 <template>
-  <div class="min-h-screen bg-paper text-ink">
-    <AppHeader />
-    <RouterView v-slot="{ Component }">
-      <Transition name="page" mode="out-in">
-        <component :is="Component" />
-      </Transition>
-    </RouterView>
-    <AppFooter />
+  <div class="site">
+    <a class="skip-link" href="#main">skip to content</a>
+    <NavBar />
+
+    <main id="main">
+      <HeroSection />
+      <WorkSection @open-project="selectedProject = $event" />
+      <AboutSection />
+      <ContactSection />
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span>© {{ year }} Ihtishaam Johnson · Cape Town, South Africa</span>
+        <span>built with vue. deployed on render. styled with stubbornness.</span>
+      </div>
+    </footer>
+
+    <ProjectModal
+      v-if="selectedProject"
+      :project="selectedProject"
+      @close="selectedProject = null"
+    />
+
+    <CursorHint />
   </div>
 </template>
 
 <script setup>
-import AppHeader from '@/components/layout/AppHeader.vue'
-import AppFooter from '@/components/layout/AppFooter.vue'
+import { ref } from 'vue'
+import NavBar from './components/NavBar.vue'
+import HeroSection from './components/HeroSection.vue'
+import WorkSection from './components/WorkSection.vue'
+import AboutSection from './components/AboutSection.vue'
+import ContactSection from './components/ContactSection.vue'
+import ProjectModal from './components/ProjectModal.vue'
+import CursorHint from './components/CursorHint.vue'
+
+const selectedProject = ref(null)
+const year = new Date().getFullYear()
 </script>
 
-<style>
-.page-enter-active,
-.page-leave-active {
-  transition:
-    opacity 300ms ease,
-    transform 300ms ease;
+<style scoped>
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 28px 0 40px;
 }
-.page-enter-from {
-  opacity: 0;
-  transform: translateY(12px);
-}
-.page-leave-to {
-  opacity: 0;
-  transform: translateY(-12px);
-}
-@media (prefers-reduced-motion: reduce) {
-  .page-enter-active,
-  .page-leave-active {
-    transition: opacity 200ms ease;
-  }
-  .page-enter-from,
-  .page-leave-to {
-    transform: none;
-  }
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  letter-spacing: 0.04em;
 }
 </style>
