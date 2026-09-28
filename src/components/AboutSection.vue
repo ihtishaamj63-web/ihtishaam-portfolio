@@ -11,9 +11,10 @@
 
       <p class="intro">
         I came to software through conservation biology, which means I arrived already suspicious of
-        tidy explanations. Fieldwork teaches you the map is not the territory. Backend work teaches
-        you the same lesson about the schema. I like problems where being systematic matters more
-        than being loud, and I would rather understand your system than decorate it.
+        tidy explanations. Fieldwork teaches you that the map is not the territory. Backend work
+        teaches you the same lesson about the schema. I write clearly, I present well, and I am
+        comfortable being the one who asks the question everyone was quietly hoping somebody would
+        ask.
       </p>
 
       <div class="timeline">
@@ -29,17 +30,14 @@
         </article>
       </div>
 
-      <div class="skills">
-        <h3 class="skills-heading">Skills</h3>
-
-        <div v-for="group in skillGroups" :key="group.title" class="group">
-          <h4>{{ group.title }}</h4>
-          <p v-if="group.intro" class="group-intro">{{ group.intro }}</p>
-          <p class="group-items">{{ group.items.join(' · ') }}</p>
-        </div>
-
-        <p class="learning">
-          Currently learning: {{ currentlyLearning.join(' and ') }}. Ask me again in a few months.
+      <div class="offclock">
+        <h3 class="offclock-title">Off the clock</h3>
+        <p class="offclock-text">
+          Away from the keyboard I am a committed cinephile (Alien and Raimi's Spider-Man can share
+          a double bill), I read comics properly, Spider-Man, Batman and the Hulk, and One Piece
+          taught me more about long projects than any course could. Manchester United and the
+          Springboks have my weekends, soccer has my knees, and a good argument about evolution,
+          philosophy, or whether the villain had a point gets me every time.
         </p>
       </div>
     </div>
@@ -48,7 +46,6 @@
 
 <script setup>
 import { experience } from '../data/experience'
-import { skillGroups, currentlyLearning } from '../data/skills'
 </script>
 
 <style scoped>
@@ -62,13 +59,13 @@ import { skillGroups, currentlyLearning } from '../data/skills'
 
 .timeline {
   border-top: 1px solid var(--line);
-  margin-bottom: 88px;
+  margin-bottom: 72px;
 }
 
 .entry {
   display: grid;
-  grid-template-columns: 170px 1fr;
-  gap: 6px 36px;
+  grid-template-columns: 1fr;
+  gap: 6px;
   padding: 30px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -118,58 +115,35 @@ h3 {
   background: var(--green);
 }
 
-.skills-heading {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 28px;
-}
-
-.group {
-  padding: 22px 0;
+.offclock {
   border-top: 1px solid var(--line);
+  padding-top: 30px;
 }
 
-.group h4 {
-  font-family: var(--serif);
-  font-size: 18px;
-  font-weight: 500;
-  margin-bottom: 6px;
+.offclock-title {
+  font-family: var(--mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--green);
+  margin-bottom: 14px;
 }
 
-.group-intro {
+.offclock-text {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 16px;
+  font-size: 18px;
+  line-height: 1.7;
   color: var(--ink-soft);
-  margin-bottom: 8px;
-}
-
-.group-items {
-  font-family: var(--mono);
-  font-size: 13px;
-  line-height: 1.9;
-  color: var(--ink-soft);
-}
-
-.learning {
-  margin-top: 28px;
-  font-family: var(--mono);
-  font-size: 13px;
-  border: 1px solid var(--line);
-  padding: 14px 18px;
-  display: inline-block;
+  max-width: 66ch;
 }
 
 @media (max-width: 720px) {
-  .entry {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
   .intro {
     font-size: 18px;
+  }
+  .offclock-text {
+    font-size: 16.5px;
   }
 }
 </style>

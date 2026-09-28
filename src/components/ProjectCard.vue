@@ -54,9 +54,9 @@ const techPreview = computed(() => {
 <style scoped>
 .card {
   display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 4px 34px;
-  padding: 34px 14px;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 34px 0;
   border-top: 1px solid var(--line);
   cursor: pointer;
   transition: background 0.18s ease;
@@ -73,9 +73,9 @@ const techPreview = computed(() => {
 
 .meta {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding-top: 8px;
+  flex-direction: row;
+  gap: 14px;
+  padding-top: 0;
   font-family: var(--mono);
   font-size: 12.5px;
 }
@@ -127,7 +127,7 @@ h3 {
 }
 
 .has-thumb {
-  grid-template-columns: 110px 1fr 240px;
+  grid-template-columns: 1fr 240px;
 }
 
 .thumb {
@@ -151,13 +151,7 @@ h3 {
   .card,
   .has-thumb {
     grid-template-columns: 1fr;
-    padding: 28px 8px;
-  }
-
-  .meta {
-    flex-direction: row;
-    gap: 14px;
-    padding-top: 0;
+    padding: 28px 0;
   }
 
   .thumb {

@@ -1,33 +1,21 @@
 <template>
-  <section id="contact" class="section">
+  <section id="contact" class="section contact">
     <div class="wrap">
       <div class="section-head">
-        <span class="index">03</span>
+        <span class="index">04</span>
         <h2>Contact</h2>
       </div>
       <p class="section-note">No contact form. Just me.</p>
 
       <p class="pitch">
-        Looking for backend, full-stack, data, or conservation-tech work. If you have a system that
-        needs someone who cares about how it fails, I would like to hear about it.
+        Open to work across software, data, security, and the spaces where science and code meet. If
+        you are building something that needs someone who cares how it holds up, I would like to
+        hear about it.
       </p>
 
+      <a class="big-email" :href="links.email">{{ links.displayEmail }}</a>
+
       <ul class="contact-list">
-        <li>
-          <a :href="links.email">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.6"
-              aria-hidden="true"
-            >
-              <rect x="3" y="5" width="18" height="14"></rect>
-              <path d="M3 7l9 6 9-6"></path>
-            </svg>
-            <span>{{ links.displayEmail }}</span>
-          </a>
-        </li>
         <li>
           <a :href="links.github" target="_blank" rel="noopener">
             <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
@@ -49,8 +37,6 @@
           </a>
         </li>
       </ul>
-
-      <p class="refs">References available on request.</p>
     </div>
   </section>
 </template>
@@ -60,12 +46,37 @@ import { links } from '../data/links'
 </script>
 
 <style scoped>
+.contact {
+  padding-bottom: 120px;
+}
+
 .pitch {
   font-family: var(--serif);
-  font-size: 24px;
-  line-height: 1.45;
-  max-width: 40ch;
+  font-size: clamp(26px, 4vw, 40px);
+  line-height: 1.3;
+  max-width: 24ch;
   margin-bottom: 48px;
+}
+
+.big-email {
+  display: inline-block;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(24px, 4.5vw, 48px);
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  border-bottom: 3px solid var(--ink);
+  padding-bottom: 6px;
+  margin-bottom: 44px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
+  word-break: break-all;
+}
+
+.big-email:hover {
+  color: var(--green);
+  border-color: var(--green);
 }
 
 .contact-list {
@@ -99,12 +110,5 @@ import { links } from '../data/links'
   width: 17px;
   height: 17px;
   flex: none;
-}
-
-.refs {
-  margin-top: 40px;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--ink-soft);
 }
 </style>

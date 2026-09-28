@@ -2,12 +2,13 @@
   <section id="top" class="hero">
     <div class="wrap">
       <p class="kicker">Ihtishaam Johnson · software developer · Cape Town, ZA</p>
-      <h1>I build backend systems that plan for failure.</h1>
+      <h1>I build software the way evolution builds species.</h1>
       <p class="lede">
-        Full-stack developer with a BSc in biodiversity and conservation biology. I have studied
-        ecosystems and databases, and both punish careless design eventually. I like knowing how
-        things actually work: the data model, the failure modes, the edge cases nobody wants to
-        test.
+        Full-stack developer with a BSc in biodiversity and conservation biology. Evolution is the
+        longest-running engineering project on record, and its method is simple: iterate, test
+        against reality, keep what survives. That is roughly how I write software, which is why I
+        care about data models and the edge cases nobody wants to test. Backend is home base, I ship
+        the whole stack, and I am increasingly drawn to data and security work.
       </p>
       <ul class="hero-links">
         <li><a :href="links.github" target="_blank" rel="noopener">GitHub</a></li>
@@ -18,7 +19,7 @@
       </ul>
       <p class="status">
         <span class="status-sq" aria-hidden="true"></span>
-        At Life Choices Academy on contract. Open to backend, full-stack, data and conservation-tech
+        At Life Choices Academy on contract. Open to software, data, security, and conservation-tech
         roles.
       </p>
     </div>

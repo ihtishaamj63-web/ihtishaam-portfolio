@@ -7,13 +7,13 @@
       <HeroSection />
       <WorkSection @open-project="selectedProject = $event" />
       <AboutSection />
+      <SkillsSection />
       <ContactSection />
     </main>
 
     <footer class="footer">
       <div class="wrap footer-inner">
         <span>© {{ year }} Ihtishaam Johnson · Cape Town, South Africa</span>
-        <span>built with vue. deployed on render. styled with stubbornness.</span>
       </div>
     </footer>
 
@@ -33,6 +33,7 @@ import NavBar from './components/NavBar.vue'
 import HeroSection from './components/HeroSection.vue'
 import WorkSection from './components/WorkSection.vue'
 import AboutSection from './components/AboutSection.vue'
+import SkillsSection from './components/SkillsSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import ProjectModal from './components/ProjectModal.vue'
 import CursorHint from './components/CursorHint.vue'
@@ -48,10 +49,6 @@ const year = new Date().getFullYear()
 }
 
 .footer-inner {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  flex-wrap: wrap;
   font-family: var(--mono);
   font-size: 12px;
   color: var(--ink-soft);

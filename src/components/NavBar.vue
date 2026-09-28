@@ -5,6 +5,7 @@
       <nav class="nav-links" aria-label="Sections">
         <a href="#work">Work</a>
         <a href="#about">About</a>
+        <a href="#skills">Skills</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -48,7 +49,7 @@
 
 .nav-links {
   display: flex;
-  gap: 34px;
+  gap: 30px;
 }
 
 .nav-links a {
@@ -70,7 +71,7 @@
     padding-right: 20px;
   }
   .nav-links {
-    gap: 18px;
+    gap: 16px;
   }
   .nav-links a {
     font-size: 12px;
