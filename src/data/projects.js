@@ -45,8 +45,8 @@ export const projects = [
 
     note: 'Runs on free-tier hosting. The backend sleeps when idle, so give the first request a moment.',
 
-    desktopShot: null,
-    mobileShot: null,
+    desktopShot: '/images/ModernTech%20Dashboard%20Desktop.png',
+    mobileShot: '/images/ModernTech%20Mobile%20Desktop.png',
 
     github: 'https://github.com/ihtishaamj63-web/hr-system', // TODO: confirm this repo URL
     live: 'https://hr-project-2-moderntech-solutions-1.onrender.com',
@@ -94,8 +94,8 @@ export const projects = [
 
     note: 'Runs on free-tier hosting. The backend sleeps when idle, so give the first request a moment.',
 
-    desktopShot: null,
-    mobileShot: null,
+    desktopShot: '/images/CleanSpaces%20Dashboard%20Desktop.png',
+    mobileShot: '/images/CleanSpaces%20Dashboard%20Mobile.png',
 
     github: 'https://github.com/ihtishaamj63-web/CleanSpaces',
     live: 'https://cleanspaces.onrender.com',

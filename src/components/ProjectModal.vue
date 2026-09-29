@@ -260,7 +260,7 @@ figure {
 .shot img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .shot span {
@@ -272,12 +272,12 @@ figure {
 }
 
 .shot-desktop {
-  width: 300px;
-  height: 188px;
+  width: min(420px, 100%);
+  aspect-ratio: 2.5;
 }
 .shot-mobile {
-  width: 120px;
-  height: 220px;
+  width: 140px;
+  aspect-ratio: 0.5;
 }
 
 figcaption {
