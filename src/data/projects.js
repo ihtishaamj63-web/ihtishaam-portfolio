@@ -46,7 +46,6 @@ export const projects = [
     note: 'Runs on free-tier hosting. The backend sleeps when idle, so give the first request a moment.',
 
     desktopShot: null,
-    tabletShot: null,
     mobileShot: null,
 
     github: 'https://github.com/ihtishaamj63-web/hr-system', // TODO: confirm this repo URL
@@ -96,7 +95,6 @@ export const projects = [
     note: 'Runs on free-tier hosting. The backend sleeps when idle, so give the first request a moment.',
 
     desktopShot: null,
-    tabletShot: null,
     mobileShot: null,
 
     github: 'https://github.com/ihtishaamj63-web/CleanSpaces',

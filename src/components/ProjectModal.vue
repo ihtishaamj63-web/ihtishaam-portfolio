@@ -35,7 +35,7 @@
       </section>
 
       <section class="block">
-        <h3>Responsive builds</h3>
+        <h3>Screenshots</h3>
         <div class="shots">
           <figure v-for="device in devices" :key="device.label">
             <div class="shot" :class="'shot-' + device.label">
@@ -74,7 +74,6 @@ const emit = defineEmits(['close'])
 
 const devices = [
   { key: 'desktopShot', label: 'desktop' },
-  { key: 'tabletShot', label: 'tablet' },
   { key: 'mobileShot', label: 'mobile' },
 ]
 
@@ -275,10 +274,6 @@ figure {
 .shot-desktop {
   width: 300px;
   height: 188px;
-}
-.shot-tablet {
-  width: 180px;
-  height: 240px;
 }
 .shot-mobile {
   width: 120px;
