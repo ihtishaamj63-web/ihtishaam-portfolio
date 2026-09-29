@@ -2,7 +2,6 @@
   <section id="about" class="section">
     <div class="wrap">
       <div class="section-head">
-        <span class="index">02</span>
         <h2>About</h2>
       </div>
       <p class="intro">
@@ -62,9 +61,8 @@ import { experience } from '../data/experience'
 }
 
 .period {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--ink-soft);
+  font-size: 14px;
+  color: var(--ink);
   padding-top: 5px;
 }
 
@@ -76,10 +74,8 @@ h3 {
 }
 
 .org {
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--green);
-  letter-spacing: 0.03em;
+  font-size: 15px;
+  color: var(--ink);
   margin: 4px 0 12px;
 }
 
@@ -91,8 +87,8 @@ h3 {
   position: relative;
   padding-left: 20px;
   margin-bottom: 8px;
-  color: var(--ink-soft);
-  font-size: 15px;
+  color: var(--ink);
+  font-size: 16px;
   max-width: 68ch;
 }
 

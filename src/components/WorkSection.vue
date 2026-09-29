@@ -2,7 +2,6 @@
   <section id="work" class="section">
     <div class="wrap">
       <div class="section-head">
-        <span class="index">01</span>
         <h2>Selected work</h2>
       </div>
       <div>

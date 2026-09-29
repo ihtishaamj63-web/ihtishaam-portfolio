@@ -1,7 +1,7 @@
 <template>
   <section id="top" class="hero">
     <div class="wrap">
-      <p class="kicker">Ihtishaam Johnson · software developer · Cape Town, ZA</p>
+      <p class="kicker">Ihtishaam Johnson · software developer · Scientist · Cape Town, ZA</p>
       <h1>I build software the way evolution builds species.</h1>
       <p class="lede">
         Full-stack developer with a BSc in biodiversity and conservation biology. Evolution is the
@@ -11,15 +11,44 @@
         the whole stack, and I am increasingly drawn to data and security work.
       </p>
       <ul class="hero-links">
-        <li><a :href="links.github" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a :href="links.linkedin" target="_blank" rel="noopener">LinkedIn</a></li>
         <li>
-          <a :href="links.email">{{ links.displayEmail }}</a>
+          <a
+            :href="links.github"
+            target="_blank"
+            rel="noopener"
+            @mouseenter="showHint('Visit GitHub')"
+            @mouseleave="hideHint()"
+            @focus="showHint('Visit GitHub')"
+            @blur="hideHint()"
+            >GitHub</a
+          >
+        </li>
+        <li>
+          <a
+            :href="links.linkedin"
+            target="_blank"
+            rel="noopener"
+            @mouseenter="showHint('Visit LinkedIn')"
+            @mouseleave="hideHint()"
+            @focus="showHint('Visit LinkedIn')"
+            @blur="hideHint()"
+            >LinkedIn</a
+          >
+        </li>
+        <li>
+          <a
+            :href="links.email"
+            @mouseenter="showHint('Open email draft')"
+            @mouseleave="hideHint()"
+            @focus="showHint('Open email draft')"
+            @blur="hideHint()"
+            >{{ links.displayEmail }}</a
+          >
         </li>
       </ul>
       <p class="status">
         <span class="status-sq" aria-hidden="true"></span>
-        At Life Choices Academy on contract. Open to software, data, security, and conservation-tech
+        Employed at Life Choices Academy. Open to software, data, security, and conservation-tech
         roles.
       </p>
     </div>
@@ -28,6 +57,9 @@
 
 <script setup>
 import { links } from '../data/links'
+import { useCursorHint } from '../composables/useCursorHint'
+
+const { showHint, hideHint } = useCursorHint()
 </script>
 
 <style scoped>

@@ -7,6 +7,7 @@ export const skillGroups = [
     items: [
       'Node.js',
       'Express',
+      'PHP',
       'REST API design',
       'MySQL & PostgreSQL (schema design, normalisation, query tuning)',
       'JWT authentication',

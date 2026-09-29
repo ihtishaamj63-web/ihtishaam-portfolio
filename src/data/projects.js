@@ -10,7 +10,7 @@ export const projects = [
     id: 'hr-platform',
     name: 'HR Management Platform',
     year: '2026',
-    role: 'Tech lead · backend',
+    role: 'Tech lead · full-stack',
     summary:
       'A full HR platform built with a team of four: employee records, automated payroll with tax, UIF and medical aid deductions, attendance analytics, leave workflows and performance reviews, all behind role-based access control.',
     thumbnail: null,
@@ -59,7 +59,7 @@ export const projects = [
     year: '2026',
     role: 'Project manager & full-stack',
     summary:
-      'A community cleanup funding platform: tiered zone subscriptions fund professional weekly cleanup crews. I ran the project and built the payments, pricing and dashboard end to end.',
+      'CleanSpaces helps neighborhoods fund weekly cleanup crews through shared zone subscriptions. I managed the project and built its pricing, payments, and live dashboard.',
     thumbnail: null,
 
     overview:

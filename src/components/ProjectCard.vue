@@ -104,26 +104,21 @@ h3 {
 }
 
 .role {
-  font-family: var(--mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--ink-soft);
-  margin: 8px 0 14px;
+  font-size: 14px;
+  color: var(--ink);
+  margin: 8px 0 10px;
 }
 
 .summary {
-  font-size: 15.5px;
-  color: var(--ink-soft);
+  font-size: 17px;
+  color: var(--ink);
   max-width: 62ch;
   margin-bottom: 14px;
 }
 
 .tech {
-  font-family: var(--mono);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--ink-soft);
-  letter-spacing: 0.02em;
 }
 
 .has-thumb {

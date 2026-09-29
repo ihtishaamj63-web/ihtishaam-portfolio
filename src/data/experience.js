@@ -4,10 +4,10 @@
 export const experience = [
   {
     period: 'Apr 2026 - Present',
-    title: 'Full-Stack Developer (Contract)',
+    title: 'Full-Stack Developer',
     org: 'Life Choices Academy',
     points: [
-      'Employed on contract as a full-stack developer, building applications to production standard and deploying them live.',
+      'Build applications to production standard and deploy them live.',
       'Tech lead for a team of 4 on an HR platform: automated payroll with tax, UIF and medical aid deductions, attendance analytics, leave workflows, role-based access control.',
       'Managed the CleanSpaces project and built its payment system end to end: pricing model, PayFast checkout flow, real-time zone activation dashboards.',
       'Vue 3, Node.js, Express, MySQL, JWT, deployment on Render and Railway.',

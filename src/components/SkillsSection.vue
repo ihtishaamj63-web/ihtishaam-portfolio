@@ -2,7 +2,6 @@
   <section id="skills" class="section">
     <div class="wrap">
       <div class="section-head">
-        <span class="index">03</span>
         <h2>Skills</h2>
       </div>
       <div class="groups">
@@ -30,19 +29,16 @@ import { skillGroups } from '../data/skills'
 }
 
 .group h3 {
-  font-family: var(--mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--green);
-  margin-bottom: 10px;
+  font-size: 18px;
+  color: var(--ink);
+  margin-bottom: 8px;
 }
 
 .items {
-  font-size: 15.5px;
-  color: var(--ink-soft);
+  font-size: 16px;
+  color: var(--ink);
   max-width: 72ch;
-  line-height: 1.9;
+  line-height: 1.75;
 }
 
 @media (max-width: 720px) {
