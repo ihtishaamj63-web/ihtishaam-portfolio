@@ -5,8 +5,6 @@
         <span class="index">04</span>
         <h2>Contact</h2>
       </div>
-      <p class="section-note">No contact form. Just me.</p>
-
       <p class="pitch">
         Open to work across software, data, security, and the spaces where science and code meet. If
         you are building something that needs someone who cares how it holds up, I would like to

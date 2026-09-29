@@ -5,11 +5,6 @@
         <span class="index">01</span>
         <h2>Selected work</h2>
       </div>
-      <p class="section-note">
-        Summaries first. Open a project for the full breakdown, the stack, and the responsive
-        builds.
-      </p>
-
       <div>
         <ProjectCard
           v-for="(project, i) in projects"

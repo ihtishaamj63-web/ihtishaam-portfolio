@@ -5,8 +5,6 @@
         <span class="index">03</span>
         <h2>Skills</h2>
       </div>
-      <p class="section-note">Grouped by how I use them. The work above is the evidence.</p>
-
       <div class="groups">
         <div v-for="group in skillGroups" :key="group.title" class="group">
           <h3>{{ group.title }}</h3>

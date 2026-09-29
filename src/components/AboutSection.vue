@@ -5,16 +5,11 @@
         <span class="index">02</span>
         <h2>About</h2>
       </div>
-      <p class="section-note">
-        One timeline. Education counts as experience, so it lives here too.
-      </p>
-
       <p class="intro">
-        I came to software through conservation biology, which means I arrived already suspicious of
-        tidy explanations. Fieldwork teaches you that the map is not the territory. Backend work
-        teaches you the same lesson about the schema. I write clearly, I present well, and I am
-        comfortable being the one who asks the question everyone was quietly hoping somebody would
-        ask.
+        I build software with care for both the experience people see and the systems behind it. I
+        value clear communication, thoughtful problem-solving, and work that holds up beyond the
+        happy path. I write clearly, present confidently, and ask the questions that help a team
+        make better decisions.
       </p>
 
       <div class="timeline">
@@ -33,11 +28,9 @@
       <div class="offclock">
         <h3 class="offclock-title">Off the clock</h3>
         <p class="offclock-text">
-          Away from the keyboard I am a committed cinephile (Alien and Raimi's Spider-Man can share
-          a double bill), I read comics properly, Spider-Man, Batman and the Hulk, and One Piece
-          taught me more about long projects than any course could. Manchester United and the
-          Springboks have my weekends, soccer has my knees, and a good argument about evolution,
-          philosophy, or whether the villain had a point gets me every time.
+          Away from the keyboard I am a committed cinephile, avid reader of books and comics, and
+          One Piece taught me more about long projects than any course could. Manchester United and
+          the Springboks have my weekends, and I'm always down for a game of football.
         </p>
       </div>
     </div>
@@ -50,9 +43,7 @@ import { experience } from '../data/experience'
 
 <style scoped>
 .intro {
-  font-family: var(--serif);
-  font-size: 21px;
-  line-height: 1.55;
+  font-size: 18px;
   max-width: 62ch;
   margin-bottom: 64px;
 }
@@ -121,29 +112,10 @@ h3 {
 }
 
 .offclock-title {
-  font-family: var(--mono);
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--green);
   margin-bottom: 14px;
 }
 
 .offclock-text {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 18px;
-  line-height: 1.7;
-  color: var(--ink-soft);
   max-width: 66ch;
-}
-
-@media (max-width: 720px) {
-  .intro {
-    font-size: 18px;
-  }
-  .offclock-text {
-    font-size: 16.5px;
-  }
 }
 </style>
