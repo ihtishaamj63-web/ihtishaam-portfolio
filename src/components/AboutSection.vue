@@ -5,10 +5,11 @@
         <h2>About</h2>
       </div>
       <p class="intro">
-        I build software with care for both the experience people see and the systems behind it. I
-        value clear communication, thoughtful problem-solving, and work that holds up beyond the
-        happy path. I write clearly, present confidently, and ask the questions that help a team
-        make better decisions.
+        I'm a full-stack developer with a BSc in Biodiversity and Conservation Biology. I work
+        across Vue, Node.js, and SQL, and I'm most at home building the backend: APIs, data models,
+        authentication, and workflows. My degree taught me to work carefully with messy data, test
+        what the evidence supports, and follow how changes affect a wider system. I bring that same
+        care to software, along with clear communication and experience working in a team.
       </p>
 
       <div class="timeline">
@@ -28,8 +29,9 @@
         <h3 class="offclock-title">Off the clock</h3>
         <p class="offclock-text">
           Away from the keyboard I am a committed cinephile, avid reader of books and comics, and
-          One Piece taught me more about long projects than any course could. Manchester United and
-          the Springboks have my weekends, and I'm always down for a game of football.
+          One Piece taught me more about long projects than any course could. Supporting Manchester
+          United and the Springboks is how I spend weekends, and I'm always down for a game of
+          football.
         </p>
       </div>
     </div>

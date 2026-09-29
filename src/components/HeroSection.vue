@@ -6,9 +6,7 @@
       <p class="lede">
         Full-stack developer with a BSc in biodiversity and conservation biology. Evolution is the
         longest-running engineering project on record, and its method is simple: iterate, test
-        against reality, keep what survives. That is roughly how I write software, which is why I
-        care about data models and the edge cases nobody wants to test. Backend is home base, I ship
-        the whole stack, and I am increasingly drawn to data and security work.
+        against reality, keep what survives.
       </p>
       <ul class="hero-links">
         <li>

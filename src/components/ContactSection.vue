@@ -5,9 +5,7 @@
         <h2>Contact</h2>
       </div>
       <p class="pitch">
-        Open to work across software, data, security, and the spaces where science and code meet. If
-        you are building something that needs someone who cares how it holds up, I would like to
-        hear about it.
+        Open to work across software, data, security, and the spaces where science and code meet.
       </p>
 
       <a
@@ -55,6 +53,30 @@
               ></path>
             </svg>
             <span>LinkedIn</span>
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://docs.google.com/document/d/1lKFOIpVViVoFyMr6fkwS4RDZhUvjgT_eV_Q5Y4AuApM/edit?usp=sharing"
+            target="_blank"
+            rel="noopener"
+            aria-label="View CV"
+            @mouseenter="showHint('Open my CV')"
+            @mouseleave="hideHint()"
+            @focus="showHint('Open my CV')"
+            @blur="hideHint()"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <path d="M14 2v6h6M8 13h8M8 17h8" />
+            </svg>
+            <span>CV</span>
           </a>
         </li>
       </ul>
