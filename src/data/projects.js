@@ -142,6 +142,6 @@ export const projects = [
     mobileShot: '/images/Market%20Pulse%20Mobile%20Retail%20Goods.png',
 
     github: 'https://github.com/adamjattiem12-gif/-Flask-Web-Scraping-Dashboard',
-    live: null,
+    live: 'https://market-pulse-11gq.onrender.com',
   },
 ]
