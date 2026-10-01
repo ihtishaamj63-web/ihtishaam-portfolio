@@ -8,42 +8,6 @@
         longest-running engineering project on record, and its method is simple: iterate, test
         against reality, keep what survives.
       </p>
-      <ul class="hero-links">
-        <li>
-          <a
-            :href="links.github"
-            target="_blank"
-            rel="noopener"
-            @mouseenter="showHint('Visit GitHub')"
-            @mouseleave="hideHint()"
-            @focus="showHint('Visit GitHub')"
-            @blur="hideHint()"
-            >GitHub</a
-          >
-        </li>
-        <li>
-          <a
-            :href="links.linkedin"
-            target="_blank"
-            rel="noopener"
-            @mouseenter="showHint('Visit LinkedIn')"
-            @mouseleave="hideHint()"
-            @focus="showHint('Visit LinkedIn')"
-            @blur="hideHint()"
-            >LinkedIn</a
-          >
-        </li>
-        <li>
-          <a
-            :href="links.email"
-            @mouseenter="showHint('Open email draft')"
-            @mouseleave="hideHint()"
-            @focus="showHint('Open email draft')"
-            @blur="hideHint()"
-            >{{ links.displayEmail }}</a
-          >
-        </li>
-      </ul>
       <p class="status">
         <span class="status-sq" aria-hidden="true"></span>
         Employed at Life Choices Academy. Open to software, data, security, and conservation-tech
@@ -53,12 +17,7 @@
   </section>
 </template>
 
-<script setup>
-import { links } from '../data/links'
-import { useCursorHint } from '../composables/useCursorHint'
-
-const { showHint, hideHint } = useCursorHint()
-</script>
+<script setup></script>
 
 <style scoped>
 .hero {
@@ -89,30 +48,6 @@ h1 {
   color: var(--ink-soft);
   max-width: 58ch;
   margin-bottom: 40px;
-}
-
-.hero-links {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 28px;
-}
-
-.hero-links a {
-  font-family: var(--mono);
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  text-decoration: none;
-  border-bottom: 1px solid var(--line);
-  padding-bottom: 3px;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
-}
-
-.hero-links a:hover {
-  color: var(--green);
-  border-color: var(--green);
 }
 
 .status {
