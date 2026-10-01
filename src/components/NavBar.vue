@@ -112,11 +112,18 @@ const { showHint, hideHint } = useCursorHint()
     padding-left: 20px;
     padding-right: 20px;
   }
+  .nav-inner {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 4px;
+  }
   .nav-links {
-    gap: 16px;
+    justify-content: space-between;
+    gap: 12px;
   }
   .nav-links a {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 </style>

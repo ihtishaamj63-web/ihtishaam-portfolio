@@ -120,6 +120,12 @@ button {
   }
 }
 
+@media (max-width: 520px) {
+  :root {
+    --nav-h: 88px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
