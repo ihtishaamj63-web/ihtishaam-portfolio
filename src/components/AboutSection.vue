@@ -18,6 +18,18 @@
           <div class="body">
             <h3>{{ entry.title }}</h3>
             <p class="org">{{ entry.org }}</p>
+            <button
+              v-if="entry.certificate"
+              class="certificate-link"
+              type="button"
+              @click="emit('view-certificate')"
+              @mouseenter="showHint('View stamped degree certificate')"
+              @mouseleave="hideHint()"
+              @focus="showHint('View stamped degree certificate')"
+              @blur="hideHint()"
+            >
+              View stamped certificate <span aria-hidden="true">↗</span>
+            </button>
             <ul class="points">
               <li v-for="point in entry.points" :key="point">{{ point }}</li>
             </ul>
@@ -40,6 +52,10 @@
 
 <script setup>
 import { experience } from '../data/experience'
+import { useCursorHint } from '../composables/useCursorHint'
+
+const emit = defineEmits(['view-certificate'])
+const { showHint, hideHint } = useCursorHint()
 </script>
 
 <style scoped>
@@ -79,6 +95,21 @@ h3 {
   font-size: 15px;
   color: var(--ink);
   margin: 4px 0 12px;
+}
+
+.certificate-link {
+  display: inline-block;
+  margin: 0 0 12px;
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-decoration: underline;
+  text-decoration-color: var(--green);
+  text-underline-offset: 4px;
+}
+
+.certificate-link:hover {
+  color: var(--ink);
 }
 
 .points {

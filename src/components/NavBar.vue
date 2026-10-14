@@ -43,6 +43,19 @@
           @blur="hideHint()"
           >Contact</a
         >
+        <button
+          class="theme-toggle"
+          type="button"
+          :aria-pressed="props.isDarkMode"
+          :aria-label="props.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
+          @click="emit('toggle-theme')"
+          @mouseenter="showHint(props.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode')"
+          @mouseleave="hideHint()"
+          @focus="showHint(props.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode')"
+          @blur="hideHint()"
+        >
+          {{ props.isDarkMode ? 'Light' : 'Dark' }}
+        </button>
       </nav>
     </div>
   </header>
@@ -52,6 +65,10 @@
 import { useCursorHint } from '../composables/useCursorHint'
 
 const { showHint, hideHint } = useCursorHint()
+const props = defineProps({
+  isDarkMode: { type: Boolean, default: false },
+})
+const emit = defineEmits(['toggle-theme'])
 </script>
 
 <style scoped>
@@ -59,7 +76,7 @@ const { showHint, hideHint } = useCursorHint()
   position: fixed;
   inset: 0 0 auto 0;
   height: var(--nav-h);
-  background: rgba(245, 243, 236, 0.9);
+  background: var(--nav-bg);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
   z-index: 1000;
@@ -107,6 +124,25 @@ const { showHint, hideHint } = useCursorHint()
   color: var(--green);
 }
 
+.theme-toggle {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--green);
+  letter-spacing: 0.04em;
+  border: 1px solid var(--line);
+  padding: 5px 9px;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.theme-toggle:hover {
+  color: var(--ink);
+  background: var(--paper-deep);
+  border-color: var(--green);
+}
+
 @media (max-width: 520px) {
   .nav .wrap {
     padding-left: 20px;
@@ -120,10 +156,31 @@ const { showHint, hideHint } = useCursorHint()
   }
   .nav-links {
     justify-content: space-between;
-    gap: 12px;
+    gap: 8px;
+    align-items: center;
   }
   .nav-links a {
     font-size: 11px;
+  }
+
+  .theme-toggle {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+@media (max-width: 380px) {
+  .nav .wrap {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .nav-links {
+    gap: 5px;
+  }
+
+  .nav-links a {
+    font-size: 10px;
   }
 }
 </style>

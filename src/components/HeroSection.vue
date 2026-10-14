@@ -50,8 +50,8 @@
 }
 
 .hero-portrait img {
-  width: min(100%, 210px);
-  max-height: 290px;
+  width: min(100%, 390px, 54vh);
+  max-height: 520px;
   object-fit: contain;
   object-position: center top;
 }
@@ -104,6 +104,8 @@ h1 {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-
+  .hero-portrait {
+    display: none;
+  }
 }
 </style>

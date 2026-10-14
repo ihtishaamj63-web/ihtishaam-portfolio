@@ -20,6 +20,7 @@ export const experience = [
     period: '2023 - 2025',
     title: 'BSc Biodiversity & Conservation Biology',
     org: 'University of the Western Cape',
+    certificate: '/images/UWC%20April%202026%20Certificate%20stamped_2089.pdf',
     points: [
       '72.5% final-year average, with distinctions in Biodiversity and Conservation, Environmental and Water Sciences, and English for Educational Development.',
       'Studying ecological data taught me to ask how it was gathered, what context might be missing, and how much a result can really tell us. I learned to look at how pressures affect a system over time: a change in one part can alter the conditions elsewhere, with consequences that feed back into future outcomes.',

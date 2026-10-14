@@ -1,12 +1,12 @@
 <template>
-  <div class="site">
+  <div class="site" :class="{ 'dark-mode': isDarkMode }">
     <a class="skip-link" href="#main">skip to content</a>
-    <NavBar />
+    <NavBar :is-dark-mode="isDarkMode" @toggle-theme="toggleTheme" />
 
     <main id="main">
       <HeroSection />
       <WorkSection @open-project="selectedProject = $event" />
-      <AboutSection />
+      <AboutSection @view-certificate="showCertificate = true" />
       <SkillsSection />
       <ContactSection />
     </main>
@@ -23,6 +23,8 @@
       @close="selectedProject = null"
     />
 
+    <CertificateModal v-if="showCertificate" @close="showCertificate = false" />
+
     <CursorHint />
   </div>
 </template>
@@ -36,10 +38,18 @@ import AboutSection from './components/AboutSection.vue'
 import SkillsSection from './components/SkillsSection.vue'
 import ContactSection from './components/ContactSection.vue'
 import ProjectModal from './components/ProjectModal.vue'
+import CertificateModal from './components/CertificateModal.vue'
 import CursorHint from './components/CursorHint.vue'
 
 const selectedProject = ref(null)
+const showCertificate = ref(false)
+const isDarkMode = ref(window.localStorage.getItem('portfolio-theme') === 'dark')
 const year = new Date().getFullYear()
+
+function toggleTheme() {
+  isDarkMode.value = !isDarkMode.value
+  window.localStorage.setItem('portfolio-theme', isDarkMode.value ? 'dark' : 'light')
+}
 </script>
 
 <style scoped>

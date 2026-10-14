@@ -1,5 +1,4 @@
-/* Global tokens. Paper background, ink text, one green accent.
-   No border-radius anywhere: everything stays square on purpose. */
+/* Global tokens. No border-radius anywhere: everything stays square on purpose. */
 
 :root {
   --paper: #f5f3ec;
@@ -8,6 +7,7 @@
   --ink-soft: #3b3932;
   --line: #d9d5c7;
   --green: #24472e;
+  --nav-bg: rgba(245, 243, 236, 0.9);
 
   --serif: 'Newsreader', Georgia, 'Times New Roman', serif;
   --sans: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
@@ -15,6 +15,26 @@
 
   --max: 1200px;
   --nav-h: 64px;
+}
+
+.site.dark-mode {
+  color-scheme: dark;
+  --paper: #171b18;
+  --paper-deep: #222923;
+  --ink: #f1f0e8;
+  --ink-soft: #c1c9c0;
+  --line: #414b42;
+  --green: #a6c98d;
+  --nav-bg: rgba(23, 27, 24, 0.92);
+}
+
+.site {
+  min-height: 100vh;
+  background: var(--paper);
+  color: var(--ink);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 * {
