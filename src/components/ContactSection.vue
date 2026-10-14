@@ -93,7 +93,14 @@ const { showHint, hideHint } = useCursorHint()
 
 <style scoped>
 .contact {
+  background: var(--green);
+  border-top-color: var(--green);
+  color: var(--paper);
   padding-bottom: 120px;
+}
+
+.contact .section-head h2 {
+  text-decoration-color: var(--paper);
 }
 
 .pitch {
@@ -111,7 +118,7 @@ const { showHint, hideHint } = useCursorHint()
   font-size: clamp(24px, 4.5vw, 48px);
   letter-spacing: -0.01em;
   text-decoration: none;
-  border-bottom: 3px solid var(--ink);
+  border-bottom: 3px solid var(--paper);
   padding-bottom: 6px;
   margin-bottom: 44px;
   transition:
@@ -121,8 +128,12 @@ const { showHint, hideHint } = useCursorHint()
 }
 
 .big-email:hover {
-  color: var(--green);
-  border-color: var(--green);
+  color: var(--paper-deep);
+  border-color: var(--paper-deep);
+}
+
+.big-email:focus-visible {
+  outline-color: var(--paper);
 }
 
 .contact-list {
@@ -137,7 +148,7 @@ const { showHint, hideHint } = useCursorHint()
   align-items: center;
   gap: 10px;
   padding: 13px 20px;
-  border: 1px solid var(--ink);
+  border: 1px solid var(--paper);
   text-decoration: none;
   font-family: var(--mono);
   font-size: 13px;
@@ -148,8 +159,12 @@ const { showHint, hideHint } = useCursorHint()
 }
 
 .contact-list a:hover {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--green);
+}
+
+.contact-list a:focus-visible {
+  outline-color: var(--paper);
 }
 
 .contact-list svg {

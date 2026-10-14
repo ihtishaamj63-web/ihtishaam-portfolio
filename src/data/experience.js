@@ -2,7 +2,13 @@
 
 export const experience = [
   {
-    period: 'Apr 2026 - Present',
+    period: 'Present',
+    title: 'Software Development Intern',
+    org: 'LC Studio',
+    points: ['Started after graduating from Life Choices Academy.'],
+  },
+  {
+    period: 'Apr 2026',
     title: 'Full-Stack Developer',
     org: 'Life Choices Academy',
     points: [

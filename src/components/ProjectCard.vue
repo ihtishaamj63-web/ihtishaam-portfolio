@@ -1,32 +1,88 @@
 <template>
   <article
-    class="card"
-    :class="{ 'has-thumb': !!project.thumbnail }"
-    role="button"
-    tabindex="0"
-    :aria-label="'Open ' + project.name + ' details'"
-    @click="$emit('open')"
-    @keydown.enter.prevent="$emit('open')"
-    @keydown.space.prevent="$emit('open')"
-    @mouseenter="showHint('view project')"
+    class="project-card"
+    @mouseenter="showHint('Explore ' + project.name)"
     @mouseleave="hideHint()"
-    @focus="showHint('view project')"
-    @blur="hideHint()"
   >
-    <div class="meta">
-      <span class="num">{{ String(index + 1).padStart(2, '0') }}</span>
-      <span class="year">{{ project.year }}</span>
-    </div>
+    <div class="project-info">
+      <div class="project-heading">
+        <span class="num">{{ String(index + 1).padStart(2, '0') }}</span>
+        <div>
+          <h3>{{ project.name }}</h3>
+          <p class="role">{{ project.year }} <span aria-hidden="true">·</span> {{ project.role }}</p>
+        </div>
+      </div>
 
-    <div class="body">
-      <h3>{{ project.name }}</h3>
-      <p class="role">{{ project.role }}</p>
       <p class="summary">{{ project.summary }}</p>
       <p class="tech">{{ techPreview }}</p>
+
+      <div class="actions">
+        <a
+          v-if="project.github"
+          :href="project.github"
+          target="_blank"
+          rel="noopener"
+          @mouseenter="showHint('Open source code')"
+          @mouseleave="showHint('Explore ' + project.name)"
+          @focus="showHint('Open source code')"
+          @blur="hideHint()"
+        >
+          Source <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          v-if="project.live"
+          :href="project.live"
+          target="_blank"
+          rel="noopener"
+          @mouseenter="showHint('Open live demo')"
+          @mouseleave="showHint('Explore ' + project.name)"
+          @focus="showHint('Open live demo')"
+          @blur="hideHint()"
+        >
+          Live demo <span aria-hidden="true">↗</span>
+        </a>
+        <button
+          type="button"
+          @click="emit('open')"
+          @mouseenter="showHint('View project details')"
+          @mouseleave="showHint('Explore ' + project.name)"
+          @focus="showHint('View project details')"
+          @blur="hideHint()"
+        >
+          Project details <span aria-hidden="true">→</span>
+        </button>
+      </div>
     </div>
 
-    <div v-if="project.thumbnail" class="thumb">
-      <img :src="project.thumbnail" :alt="project.name" />
+    <div v-if="project.desktopShot || project.mobileShot" class="gallery">
+      <button
+        v-if="project.desktopShot"
+        class="preview desktop-preview"
+        type="button"
+        :aria-label="'View ' + project.name + ' desktop screenshot and details'"
+        @click="emit('open')"
+        @mouseenter="showHint('View project details')"
+        @mouseleave="showHint('Explore ' + project.name)"
+        @focus="showHint('View project details')"
+        @blur="hideHint()"
+      >
+        <span class="preview-bar"><span class="window-dots" aria-hidden="true">•••</span> desktop</span>
+        <img :src="project.desktopShot" :alt="project.name + ' desktop interface'" />
+      </button>
+      <button
+        v-if="project.mobileShot"
+        class="preview mobile-preview"
+        type="button"
+        :aria-label="'View ' + project.name + ' mobile screenshot and details'"
+        @click="emit('open')"
+        @mouseenter="showHint('View project details')"
+        @mouseleave="showHint('Explore ' + project.name)"
+        @focus="showHint('View project details')"
+        @blur="hideHint()"
+      >
+        <span class="preview-bar"><span class="window-dots" aria-hidden="true">•••</span> mobile</span>
+        <img :src="project.mobileShot" :alt="project.name + ' mobile interface'" />
+      </button>
     </div>
   </article>
 </template>
@@ -40,118 +96,182 @@ const props = defineProps({
   index: { type: Number, default: 0 },
 })
 
-defineEmits(['open'])
+const emit = defineEmits(['open'])
 
 const { showHint, hideHint } = useCursorHint()
 
 const techPreview = computed(() => {
   const t = props.project.tech
-  const head = t.slice(0, 4).join(' · ')
-  return t.length > 4 ? head + ' · +' + (t.length - 4) + ' more' : head
+  const head = t.slice(0, 6).join(' · ')
+  return t.length > 6 ? head + ' · +' + (t.length - 6) + ' more' : head
 })
 </script>
 
 <style scoped>
-.card {
+.project-card {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-  padding: 34px 0;
-  border-top: 1px solid var(--line);
-  cursor: pointer;
-  transition: background 0.18s ease;
-}
-
-.card:last-child {
+  gap: 34px;
+  padding: clamp(24px, 4vw, 44px);
+  background: var(--paper-deep);
   border-bottom: 1px solid var(--line);
 }
 
-.card:hover,
-.card:focus-visible {
-  background: var(--paper-deep);
+.project-info {
+  max-width: 760px;
 }
 
-.meta {
+.project-heading {
   display: flex;
-  flex-direction: row;
-  gap: 14px;
-  padding-top: 0;
-  font-family: var(--mono);
-  font-size: 12.5px;
+  align-items: baseline;
+  gap: 18px;
+  margin-bottom: 14px;
 }
 
 .num {
+  flex: none;
   color: var(--green);
-}
-
-.year {
-  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-size: 38px;
+  line-height: 1;
 }
 
 h3 {
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(24px, 3vw, 32px);
+  font-size: clamp(30px, 4vw, 42px);
   line-height: 1.15;
   letter-spacing: -0.01em;
 }
 
-.card:hover h3 {
-  text-decoration: underline;
-  text-decoration-color: var(--green);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 6px;
-}
-
 .role {
-  font-size: 14px;
-  color: var(--ink);
-  margin: 8px 0 10px;
+  margin-top: 5px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-soft);
+  text-transform: lowercase;
 }
 
 .summary {
-  font-size: 17px;
+  font-size: 16px;
   color: var(--ink);
-  max-width: 62ch;
-  margin-bottom: 14px;
+  max-width: 68ch;
+  margin-bottom: 10px;
 }
 
 .tech {
-  font-size: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
   color: var(--ink-soft);
+  line-height: 1.8;
 }
 
-.has-thumb {
-  grid-template-columns: 1fr 240px;
+.actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 22px;
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 12px;
 }
 
-.thumb {
-  border: 1px solid var(--line);
-  overflow: hidden;
-  align-self: start;
+.actions a,
+.actions button {
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-decoration-color: var(--green);
+  text-underline-offset: 4px;
+  transition: color 0.15s ease;
 }
 
-.thumb img {
+.actions a:hover,
+.actions button:hover {
+  color: var(--green);
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 190px;
+  gap: 18px;
+  align-items: end;
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.3s ease;
+  overflow: hidden;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+  text-align: left;
 }
 
-.card:hover .thumb img {
-  transform: scale(1.03);
+.preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: none;
+  height: 26px;
+  padding: 0 10px;
+  color: var(--green);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+
+.window-dots {
+  color: var(--ink-soft);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.preview img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: top center;
+  background: var(--paper);
+  transition: transform 0.25s ease;
+}
+
+.mobile-preview img {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+}
+
+.preview:hover img {
+  transform: scale(1.015);
+}
+
+.mobile-preview {
+  aspect-ratio: 0.52;
+  max-height: 390px;
+}
+
+.preview:focus-visible,
+.actions a:focus-visible,
+.actions button:focus-visible {
+  outline-color: var(--green);
+  outline-offset: 4px;
 }
 
 @media (max-width: 720px) {
-  .card,
-  .has-thumb {
-    grid-template-columns: 1fr;
-    padding: 28px 0;
+  .project-card {
+    gap: 24px;
   }
 
-  .thumb {
-    order: -1;
-    height: 170px;
+  .gallery {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .mobile-preview {
+    width: min(100%, 210px);
+    justify-self: center;
+    max-height: 340px;
   }
 }
 </style>

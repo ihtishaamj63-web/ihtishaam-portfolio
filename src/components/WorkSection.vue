@@ -4,7 +4,7 @@
       <div class="section-head">
         <h2>Selected work</h2>
       </div>
-      <div>
+      <div class="project-list">
         <ProjectCard
           v-for="(project, i) in projects"
           :key="project.id"
@@ -23,3 +23,16 @@ import { projects } from '../data/projects'
 
 defineEmits(['open-project'])
 </script>
+
+<style scoped>
+.project-list {
+  display: grid;
+  gap: 28px;
+}
+
+@media (max-width: 720px) {
+  .project-list {
+    gap: 20px;
+  }
+}
+</style>

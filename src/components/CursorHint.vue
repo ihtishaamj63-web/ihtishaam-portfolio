@@ -2,7 +2,7 @@
   <div
     class="cursor-hint"
     :class="{ on: text }"
-    :style="{ transform: 'translate(' + (x + 18) + 'px, ' + (y + 18) + 'px)' }"
+    :style="{ transform: 'translate(' + (x + 14) + 'px, ' + (y + 14) + 'px)' }"
     aria-hidden="true"
   >
     {{ text }}
@@ -50,7 +50,7 @@ onUnmounted(() => {
   top: 0;
   left: 0;
   padding: 5px 10px;
-  background: var(--ink);
+  background: var(--green);
   color: var(--paper);
   font-family: var(--mono);
   font-size: 11px;

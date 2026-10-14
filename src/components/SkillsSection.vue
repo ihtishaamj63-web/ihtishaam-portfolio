@@ -24,25 +24,33 @@ import { skillGroups } from '../data/skills'
 }
 
 .group {
+  display: grid;
+  grid-template-columns: minmax(200px, 1fr) minmax(0, 3fr);
+  gap: 28px;
+  align-items: start;
   padding: 26px 0;
   border-top: 1px solid var(--line);
 }
 
 .group h3 {
-  font-size: 18px;
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   color: var(--ink);
-  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
 .items {
   font-size: 16px;
   color: var(--ink);
-  max-width: 72ch;
   line-height: 1.75;
 }
 
 @media (max-width: 720px) {
   .group {
+    grid-template-columns: 1fr;
+    gap: 8px;
     padding: 20px 0;
   }
 }

@@ -48,4 +48,16 @@ export const skillGroups = [
       'Rate limiting',
     ],
   },
+  {
+    title: 'Tools & workflow',
+    items: [
+      'Git',
+      'GitHub',
+      'Vite',
+      'Figma',
+      'Microsoft 365',
+      'Google Workspace',
+      'AI-assisted development (Claude Code, Cursor)',
+    ],
+  },
 ]
