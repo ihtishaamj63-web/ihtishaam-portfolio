@@ -96,7 +96,7 @@ export const projects = [
     desktopShot: '/images/ModernTech%20Dashboard%20Desktop.png',
     mobileShot: '/images/ModernTech%20Mobile%20Desktop.png',
 
-    github: 'https://github.com/ihtishaamj63-web/hr-system', // TODO: confirm this repo URL
+    github: 'https://github.com/ihtishaamj63-web/HR-Project-2-ModernTech-Solutions',
     live: 'https://hr-project-2-moderntech-solutions-1.onrender.com',
   },
   {

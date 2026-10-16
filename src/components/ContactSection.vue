@@ -11,12 +11,40 @@
       <a
         class="big-email"
         :href="links.email"
+        target="_blank"
+        rel="noopener noreferrer"
         @mouseenter="showHint('Open email draft')"
         @mouseleave="hideHint()"
         @focus="showHint('Open email draft')"
         @blur="hideHint()"
         >{{ links.displayEmail }}</a
       >
+
+      <form class="contact-form" @submit.prevent="openEmailDraft">
+        <div class="form-fields">
+          <label>
+            <span>Name</span>
+            <input v-model="form.name" name="name" autocomplete="name" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input
+              v-model="form.email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </label>
+          <label class="message-field">
+            <span>Message</span>
+            <textarea v-model="form.message" name="message" rows="3" required></textarea>
+          </label>
+        </div>
+        <div class="form-actions">
+          <button class="send-button" type="submit">Send via Gmail <span aria-hidden="true">↗</span></button>
+        </div>
+      </form>
 
       <ul class="contact-list">
         <li>
@@ -85,17 +113,28 @@
 </template>
 
 <script setup>
+import { reactive } from 'vue'
 import { links } from '../data/links'
 import { useCursorHint } from '../composables/useCursorHint'
 
 const { showHint, hideHint } = useCursorHint()
+const form = reactive({ name: '', email: '', message: '' })
+
+function openEmailDraft() {
+  const subject = `Portfolio enquiry from ${form.name.trim()}`
+  const body = `${form.message.trim()}\n\nFrom: ${form.name.trim()} <${form.email.trim()}>`
+  const url = new URL(links.email)
+  url.searchParams.set('su', subject)
+  url.searchParams.set('body', body)
+  window.open(url.toString(), '_blank', 'noopener,noreferrer')
+}
 </script>
 
 <style scoped>
 .contact {
-  background: var(--green);
-  border-top-color: var(--green);
-  color: var(--paper);
+  background: var(--paper-deep);
+  border-top-color: var(--line);
+  color: var(--ink);
   padding-top: 64px;
   padding-bottom: 72px;
 }
@@ -105,7 +144,7 @@ const { showHint, hideHint } = useCursorHint()
 }
 
 .contact .section-head h2 {
-  text-decoration-color: var(--paper);
+  text-decoration-color: var(--ink);
 }
 
 .pitch {
@@ -123,7 +162,7 @@ const { showHint, hideHint } = useCursorHint()
   font-size: clamp(23px, 3.6vw, 38px);
   letter-spacing: -0.01em;
   text-decoration: none;
-  border-bottom: 2px solid var(--paper);
+  border-bottom: 2px solid var(--green);
   padding-bottom: 4px;
   margin-bottom: 30px;
   transition:
@@ -133,12 +172,88 @@ const { showHint, hideHint } = useCursorHint()
 }
 
 .big-email:hover {
-  color: var(--paper-deep);
-  border-color: var(--paper-deep);
+  color: var(--green);
+  border-color: var(--green);
 }
 
 .big-email:focus-visible {
-  outline-color: var(--paper);
+  outline-color: var(--green);
+}
+
+.contact-form {
+  max-width: 660px;
+  margin: 0 0 34px;
+  padding: 22px;
+  border: 1px solid var(--line);
+}
+
+.form-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+.form-fields label {
+  display: grid;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.form-fields input,
+.form-fields textarea {
+  width: 100%;
+  padding: 9px 0;
+  border: 0;
+  border-bottom: 1px solid var(--ink-soft);
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 15px/1.5 var(--sans);
+  resize: vertical;
+}
+
+.form-fields input:focus,
+.form-fields textarea:focus {
+  outline: 0;
+  border-bottom-color: var(--green);
+}
+
+.form-fields input:focus-visible,
+.form-fields textarea:focus-visible {
+  box-shadow: 0 2px 0 var(--green);
+}
+
+.form-fields input::placeholder,
+.form-fields textarea::placeholder {
+  color: var(--ink-soft);
+}
+
+.message-field {
+  grid-column: 1 / -1;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px 18px;
+  margin-top: 20px;
+}
+
+.send-button {
+  padding: 10px 14px;
+  background: var(--green);
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 12px;
+  transition: background-color 0.15s ease;
+}
+
+.send-button:hover {
+  background: var(--ink);
 }
 
 .contact-list {
@@ -153,7 +268,7 @@ const { showHint, hideHint } = useCursorHint()
   align-items: center;
   gap: 10px;
   padding: 13px 20px;
-  border: 1px solid var(--paper);
+  border: 1px solid var(--green);
   text-decoration: none;
   font-family: var(--mono);
   font-size: 13px;
@@ -164,17 +279,31 @@ const { showHint, hideHint } = useCursorHint()
 }
 
 .contact-list a:hover {
-  background: var(--paper);
-  color: var(--green);
+  background: var(--green);
+  color: var(--paper);
 }
 
 .contact-list a:focus-visible {
-  outline-color: var(--paper);
+  outline-color: var(--green);
 }
 
 .contact-list svg {
   width: 17px;
   height: 17px;
   flex: none;
+}
+
+@media (max-width: 520px) {
+  .contact-form {
+    padding: 16px;
+  }
+
+  .form-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .message-field {
+    grid-column: auto;
+  }
 }
 </style>

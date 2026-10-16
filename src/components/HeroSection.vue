@@ -35,7 +35,7 @@
 
 .hero-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.8fr);
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.9fr);
   grid-template-areas: 'copy portrait';
   align-items: center;
   gap: 48px;
@@ -50,13 +50,13 @@
   grid-area: portrait;
   display: flex;
   justify-content: center;
-  align-self: start;
-  margin-top: 44px;
+  align-self: end;
+  margin-bottom: 40px;
 }
 
 .portrait-frame {
-  width: min(100%, 340px);
-  height: min(390px, 50vh);
+  width: min(100%, 410px);
+  height: min(450px, 56.25vh);
   min-height: 300px;
   padding: 8px;
   border: 2px solid var(--green);
@@ -143,6 +143,7 @@ h1 {
   .hero-portrait {
     justify-content: flex-start;
     align-self: start;
+    margin-top: 0;
     margin-bottom: 0;
   }
 
