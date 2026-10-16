@@ -51,11 +51,12 @@
   display: flex;
   justify-content: center;
   align-self: start;
+  margin-top: 68px;
 }
 
 .portrait-frame {
-  width: min(100%, 360px);
-  height: min(410px, 52vh);
+  width: min(100%, 340px);
+  height: min(390px, 50vh);
   min-height: 300px;
   padding: 10px;
   border: 1px solid var(--green);
@@ -67,7 +68,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 34%;
+  object-position: center 30%;
 }
 
 .kicker {
@@ -142,6 +143,8 @@ h1 {
 
   .hero-portrait {
     justify-content: flex-start;
+    align-self: start;
+    margin-bottom: 0;
   }
 
   .portrait-frame {

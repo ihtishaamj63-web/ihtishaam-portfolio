@@ -1,8 +1,9 @@
 <template>
   <article
     class="project-card"
-    @mouseenter="showHint('Explore ' + project.name)"
-    @mouseleave="hideHint()"
+    @click="onCardClick"
+    @mouseenter="showHint('View project details')"
+    @mouseleave="hideHint"
   >
     <div class="project-info">
       <div class="project-heading">
@@ -23,7 +24,8 @@
           target="_blank"
           rel="noopener"
           @mouseenter="showHint('Open source code')"
-          @mouseleave="showHint('Explore ' + project.name)"
+          @click.stop
+          @mouseleave="showHint('View project details')"
           @focus="showHint('Open source code')"
           @blur="hideHint()"
         >
@@ -35,7 +37,8 @@
           target="_blank"
           rel="noopener"
           @mouseenter="showHint('Open live demo')"
-          @mouseleave="showHint('Explore ' + project.name)"
+          @click.stop
+          @mouseleave="showHint('View project details')"
           @focus="showHint('Open live demo')"
           @blur="hideHint()"
         >
@@ -43,9 +46,9 @@
         </a>
         <button
           type="button"
-          @click="emit('open')"
+          @click.stop="openProject"
           @mouseenter="showHint('View project details')"
-          @mouseleave="showHint('Explore ' + project.name)"
+          @mouseleave="showHint('View project details')"
           @focus="showHint('View project details')"
           @blur="hideHint()"
         >
@@ -60,9 +63,9 @@
         class="preview desktop-preview"
         type="button"
         :aria-label="'View ' + project.name + ' desktop screenshot and details'"
-        @click="emit('open')"
+        @click.stop="openProject"
         @mouseenter="showHint('View project details')"
-        @mouseleave="showHint('Explore ' + project.name)"
+        @mouseleave="showHint('View project details')"
         @focus="showHint('View project details')"
         @blur="hideHint()"
       >
@@ -74,9 +77,9 @@
         class="preview mobile-preview"
         type="button"
         :aria-label="'View ' + project.name + ' mobile screenshot and details'"
-        @click="emit('open')"
+        @click.stop="openProject"
         @mouseenter="showHint('View project details')"
-        @mouseleave="showHint('Explore ' + project.name)"
+        @mouseleave="showHint('View project details')"
         @focus="showHint('View project details')"
         @blur="hideHint()"
       >
@@ -105,15 +108,36 @@ const techPreview = computed(() => {
   const head = t.slice(0, 6).join(' · ')
   return t.length > 6 ? head + ' · +' + (t.length - 6) + ' more' : head
 })
+
+function openProject() {
+  hideHint()
+  emit('open')
+}
+
+function onCardClick(event) {
+  if (event.target.closest('a, button')) return
+  openProject()
+}
 </script>
 
 <style scoped>
 .project-card {
+  cursor: pointer;
   display: grid;
   gap: 34px;
   padding: clamp(24px, 4vw, 44px);
   background: var(--paper-deep);
   border-bottom: 1px solid var(--line);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.project-card:hover {
+  border-color: var(--green);
+  box-shadow: 5px 5px 0 var(--green);
+  transform: translate(-2px, -2px);
 }
 
 .project-info {

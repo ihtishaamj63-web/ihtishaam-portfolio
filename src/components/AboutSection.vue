@@ -13,8 +13,17 @@
       </p>
 
       <div class="timeline">
-        <article v-for="entry in experience" :key="entry.title" class="entry">
-          <p class="period">{{ entry.period }}</p>
+        <article
+          v-for="entry in experience"
+          :key="entry.title"
+          class="entry"
+          :class="{ current: entry.current }"
+        >
+          <span class="node" aria-hidden="true"></span>
+          <p class="period">
+            {{ entry.period }}
+            <span v-if="entry.current" class="current-label">Current</span>
+          </p>
           <div class="body">
             <h3>{{ entry.title }}</h3>
             <p class="org">{{ entry.org }}</p>
@@ -66,22 +75,81 @@ const { showHint, hideHint } = useCursorHint()
 }
 
 .timeline {
+  --period-width: 150px;
+  --timeline-gap: 36px;
+  position: relative;
   border-top: 1px solid var(--line);
   margin-bottom: 72px;
 }
 
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--period-width) + var(--timeline-gap) / 2);
+  width: 1px;
+  background: var(--line);
+}
+
 .entry {
+  position: relative;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 6px;
+  grid-template-columns: var(--period-width) minmax(0, 1fr);
+  gap: var(--timeline-gap);
   padding: 30px 0;
   border-bottom: 1px solid var(--line);
 }
 
+.node {
+  position: absolute;
+  top: 35px;
+  left: calc(var(--period-width) + var(--timeline-gap) / 2 - 7px);
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--green);
+  background: var(--paper);
+}
+
+.entry.current .node {
+  background: var(--green);
+}
+
+.entry.current .node::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border: 1px solid var(--green);
+  animation: beacon 1.8s ease-out infinite;
+}
+
+@keyframes beacon {
+  0% {
+    opacity: 0.75;
+    transform: scale(0.65);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.7);
+  }
+}
+
 .period {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
   font-size: 14px;
   color: var(--ink);
   padding-top: 5px;
+}
+
+.current-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
 }
 
 h3 {
@@ -146,5 +214,32 @@ h3 {
 
 .offclock-text {
   max-width: 66ch;
+}
+
+@media (max-width: 720px) {
+  .timeline {
+    padding-left: 28px;
+  }
+
+  .timeline::before {
+    left: 6px;
+  }
+
+  .entry {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 24px 0;
+  }
+
+  .node {
+    top: 29px;
+    left: -28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .entry.current .node::after {
+    animation: none;
+  }
 }
 </style>

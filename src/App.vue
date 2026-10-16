@@ -30,7 +30,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import NavBar from './components/NavBar.vue'
 import HeroSection from './components/HeroSection.vue'
 import WorkSection from './components/WorkSection.vue'
@@ -45,6 +45,44 @@ const selectedProject = ref(null)
 const showCertificate = ref(false)
 const isDarkMode = ref(window.localStorage.getItem('portfolio-theme') === 'dark')
 const year = new Date().getFullYear()
+let revealObserver
+
+onMounted(() => {
+  const revealTargets = document.querySelectorAll(
+    'main > .hero, main > .section, .project-card, .group, .entry, .offclock',
+  )
+
+  if (
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+    !('IntersectionObserver' in window)
+  ) {
+    revealTargets.forEach((element) => element.classList.add('is-visible'))
+    return
+  }
+
+  document.querySelector('main').classList.add('motion-ready')
+  revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          observer.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.12, rootMargin: '0px 0px -32px 0px' },
+  )
+
+  revealTargets.forEach((element) => {
+    const siblingIndex = Array.prototype.indexOf.call(element.parentElement.children, element)
+    element.style.setProperty('--reveal-delay', `${Math.min(siblingIndex, 4) * 65}ms`)
+    revealObserver.observe(element)
+  })
+})
+
+onUnmounted(() => {
+  revealObserver?.disconnect()
+})
 
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value

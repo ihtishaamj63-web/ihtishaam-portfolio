@@ -115,6 +115,19 @@ button {
   scroll-margin-top: var(--nav-h);
 }
 
+main.motion-ready :is(.hero, .section, .project-card, .group, .entry, .offclock) {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.65s ease var(--reveal-delay, 0ms),
+    transform 0.65s ease var(--reveal-delay, 0ms);
+}
+
+main.motion-ready :is(.hero, .section, .project-card, .group, .entry, .offclock).is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .section-head {
   display: flex;
   align-items: baseline;
