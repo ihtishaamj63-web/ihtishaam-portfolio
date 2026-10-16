@@ -8,19 +8,9 @@
         Open to work across software, data, security, and the spaces where science and code meet.
       </p>
 
-      <a
-        class="big-email"
-        :href="links.email"
-        target="_blank"
-        rel="noopener noreferrer"
-        @mouseenter="showHint('Open email draft')"
-        @mouseleave="hideHint()"
-        @focus="showHint('Open email draft')"
-        @blur="hideHint()"
-        >{{ links.displayEmail }}</a
-      >
+      <p class="big-email">{{ links.displayEmail }}</p>
 
-      <form class="contact-form" @submit.prevent="openEmailDraft">
+      <form class="contact-form" @submit.prevent="sendMessage">
         <div class="form-fields">
           <label>
             <span>Name</span>
@@ -42,8 +32,19 @@
           </label>
         </div>
         <div class="form-actions">
-          <button class="send-button" type="submit">Send via Gmail <span aria-hidden="true">↗</span></button>
+          <button class="send-button" type="submit" :disabled="isSending">
+            {{ isSending ? 'Sending...' : 'Send message' }}
+          </button>
         </div>
+        <p
+          v-if="submissionMessage"
+          class="form-status"
+          :class="`form-status--${submissionState}`"
+          role="status"
+          aria-live="polite"
+        >
+          {{ submissionMessage }}
+        </p>
       </form>
 
       <ul class="contact-list">
@@ -113,20 +114,59 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { links } from '../data/links'
 import { useCursorHint } from '../composables/useCursorHint'
 
 const { showHint, hideHint } = useCursorHint()
-const form = reactive({ name: '', email: '', message: "Congratulations, you've got the job!" })
+const form = reactive({ name: '', email: '', message: '' })
+const isSending = ref(false)
+const submissionState = ref('')
+const submissionMessage = ref('')
 
-function openEmailDraft() {
-  const subject = `Portfolio enquiry from ${form.name.trim()}`
-  const body = `${form.message.trim()}\n\nFrom: ${form.name.trim()} <${form.email.trim()}>`
-  const url = new URL(links.email)
-  url.searchParams.set('su', subject)
-  url.searchParams.set('body', body)
-  window.open(url.toString(), '_blank', 'noopener,noreferrer')
+async function sendMessage() {
+  isSending.value = true
+  submissionState.value = ''
+  submissionMessage.value = ''
+
+  try {
+    const response = await fetch(
+      `https://formsubmit.co/ajax/${encodeURIComponent(links.displayEmail)}`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          message: form.message.trim(),
+          _replyto: form.email.trim(),
+          _subject: `Portfolio enquiry from ${form.name.trim()}`,
+        }),
+      },
+    )
+    const result = await response.json()
+
+    if (!response.ok || (result.success !== 'true' && result.success !== true)) {
+      submissionState.value = 'error'
+      submissionMessage.value = result.message || 'The message could not be sent. Please try again.'
+      return
+    }
+
+    submissionState.value = 'success'
+    submissionMessage.value = 'Thanks for reaching out. Your message has been sent.'
+    form.name = ''
+    form.email = ''
+    form.message = ''
+  } catch (error) {
+    console.error('Contact form submission failed:', error)
+    submissionState.value = 'error'
+    submissionMessage.value = 'Unable to send your message right now. Please try again later.'
+  } finally {
+    isSending.value = false
+  }
 }
 </script>
 
@@ -156,28 +196,15 @@ function openEmailDraft() {
 }
 
 .big-email {
-  display: inline-block;
+  display: block;
   font-family: var(--serif);
   font-weight: 500;
   font-size: clamp(23px, 3.6vw, 38px);
   letter-spacing: -0.01em;
-  text-decoration: none;
   border-bottom: 2px solid var(--green);
   padding-bottom: 4px;
   margin-bottom: 30px;
-  transition:
-    color 0.15s ease,
-    border-color 0.15s ease;
   word-break: break-all;
-}
-
-.big-email:hover {
-  color: var(--green);
-  border-color: var(--green);
-}
-
-.big-email:focus-visible {
-  outline-color: var(--green);
 }
 
 .contact-form {
@@ -243,6 +270,20 @@ function openEmailDraft() {
   margin-top: 20px;
 }
 
+.form-status {
+  margin-top: 14px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.form-status--success {
+  color: var(--green);
+}
+
+.form-status--error {
+  color: #a33224;
+}
+
 .send-button {
   padding: 10px 14px;
   background: var(--green);
@@ -250,6 +291,11 @@ function openEmailDraft() {
   font-family: var(--mono);
   font-size: 12px;
   transition: background-color 0.15s ease;
+}
+
+.send-button:disabled {
+  cursor: wait;
+  opacity: 0.7;
 }
 
 .send-button:hover {

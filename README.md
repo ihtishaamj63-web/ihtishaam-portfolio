@@ -12,6 +12,9 @@ npm run dev
 Build command: npm run build
 Publish directory: dist
 
+The contact form sends messages through FormSubmit. Verify the first confirmation
+email sent to the portfolio inbox before the form can deliver messages.
+
 ## Editing content (no component changes needed)
 
 - Projects: src/data/projects.js
