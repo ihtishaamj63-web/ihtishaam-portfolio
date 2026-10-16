@@ -51,17 +51,16 @@
   display: flex;
   justify-content: center;
   align-self: start;
-  margin-top: 68px;
+  margin-top: 44px;
 }
 
 .portrait-frame {
   width: min(100%, 340px);
   height: min(390px, 50vh);
   min-height: 300px;
-  padding: 10px;
-  border: 1px solid var(--green);
-  background: var(--paper-deep);
-  box-shadow: 10px 10px 0 var(--green);
+  padding: 8px;
+  border: 2px solid var(--green);
+  background: var(--paper);
 }
 
 .portrait-frame img {
