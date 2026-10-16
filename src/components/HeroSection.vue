@@ -1,25 +1,26 @@
 <template>
   <section id="top" class="hero">
     <div class="wrap hero-layout">
+      <div class="hero-portrait">
+        <div class="portrait-frame">
+          <img src="/images/Ihtishaam%20profile.png" alt="Ihtishaam Johnson" />
+        </div>
+      </div>
       <div class="hero-copy">
         <p class="kicker">Ihtishaam Johnson · software developer · Scientist · Cape Town, ZA</p>
+        <p class="status">
+          <span class="status-sq" aria-hidden="true"></span>
+          <span class="status-copy">
+            <strong>Software Development Intern at LC Studio.</strong>
+            <span>Open to software, data, security, and conservation-tech roles.</span>
+          </span>
+        </p>
         <h1>I build software the way evolution builds species.</h1>
         <p class="lede">
           Full-stack developer with a BSc in biodiversity and conservation biology. Evolution is the
           longest-running engineering project on record, and its method is simple: iterate, test
           against reality, keep what survives.
         </p>
-        <p class="status">
-          <span class="status-sq" aria-hidden="true"></span>
-          Software Development Intern at LC Studio. Open to software, data, security, and
-          conservation-tech roles.
-        </p>
-      </div>
-      <div class="hero-portrait">
-        <img
-          src="/images/ihtishaam_johnson_portfolio_image-removebg-preview.png"
-          alt="Ihtishaam Johnson"
-        />
       </div>
     </div>
   </section>
@@ -29,31 +30,44 @@
 
 <style scoped>
 .hero {
-  padding: calc(var(--nav-h) + 48px) 0 104px;
+  padding: calc(var(--nav-h) + 24px) 0 80px;
 }
 
 .hero-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.8fr);
-  align-items: start;
-  gap: 40px;
+  grid-template-areas: 'copy portrait';
+  align-items: center;
+  gap: 48px;
 }
 
 .hero-copy {
+  grid-area: copy;
   min-width: 0;
 }
 
 .hero-portrait {
+  grid-area: portrait;
   display: flex;
   justify-content: center;
   align-self: start;
 }
 
-.hero-portrait img {
-  width: min(100%, 390px, 54vh);
-  max-height: 520px;
-  object-fit: contain;
-  object-position: center top;
+.portrait-frame {
+  width: min(100%, 360px);
+  height: min(410px, 52vh);
+  min-height: 300px;
+  padding: 10px;
+  border: 1px solid var(--green);
+  background: var(--paper-deep);
+  box-shadow: 10px 10px 0 var(--green);
+}
+
+.portrait-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 34%;
 }
 
 .kicker {
@@ -83,29 +97,70 @@ h1 {
 }
 
 .status {
-  margin-top: 64px;
-  font-family: var(--mono);
-  font-size: 12.5px;
-  color: var(--ink-soft);
+  margin: 0 0 30px;
+  padding: 17px 20px;
+  border-left: 3px solid var(--green);
+  background: var(--paper-deep);
   display: flex;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 14px;
+  color: var(--ink-soft);
 }
 
 .status-sq {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
+  margin-top: 7px;
   background: var(--green);
   flex: none;
 }
 
+.status-copy {
+  display: grid;
+  gap: 2px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.status-copy strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 @media (max-width: 720px) {
+  .hero {
+    padding-top: calc(var(--nav-h) + 20px);
+  }
+
   .hero-layout {
     grid-template-columns: 1fr;
-    gap: 28px;
+    grid-template-areas:
+      'portrait'
+      'copy';
+    gap: 36px;
   }
+
   .hero-portrait {
-    display: none;
+    justify-content: flex-start;
+  }
+
+  .portrait-frame {
+    width: min(72vw, 320px);
+    height: min(78vw, 340px);
+    min-height: 260px;
+  }
+
+  .kicker {
+    margin-bottom: 24px;
+  }
+
+  .status {
+    margin-top: 28px;
+    padding: 15px 16px;
+  }
+
+  .status-copy {
+    font-size: 14px;
   }
 }
 </style>

@@ -96,7 +96,12 @@ const { showHint, hideHint } = useCursorHint()
   background: var(--green);
   border-top-color: var(--green);
   color: var(--paper);
-  padding-bottom: 120px;
+  padding-top: 64px;
+  padding-bottom: 72px;
+}
+
+.contact .section-head {
+  margin-bottom: 32px;
 }
 
 .contact .section-head h2 {
@@ -105,22 +110,22 @@ const { showHint, hideHint } = useCursorHint()
 
 .pitch {
   font-family: var(--serif);
-  font-size: clamp(26px, 4vw, 40px);
-  line-height: 1.3;
-  max-width: 24ch;
-  margin-bottom: 48px;
+  font-size: clamp(23px, 3vw, 32px);
+  line-height: 1.25;
+  max-width: 32ch;
+  margin-bottom: 30px;
 }
 
 .big-email {
   display: inline-block;
   font-family: var(--serif);
   font-weight: 500;
-  font-size: clamp(24px, 4.5vw, 48px);
+  font-size: clamp(23px, 3.6vw, 38px);
   letter-spacing: -0.01em;
   text-decoration: none;
-  border-bottom: 3px solid var(--paper);
-  padding-bottom: 6px;
-  margin-bottom: 44px;
+  border-bottom: 2px solid var(--paper);
+  padding-bottom: 4px;
+  margin-bottom: 30px;
   transition:
     color 0.15s ease,
     border-color 0.15s ease;

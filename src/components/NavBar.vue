@@ -108,10 +108,14 @@ const emit = defineEmits(['toggle-theme'])
 
 .nav-links {
   display: flex;
+  align-items: center;
   gap: 30px;
 }
 
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
   font-family: var(--mono);
   font-size: 13px;
   text-decoration: none;
@@ -125,6 +129,10 @@ const emit = defineEmits(['toggle-theme'])
 }
 
 .theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
   font-family: var(--mono);
   font-size: 12px;
   color: var(--green);
