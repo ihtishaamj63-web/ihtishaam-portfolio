@@ -118,7 +118,7 @@ import { links } from '../data/links'
 import { useCursorHint } from '../composables/useCursorHint'
 
 const { showHint, hideHint } = useCursorHint()
-const form = reactive({ name: '', email: '', message: '' })
+const form = reactive({ name: '', email: '', message: "Congratulations, you've got the job!" })
 
 function openEmailDraft() {
   const subject = `Portfolio enquiry from ${form.name.trim()}`
