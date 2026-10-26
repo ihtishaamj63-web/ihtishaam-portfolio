@@ -8,19 +8,19 @@
       @click.stop
     >
       <div class="certificate-header">
-        <h2 id="certificate-title">Stamped degree certificate</h2>
+        <h2 id="certificate-title">{{ certificate.title }}</h2>
         <button type="button" aria-label="Close certificate" @click="emit('close')">
           Close
         </button>
       </div>
       <iframe
         class="certificate-document"
-        src="/images/UWC%20April%202026%20Certificate%20stamped_2089.pdf"
-        title="University of the Western Cape stamped degree certificate"
+        :src="certificate.src"
+        :title="certificate.title"
       ></iframe>
       <a
         class="certificate-open"
-        href="/images/UWC%20April%202026%20Certificate%20stamped_2089.pdf"
+        :href="certificate.src"
         target="_blank"
         rel="noopener"
       >
@@ -32,6 +32,10 @@
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
+
+defineProps({
+  certificate: { type: Object, required: true },
+})
 
 const emit = defineEmits(['close'])
 

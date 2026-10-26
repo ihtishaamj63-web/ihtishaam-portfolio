@@ -70,7 +70,14 @@
         @blur="hideHint()"
       >
         <span class="preview-bar"><span class="window-dots" aria-hidden="true">•••</span> desktop</span>
-        <img :src="project.desktopShot" :alt="project.name + ' desktop interface'" />
+        <img
+          :src="project.desktopShot"
+          :alt="project.name + ' desktop interface'"
+          :width="project.desktopShotWidth"
+          :height="project.desktopShotHeight"
+          loading="lazy"
+          decoding="async"
+        />
       </button>
       <button
         v-if="project.mobileShot"
@@ -84,7 +91,14 @@
         @blur="hideHint()"
       >
         <span class="preview-bar"><span class="window-dots" aria-hidden="true">•••</span> mobile</span>
-        <img :src="project.mobileShot" :alt="project.name + ' mobile interface'" />
+        <img
+          :src="project.mobileShot"
+          :alt="project.name + ' mobile interface'"
+          :width="project.mobileShotWidth"
+          :height="project.mobileShotHeight"
+          loading="lazy"
+          decoding="async"
+        />
       </button>
     </div>
   </article>

@@ -17,7 +17,7 @@
           v-for="entry in experience"
           :key="entry.title"
           class="entry"
-          :class="{ current: entry.current }"
+          :class="{ current: entry.current, 'has-certificates': entry.certificates?.length }"
         >
           <span class="node" aria-hidden="true"></span>
           <p class="period">
@@ -27,18 +27,21 @@
           <div class="body">
             <h3>{{ entry.title }}</h3>
             <p class="org">{{ entry.org }}</p>
-            <button
-              v-if="entry.certificate"
-              class="certificate-link"
-              type="button"
-              @click="emit('view-certificate')"
-              @mouseenter="showHint('View stamped degree certificate')"
-              @mouseleave="hideHint()"
-              @focus="showHint('View stamped degree certificate')"
-              @blur="hideHint()"
-            >
-              View stamped certificate <span aria-hidden="true">↗</span>
-            </button>
+            <div v-if="entry.certificates?.length" class="certificate-links">
+              <button
+                v-for="certificate in entry.certificates"
+                :key="certificate.src"
+                class="certificate-link"
+                type="button"
+                @click="emit('view-certificate', certificate)"
+                @mouseenter="showHint(certificate.label)"
+                @mouseleave="hideHint()"
+                @focus="showHint(certificate.label)"
+                @blur="hideHint()"
+              >
+                {{ certificate.label }} <span aria-hidden="true">↗</span>
+              </button>
+            </div>
             <ul class="points">
               <li v-for="point in entry.points" :key="point">{{ point }}</li>
             </ul>
@@ -115,6 +118,16 @@ const { showHint, hideHint } = useCursorHint()
   background: var(--green);
 }
 
+.entry.has-certificates .body {
+  border-left: 2px solid var(--green);
+  padding: 4px 0 4px 18px;
+}
+
+.entry.has-certificates h3 {
+  font-size: 24px;
+  font-weight: 600;
+}
+
 .entry.current .node::after {
   content: '';
   position: absolute;
@@ -165,19 +178,31 @@ h3 {
   margin: 4px 0 12px;
 }
 
+.certificate-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 14px;
+}
+
 .certificate-link {
-  display: inline-block;
-  margin: 0 0 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--green);
+  background: var(--paper);
   color: var(--green);
   font-family: var(--mono);
   font-size: 12px;
-  text-decoration: underline;
-  text-decoration-color: var(--green);
-  text-underline-offset: 4px;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .certificate-link:hover {
-  color: var(--ink);
+  color: var(--paper);
+  background: var(--green);
 }
 
 .points {
@@ -213,6 +238,7 @@ h3 {
 }
 
 .offclock-text {
+  font-size: 18px;
   max-width: 66ch;
 }
 
@@ -229,6 +255,10 @@ h3 {
     grid-template-columns: 1fr;
     gap: 6px;
     padding: 24px 0;
+  }
+
+  .entry.has-certificates .body {
+    padding-left: 14px;
   }
 
   .node {

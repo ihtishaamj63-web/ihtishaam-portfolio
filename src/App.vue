@@ -6,7 +6,7 @@
     <main id="main">
       <HeroSection />
       <WorkSection @open-project="selectedProject = $event" />
-      <AboutSection @view-certificate="showCertificate = true" />
+      <AboutSection @view-certificate="selectedCertificate = $event" />
       <SkillsSection />
       <ContactSection />
     </main>
@@ -23,7 +23,11 @@
       @close="selectedProject = null"
     />
 
-    <CertificateModal v-if="showCertificate" @close="showCertificate = false" />
+    <CertificateModal
+      v-if="selectedCertificate"
+      :certificate="selectedCertificate"
+      @close="selectedCertificate = null"
+    />
 
     <CursorHint />
   </div>
@@ -42,7 +46,7 @@ import CertificateModal from './components/CertificateModal.vue'
 import CursorHint from './components/CursorHint.vue'
 
 const selectedProject = ref(null)
-const showCertificate = ref(false)
+const selectedCertificate = ref(null)
 const isDarkMode = ref(window.localStorage.getItem('portfolio-theme') === 'dark')
 const year = new Date().getFullYear()
 let revealObserver

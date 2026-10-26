@@ -48,8 +48,12 @@ export const projects = [
 
     note: 'Runs on free-tier hosting. The backend sleeps when idle, so give the first request a moment.',
 
-    desktopShot: '/images/CleanSpaces%20Dashboard%20Desktop.png',
-    mobileShot: '/images/CleanSpaces%20Dashboard%20Mobile.png',
+    desktopShot: '/images/cleanspaces-desktop.jpg',
+    desktopShotWidth: 1200,
+    desktopShotHeight: 488,
+    mobileShot: '/images/cleanspaces-mobile.jpg',
+    mobileShotWidth: 362,
+    mobileShotHeight: 779,
 
     github: 'https://github.com/ihtishaamj63-web/CleanSpaces',
     live: 'https://cleanspaces.onrender.com',
@@ -93,8 +97,12 @@ export const projects = [
 
     note: 'Runs on free-tier hosting. The backend sleeps when idle, so give the first request a moment.',
 
-    desktopShot: '/images/ModernTech%20Dashboard%20Desktop.png',
-    mobileShot: '/images/ModernTech%20Mobile%20Desktop.png',
+    desktopShot: '/images/moderntech-desktop.jpg',
+    desktopShotWidth: 1200,
+    desktopShotHeight: 496,
+    mobileShot: '/images/moderntech-mobile.jpg',
+    mobileShotWidth: 362,
+    mobileShotHeight: 685,
 
     github: 'https://github.com/ihtishaamj63-web/HR-Project-2-ModernTech-Solutions',
     live: 'https://hr-project-2-moderntech-solutions-1.onrender.com',
@@ -138,8 +146,12 @@ export const projects = [
       'Managed a cross-functional team and reviewed and approved integrated contributions',
     ],
 
-    desktopShot: '/images/Market%20Pulse%20Desktop%20Dashboard.png',
-    mobileShot: '/images/Market%20Pulse%20Mobile%20Retail%20Goods.png',
+    desktopShot: '/images/market-pulse-desktop.jpg',
+    desktopShotWidth: 1200,
+    desktopShotHeight: 574,
+    mobileShot: '/images/market-pulse-mobile.jpg',
+    mobileShotWidth: 367,
+    mobileShotHeight: 807,
 
     github: 'https://github.com/adamjattiem12-gif/-Flask-Web-Scraping-Dashboard',
     live: 'https://market-pulse-11gq.onrender.com',

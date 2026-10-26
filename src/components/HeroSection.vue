@@ -3,7 +3,14 @@
     <div class="wrap hero-layout">
       <div class="hero-portrait">
         <div class="portrait-frame">
-          <img src="/images/Ihtishaam%20profile.png" alt="Ihtishaam Johnson" />
+          <img
+            src="/images/profile.jpg"
+            alt="Ihtishaam Johnson"
+            width="800"
+            height="861"
+            fetchpriority="high"
+            decoding="async"
+          />
         </div>
       </div>
       <div class="hero-copy">

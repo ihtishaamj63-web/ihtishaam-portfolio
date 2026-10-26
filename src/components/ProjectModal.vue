@@ -43,6 +43,10 @@
                 v-if="project[device.key]"
                 :src="project[device.key]"
                 :alt="project.name + ' running on ' + device.label"
+                :width="project[device.widthKey]"
+                :height="project[device.heightKey]"
+                loading="lazy"
+                decoding="async"
               />
               <span v-else>{{ device.label }} view</span>
             </div>
@@ -73,8 +77,18 @@ defineProps({
 const emit = defineEmits(['close'])
 
 const devices = [
-  { key: 'desktopShot', label: 'desktop' },
-  { key: 'mobileShot', label: 'mobile' },
+  {
+    key: 'desktopShot',
+    widthKey: 'desktopShotWidth',
+    heightKey: 'desktopShotHeight',
+    label: 'desktop',
+  },
+  {
+    key: 'mobileShot',
+    widthKey: 'mobileShotWidth',
+    heightKey: 'mobileShotHeight',
+    label: 'mobile',
+  },
 ]
 
 function onKeydown(e) {
