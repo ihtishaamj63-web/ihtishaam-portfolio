@@ -43,10 +43,10 @@ export const projects = [
 
     note: 'Runs locally via Docker Compose (Docker required). All clubs, players and crests are fictional; no live public demo is currently available.',
 
-    desktopShot: '/images/pitchside home page.png',
-    desktopShotWidth: 1613,
-    desktopShotHeight: 872,
-    mobileShot: '/images/pitchside 390 x 844.png',
+    desktopShot: '/images/pitchside homepage.jpg',
+    desktopShotWidth: 1901,
+    desktopShotHeight: 868,
+    mobileShot: '/images/pitchside 390 x 844.jpg',
     mobileShotWidth: 349,
     mobileShotHeight: 767,
 
