@@ -10,7 +10,7 @@
 
       <p class="big-email">{{ links.displayEmail }}</p>
 
-      <form class="contact-form" @submit.prevent="openEmailDraft">
+      <form class="contact-form" @submit.prevent="openDefaultEmail">
         <div class="form-fields">
           <label>
             <span>Name</span>
@@ -33,8 +33,11 @@
         </div>
         <div class="form-actions">
           <button class="send-button" type="submit">
-            Send via Gmail <span aria-hidden="true">↗</span>
+            Open email app <span aria-hidden="true">↗</span>
           </button>
+          <a class="gmail-link" :href="gmailDraftUrl" target="_blank" rel="noopener noreferrer">
+            Open Gmail <span aria-hidden="true">↗</span>
+          </a>
         </div>
       </form>
 
@@ -105,7 +108,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { links } from '../data/links'
 import { useCursorHint } from '../composables/useCursorHint'
 
@@ -116,13 +119,35 @@ const form = reactive({
   message: "Congratulations, you've got the job!",
 })
 
-function openEmailDraft() {
-  const subject = `Portfolio enquiry from ${form.name.trim()}`
-  const body = `${form.message.trim()}\n\nFrom: ${form.name.trim()} <${form.email.trim()}>`
-  const url = new URL(links.email)
-  url.searchParams.set('su', subject)
-  url.searchParams.set('body', body)
-  window.open(url.toString(), '_blank', 'noopener,noreferrer')
+const emailDetails = computed(() => {
+  const name = form.name.trim()
+  const email = form.email.trim()
+  const subject = `Portfolio enquiry from ${name}`
+  const body = `${form.message.trim()}\n\nFrom: ${name} <${email}>`
+  return { subject, body }
+})
+
+const mailtoUrl = computed(() => {
+  const params = new URLSearchParams({
+    subject: emailDetails.value.subject,
+    body: emailDetails.value.body,
+  })
+  return `mailto:${links.displayEmail}?${params.toString()}`
+})
+
+const gmailDraftUrl = computed(() => {
+  const params = new URLSearchParams({
+    view: 'cm',
+    fs: '1',
+    to: links.displayEmail,
+    su: emailDetails.value.subject,
+    body: emailDetails.value.body,
+  })
+  return `https://mail.google.com/mail/?${params.toString()}`
+})
+
+function openDefaultEmail() {
+  window.location.href = mailtoUrl.value
 }
 </script>
 
@@ -237,6 +262,26 @@ function openEmailDraft() {
 
 .send-button:hover {
   background: var(--ink);
+}
+
+.gmail-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.gmail-link:hover {
+  color: var(--green);
+}
+
+.gmail-link:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
 }
 
 .contact-list {
