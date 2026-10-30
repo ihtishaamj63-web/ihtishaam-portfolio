@@ -90,7 +90,13 @@
                   >
                     <template v-if="view === 'mobile' && hasMobile">
                       <div class="phone-frame">
-                        <div class="phone-screen">
+                        <div
+                          class="phone-screen"
+                          :style="{
+                            aspectRatio: currentWidth + '/' + currentHeight,
+                            height: 'auto',
+                          }"
+                        >
                           <img
                             class="phone-screen-image"
                             :src="currentShot"
@@ -631,6 +637,9 @@ onUnmounted(() => {
   border-radius: 42px;
   background: var(--device-frame);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16), inset 0 1px 0 var(--device-highlight);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .phone-frame::before,
@@ -660,7 +669,7 @@ onUnmounted(() => {
   height: 100%;
   overflow: hidden;
   border-radius: 36px;
-  background: #fff;
+  background: transparent;
 }
 
 .phone-screen-image {
