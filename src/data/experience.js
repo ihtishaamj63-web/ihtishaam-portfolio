@@ -6,7 +6,10 @@ export const experience = [
     title: 'Software Development Intern',
     org: 'LC Studio',
     current: true,
-    points: ['Started after graduating from Life Choices Academy.'],
+    points: [
+      'Started after graduating from Life Choices Academy.',
+      'Completed Cisco Networking Academy training in cybersecurity fundamentals and data science, gaining foundational knowledge of security principles, data analysis and working with data.',
+    ],
   },
   {
     period: 'Apr 2026',

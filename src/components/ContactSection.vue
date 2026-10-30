@@ -77,7 +77,7 @@
         </li>
         <li>
           <a
-            href="https://docs.google.com/document/d/1lKFOIpVViVoFyMr6fkwS4RDZhUvjgT_eV_Q5Y4AuApM/edit?usp=sharing"
+            href="/CV%20-%20Ihtishaam%20Johnson.pdf"
             target="_blank"
             rel="noopener"
             aria-label="View CV"

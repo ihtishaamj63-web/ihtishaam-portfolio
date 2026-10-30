@@ -52,6 +52,7 @@ const year = new Date().getFullYear()
 let revealObserver
 
 onMounted(() => {
+  window.addEventListener('keydown', onGlobalKeydown)
   const revealTargets = document.querySelectorAll(
     'main > .hero, main > .section, .project-card, .group, .entry, .offclock',
   )
@@ -85,8 +86,21 @@ onMounted(() => {
 })
 
 onUnmounted(() => {
+  window.removeEventListener('keydown', onGlobalKeydown)
   revealObserver?.disconnect()
 })
+
+function onGlobalKeydown(e) {
+  const target = e.target
+  const tag = target?.tagName?.toLowerCase()
+  if (tag === 'input' || tag === 'textarea' || tag === 'select' || target?.isContentEditable) {
+    return
+  }
+  if (e.ctrlKey || e.altKey || e.metaKey) return
+  if (e.key === 'd' || e.key === 'D') {
+    toggleTheme()
+  }
+}
 
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value

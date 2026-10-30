@@ -7,6 +7,53 @@
 
 export const projects = [
   {
+    id: 'pitchside',
+    name: 'PitchSide',
+    year: '2026',
+    role: 'Creator & Developer',
+    summary:
+      'PitchSide is a fictional football league simulator. Create a league, follow every matchday live, and explore match reports, standings, player statistics, awards and club profiles.',
+
+    overview:
+      'PitchSide is a fictional football league simulator. Create a league, follow every matchday live, and explore match reports, standings, player statistics, awards and club profiles. Open the preloaded Demo league, choose a team to manage, set its tactics, and simulate the next matchday. League routes include /leagues/:id/table, /leagues/:id/fixtures, /leagues/:id/live, /leagues/:id/stats and /leagues/:id/awards; match, club and player pages live at /matches/:id, /clubs/:id and /players/:id. The Live hub follows every fixture in the current round, with server clock, revealed commentary, match stats and line-ups that become the final report. All club and player names, ratings and crests are fictional; the project uses no real-world club, league, player or badge data.',
+
+    roleDetail:
+      'Built as a full-stack application: a React and TypeScript frontend (Vite) talking to an Express 5 API backed by PostgreSQL, with Docker Compose for local development and automated backend and frontend tests. Match simulation is deterministic and seeded, with transactional matchday writes so concurrent requests cannot simulate the same round twice or leave a partial round. Live delivery uses an in-process SSE ticker with polling fallback.',
+
+    tech: [
+      'React',
+      'TypeScript',
+      'Vite',
+      'Express 5',
+      'PostgreSQL',
+      'Docker Compose',
+      'Jest',
+      'ts-jest',
+      'Supertest',
+    ],
+
+    achievements: [
+      'Fictional league creation with circle-method round-robin fixtures and home/away swap in the second half',
+      'Live matchday hub with server clock, revealed commentary, match stats, line-ups and final reports',
+      'Standings, fixtures, player statistics (goals, assists, xG, key passes, tackles, cards, goals per 90), awards, club and player profiles',
+      'Deterministic seeded match simulation with transactional matchday writes and spoiler-safe event reveal',
+      'Configurable live speed plus instant full-season simulation; notifications stored per league in the browser',
+      'Managed-team tactics saved per league in the browser, applied one matchday at a time',
+    ],
+
+    note: 'Runs locally via Docker Compose (Docker required). All clubs, players and crests are fictional; no live public demo is currently available.',
+
+    desktopShot: '/images/pitchside home page.png',
+    desktopShotWidth: 1613,
+    desktopShotHeight: 872,
+    mobileShot: '/images/pitchside 390 x 844.png',
+    mobileShotWidth: 349,
+    mobileShotHeight: 767,
+
+    github: 'https://github.com/ihtishaamj63-web/Pitch-Side',
+    live: null,
+  },
+  {
     id: 'cleanspaces',
     name: 'CleanSpaces',
     year: '2026',
@@ -64,7 +111,7 @@ export const projects = [
     year: '2026',
     role: 'Tech lead · full-stack',
     summary:
-      'A full HR platform built with a team of four: employee records, automated payroll with tax, UIF and medical aid deductions, attendance analytics, leave workflows and performance reviews, all behind role-based access control.',
+      'A full HR platform built with a team of four. Employee records, automated payroll with tax, UIF and medical aid deductions, attendance analytics, leave workflows and performance reviews, all behind role-based access control.',
     thumbnail: null,
 
     overview:
@@ -109,11 +156,11 @@ export const projects = [
   },
   {
     id: 'market-pulse',
-    name: 'Market Pulse',
+    name: 'Web Scraping Project',
     year: '2026',
     role: 'Team lead · full-stack',
     summary:
-      'A real-time market monitoring dashboard that tracks retail products and digital assets, with live scraping, price history, watchlists, top movers, and interactive 3D visualizations.',
+      'A real-time market monitoring dashboard. It tracks retail products and digital assets, with live scraping, price history, watchlists, top movers, and interactive 3D visualizations.',
     thumbnail: null,
 
     overview:

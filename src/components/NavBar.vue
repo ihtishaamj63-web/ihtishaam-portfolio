@@ -49,9 +49,9 @@
           :aria-pressed="props.isDarkMode"
           :aria-label="props.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'"
           @click="emit('toggle-theme')"
-          @mouseenter="showHint(props.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode')"
+          @mouseenter="showHint(props.isDarkMode ? 'Switch to light mode (press D)' : 'Switch to dark mode (press D)')"
           @mouseleave="hideHint()"
-          @focus="showHint(props.isDarkMode ? 'Switch to light mode' : 'Switch to dark mode')"
+          @focus="showHint(props.isDarkMode ? 'Switch to light mode (press D)' : 'Switch to dark mode (press D)')"
           @blur="hideHint()"
         >
           {{ props.isDarkMode ? 'Light' : 'Dark' }}
