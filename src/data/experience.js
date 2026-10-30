@@ -6,10 +6,7 @@ export const experience = [
     title: 'Software Development Intern',
     org: 'LC Studio',
     current: true,
-    points: [
-      'Started after graduating from Life Choices Academy.',
-      'Completed Cisco Networking Academy training in cybersecurity fundamentals and data science, gaining foundational knowledge of security principles, data analysis and working with data.',
-    ],
+    points: ['Started after graduating from Life Choices Academy.'],
   },
   {
     period: 'Apr 2026',
@@ -30,6 +27,7 @@ export const experience = [
     points: [
       'Worked in a four-person development team, taking responsibility for technical direction, code integration, and review.',
       'Built and deployed full-stack applications using Vue 3, Node.js, Express, MySQL, and JWT authentication.',
+      'Completed Cisco Networking Academy training in cybersecurity fundamentals and data science, gaining foundational knowledge of security principles, data analysis and working with data.',
     ],
   },
   {
