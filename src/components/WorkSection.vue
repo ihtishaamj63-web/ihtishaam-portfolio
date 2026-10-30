@@ -103,7 +103,8 @@
                             :alt="activeProject.name + ' mobile interface'"
                             :width="currentWidth"
                             :height="currentHeight"
-                            loading="lazy"
+                            loading="eager"
+                            fetchpriority="high"
                             decoding="async"
                           />
                         </div>
@@ -111,14 +112,20 @@
                     </template>
                     <template v-else>
                       <div class="monitor">
-                        <div class="monitor-screen">
+                        <div
+                          class="monitor-screen"
+                          :style="{
+                            aspectRatio: currentWidth + '/' + currentHeight,
+                          }"
+                        >
                           <img
                             class="monitor-screen-image"
                             :src="currentShot"
                             :alt="activeProject.name + ' desktop interface'"
                             :width="currentWidth"
                             :height="currentHeight"
-                            loading="lazy"
+                            loading="eager"
+                            fetchpriority="high"
                             decoding="async"
                           />
                         </div>
@@ -219,9 +226,23 @@ const progressWidth = computed(
   () => `${((activeIndex.value + 1) / projects.length) * 100}%`,
 )
 
-watch(activeIndex, () => {
+watch(activeIndex, (idx) => {
   view.value = 'desktop'
-})
+  const currentProject = projects[idx]
+  if (currentProject?.mobileShot) {
+    const img = new Image()
+    img.src = currentProject.mobileShot
+  }
+  const nextProject = projects[(idx + 1) % projects.length]
+  if (nextProject?.desktopShot) {
+    const img = new Image()
+    img.src = nextProject.desktopShot
+  }
+  if (nextProject?.mobileShot) {
+    const img = new Image()
+    img.src = nextProject.mobileShot
+  }
+}, { immediate: true })
 
 function setView(next) {
   if (next === 'mobile' && !hasMobile.value) return
