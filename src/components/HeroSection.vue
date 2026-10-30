@@ -148,7 +148,7 @@ h1 {
   }
 
   .hero-portrait {
-    justify-content: flex-start;
+    justify-content: center;
     align-self: start;
     margin-top: 0;
     margin-bottom: 0;
