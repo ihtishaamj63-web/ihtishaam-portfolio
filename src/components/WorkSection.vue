@@ -92,10 +92,7 @@
                       <div class="phone-frame">
                         <div
                           class="phone-screen"
-                          :style="{
-                            aspectRatio: currentWidth + '/' + currentHeight,
-                            height: 'auto',
-                          }"
+                          :style="phoneScreenStyle"
                         >
                           <img
                             class="phone-screen-image"
@@ -221,6 +218,24 @@ const currentHeight = computed(() =>
     ? activeProject.value.mobileShotHeight
     : activeProject.value.desktopShotHeight,
 )
+
+const phoneScreenStyle = computed(() => {
+  if (!hasMobile.value) return {}
+  const imgAspect = currentWidth.value / currentHeight.value
+  const frameAspect = 280 / 570
+  if (imgAspect >= frameAspect) {
+    return {
+      width: '100%',
+      height: 'auto',
+      aspectRatio: currentWidth.value + '/' + currentHeight.value,
+    }
+  }
+  return {
+    width: 'auto',
+    height: '100%',
+    aspectRatio: currentWidth.value + '/' + currentHeight.value,
+  }
+})
 
 const progressWidth = computed(
   () => `${((activeIndex.value + 1) / projects.length) * 100}%`,
