@@ -48,6 +48,7 @@ import CursorHint from './components/CursorHint.vue'
 const selectedProject = ref(null)
 const selectedCertificate = ref(null)
 const isDarkMode = ref(window.localStorage.getItem('portfolio-theme') === 'dark')
+document.documentElement.classList.toggle('dark-mode', isDarkMode.value)
 const year = new Date().getFullYear()
 let revealObserver
 
@@ -104,6 +105,7 @@ function onGlobalKeydown(e) {
 
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value
+  document.documentElement.classList.toggle('dark-mode', isDarkMode.value)
   window.localStorage.setItem('portfolio-theme', isDarkMode.value ? 'dark' : 'light')
 }
 </script>
