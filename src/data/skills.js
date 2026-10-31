@@ -13,7 +13,7 @@ export const skillGroups = [
       'JWT authentication',
       'Role-based access control',
       'Docker & Docker Compose',
-      'Deployment (Render, Railway)',
+      'Application deployment (Render, Railway)',
     ],
   },
   {
@@ -37,13 +37,11 @@ export const skillGroups = [
       'Ecological analysis (diversity indices)',
       'QGIS (geospatial)',
       'Web scraping',
-      'Data science fundamentals',
     ],
   },
   {
     title: 'Security',
     items: [
-      'Cybersecurity fundamentals',
       'Authentication & session security',
       'Input validation',
       'Rate limiting',
@@ -52,13 +50,11 @@ export const skillGroups = [
   {
     title: 'Tools & workflow',
     items: [
-      'Git',
-      'GitHub',
+      'Git & GitHub',
       'GitHub Actions (CI)',
       'Automated testing (Jest, Supertest, testthat)',
-      'Vite',
       'Figma',
-      'AI-assisted development (Claude Code, Cursor)',
+      'AI-assisted development workflows (Claude Code, Cursor)',
     ],
   },
 ]
