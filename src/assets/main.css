@@ -17,7 +17,8 @@
   --nav-h: 64px;
 }
 
-.site.dark-mode {
+.site.dark-mode,
+:root.dark-mode {
   color-scheme: dark;
   --paper: #171b18;
   --paper-deep: #222923;
@@ -30,6 +31,9 @@
 
 .site {
   min-height: 100vh;
+  min-height: 100dvh;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
   background: var(--paper);
   color: var(--ink);
   transition:
@@ -45,6 +49,7 @@
 
 html {
   scroll-behavior: smooth;
+  background: var(--paper);
 }
 
 body {
