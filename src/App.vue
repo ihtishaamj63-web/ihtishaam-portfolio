@@ -54,7 +54,7 @@ let revealObserver
 onMounted(() => {
   window.addEventListener('keydown', onGlobalKeydown)
   const revealTargets = document.querySelectorAll(
-    'main > .hero, main > .section, .project-card, .group',
+    'main > .hero, main > .section, .project-card',
   )
 
   if (
