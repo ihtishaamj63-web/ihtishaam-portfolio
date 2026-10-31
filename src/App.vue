@@ -49,6 +49,7 @@ const selectedProject = ref(null)
 const selectedCertificate = ref(null)
 const isDarkMode = ref(window.localStorage.getItem('portfolio-theme') === 'dark')
 document.documentElement.classList.toggle('dark-mode', isDarkMode.value)
+updateThemeColor()
 const year = new Date().getFullYear()
 let revealObserver
 
@@ -103,9 +104,15 @@ function onGlobalKeydown(e) {
   }
 }
 
+function updateThemeColor() {
+  const themeColor = isDarkMode.value ? '#171b18' : '#f5f3ec'
+  document.querySelector('meta[name="theme-color"]')?.setAttribute('content', themeColor)
+}
+
 function toggleTheme() {
   isDarkMode.value = !isDarkMode.value
   document.documentElement.classList.toggle('dark-mode', isDarkMode.value)
+  updateThemeColor()
   window.localStorage.setItem('portfolio-theme', isDarkMode.value ? 'dark' : 'light')
 }
 </script>
