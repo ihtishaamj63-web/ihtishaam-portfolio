@@ -5,11 +5,12 @@
         <h2>About</h2>
       </div>
       <p class="intro">
-        I'm a full-stack developer with a BSc in Biodiversity and Conservation Biology. I work
-        across Vue, Node.js, and SQL, and I'm most at home building the backend: APIs, data models,
-        authentication, and workflows. My degree taught me to work carefully with messy data, test
-        what the evidence supports, and follow how changes affect a wider system. I bring that same
-        care to software, along with clear communication and experience working in a team.
+        I'm a full-stack developer with a BSc in Biodiversity and Conservation Biology, working
+        across Vue, Node.js, and SQL. I enjoy the analytical puzzles of backend development and
+        the psychology and design thinking behind intuitive frontend experiences. My scientific
+        background shaped a thoughtful, methodical approach to solving complex problems and
+        understanding how systems connect. I bring that perspective to building useful software
+        and working with others.
       </p>
 
       <div class="timeline">
