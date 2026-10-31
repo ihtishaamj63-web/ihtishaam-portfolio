@@ -25,8 +25,7 @@ export const experience = [
       },
     ],
     points: [
-      'Worked in a four-person development team, taking responsibility for technical direction, code integration, and review.',
-      'Built and deployed full-stack applications using Vue 3, Node.js, Express, MySQL, and JWT authentication.',
+      'Led and independently developed full-stack projects, overseeing technical direction, implementation, integration and code review.',
       'Completed Cisco Networking Academy training in cybersecurity fundamentals and data science, gaining foundational knowledge of security principles, data analysis and working with data.',
     ],
   },
