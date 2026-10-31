@@ -51,7 +51,7 @@ export const skillGroups = [
     title: 'Tools & workflow',
     items: [
       'Git & GitHub',
-            'Automated testing (Jest, Supertest, testthat)',
+      'Automated testing (Jest, Supertest, testthat)',
       'Figma',
       'AI-assisted development workflows',
     ],
