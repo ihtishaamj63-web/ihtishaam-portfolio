@@ -34,8 +34,8 @@
         class="showcase"
         @touchstart.passive="onTouchStart"
         @touchend.passive="onTouchEnd"
-        @mouseenter="onHover(true)"
-        @mouseleave="onHover(false)"
+        @pointerenter="onPointerEnter"
+        @pointerleave="onPointerLeave"
         @focusin="pauseForInteraction"
       >
         <Transition name="fade" mode="out-in">
@@ -335,6 +335,16 @@ function next() {
 function prev() {
   if (activeIndex.value > 0) activeIndex.value -= 1
   pauseForInteraction()
+}
+
+function onPointerEnter(event) {
+  // Touchscreens can emit synthetic mouse events after a tap.
+  // Only a real mouse hover should pause the automatic showcase.
+  if (event.pointerType === 'mouse') onHover(true)
+}
+
+function onPointerLeave(event) {
+  if (event.pointerType === 'mouse') onHover(false)
 }
 
 function onHover(state) {
