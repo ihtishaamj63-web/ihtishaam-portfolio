@@ -272,7 +272,6 @@ const RESUME_DELAY = 8000
 const isHovering = ref(false)
 const interactionPaused = ref(false)
 const visibilityPaused = ref(false)
-const reducedMotion = ref(false)
 let autoTimer = null
 let resumeTimer = null
 let wheelAccum = 0
@@ -283,8 +282,7 @@ const autoAllowed = computed(
   () =>
     !isHovering.value &&
     !interactionPaused.value &&
-    !visibilityPaused.value &&
-    !reducedMotion.value,
+    !visibilityPaused.value,
 )
 
 function clearAuto() {
@@ -438,14 +436,6 @@ onMounted(() => {
   }
   document.addEventListener('visibilitychange', onVisibilityChange)
   window.addEventListener('keydown', onKeydown)
-
-  const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
-  reducedMotion.value = mq.matches
-  const onMotionChange = (e) => {
-    reducedMotion.value = e.matches
-  }
-  if (mq.addEventListener) mq.addEventListener('change', onMotionChange)
-  else mq.addListener(onMotionChange)
 
   scheduleAuto()
 })
