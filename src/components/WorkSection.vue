@@ -266,7 +266,8 @@ function setView(next) {
 }
 
 // --- Automatic progression state ---
-const AUTO_DELAY = 5000
+const AUTO_DELAY = 6000
+const VIEW_DELAY = AUTO_DELAY / 2
 const RESUME_DELAY = 8000
 const isHovering = ref(false)
 const interactionPaused = ref(false)
@@ -296,11 +297,20 @@ function clearAuto() {
 function scheduleAuto() {
   clearAuto()
   if (!autoAllowed.value) return
+
+  const delay = hasMobile.value ? VIEW_DELAY : AUTO_DELAY
   autoTimer = setTimeout(() => {
     if (!autoAllowed.value) return
+
+    if (hasMobile.value && view.value === 'desktop') {
+      view.value = 'mobile'
+      scheduleAuto()
+      return
+    }
+
     activeIndex.value = (activeIndex.value + 1) % projects.length
     scheduleAuto()
-  }, AUTO_DELAY)
+  }, delay)
 }
 
 function pauseForInteraction() {
