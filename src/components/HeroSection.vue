@@ -57,8 +57,9 @@
   grid-area: portrait;
   display: flex;
   justify-content: center;
-  align-self: end;
-  margin-bottom: 40px;
+  align-self: center;
+  margin-bottom: 0;
+  transform: translateY(-8px);
 }
 
 .portrait-frame {
@@ -150,6 +151,7 @@ h1 {
   .hero-portrait {
     justify-content: center;
     align-self: start;
+    transform: none;
     margin-top: 0;
     margin-bottom: 0;
   }
