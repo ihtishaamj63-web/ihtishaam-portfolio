@@ -6,9 +6,10 @@
       </div>
       <p class="intro">
         I'm a full-stack developer with a BSc in Biodiversity and Conservation Biology. I enjoy
-        the analytical puzzles of backend development and the psychology and design thinking
-        behind intuitive frontend experiences. My scientific background shaped a thoughtful,
-        methodical approach to solving complex problems and understanding how systems connect.
+        the analytical puzzles of backend development and the psychology behind frontend UI/UX:
+        designing intuitive experiences that guide users naturally through a website. My scientific
+        background shaped a thoughtful, methodical approach to solving complex problems and
+        understanding how systems connect.
       </p>
 
       <div class="timeline">
