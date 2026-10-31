@@ -115,7 +115,7 @@ button {
   scroll-margin-top: var(--nav-h);
 }
 
-main.motion-ready :is(.hero, .section, .project-card, .group) {
+main.motion-ready :is(.hero, .section, .project-card) {
   opacity: 0;
   transform: translateY(18px);
   transition:
@@ -123,7 +123,7 @@ main.motion-ready :is(.hero, .section, .project-card, .group) {
     transform 0.65s ease var(--reveal-delay, 0ms);
 }
 
-main.motion-ready :is(.hero, .section, .project-card, .group).is-visible {
+main.motion-ready :is(.hero, .section, .project-card).is-visible {
   opacity: 1;
   transform: translateY(0);
 }
