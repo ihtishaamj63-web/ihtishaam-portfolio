@@ -19,7 +19,6 @@
           <span class="status-sq" aria-hidden="true"></span>
           <span class="status-copy">
             <strong>Software Development Intern at LC Studio.</strong>
-            <span>Open to software, data, security, and conservation-tech roles.</span>
           </span>
         </p>
         <h1>I build software the way evolution builds species.</h1>
