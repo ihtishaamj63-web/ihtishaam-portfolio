@@ -90,6 +90,9 @@
                   >
                     <template v-if="view === 'mobile' && hasMobile">
                       <div class="phone-frame">
+                        <span class="phone-button phone-button-left" aria-hidden="true"></span>
+                        <span class="phone-button phone-button-right" aria-hidden="true"></span>
+                        <div class="phone-island" aria-hidden="true"><span></span></div>
                         <div
                           class="phone-screen"
                           :style="phoneScreenStyle"
@@ -109,6 +112,7 @@
                     </template>
                     <template v-else>
                       <div class="monitor">
+                        <div class="monitor-camera" aria-hidden="true"></div>
                         <div
                           class="monitor-screen"
                           :style="{
@@ -127,7 +131,9 @@
                           />
                         </div>
                         <div class="monitor-chin">
+                          <span class="monitor-brand-mark" aria-hidden="true">IJ</span>
                           <div class="monitor-indicator" aria-hidden="true"></div>
+                          <span class="monitor-power" aria-hidden="true"></span>
                         </div>
                       </div>
                       <div class="monitor-stand" aria-hidden="true">
@@ -604,11 +610,28 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   max-width: 850px;
-  padding: 8px;
+  padding: 13px 10px 7px;
   border: 1px solid var(--device-edge);
-  border-radius: 12px;
-  background: var(--device-frame);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16), inset 0 1px 0 var(--device-highlight);
+  border-radius: 15px;
+  background:
+    linear-gradient(145deg, var(--device-highlight), transparent 28%),
+    linear-gradient(110deg, var(--device-frame), var(--device-edge) 52%, var(--device-frame));
+  box-shadow:
+    0 22px 42px rgba(0, 0, 0, 0.2),
+    0 4px 0 rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.monitor-camera {
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #111713;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.12);
+  transform: translateX(-50%);
 }
 
 .monitor-screen {
@@ -629,17 +652,37 @@ onUnmounted(() => {
 }
 
 .monitor-chin {
-  height: 10px;
+  position: relative;
+  height: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.monitor-brand-mark {
+  position: absolute;
+  left: 2px;
+  color: rgba(255,255,255,.56);
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: .12em;
 }
 
 .monitor-indicator {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--device-edge);
+  background: var(--device-highlight);
+}
+
+.monitor-power {
+  position: absolute;
+  right: 3px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 7px var(--green);
 }
 
 .monitor-stand {
@@ -656,10 +699,21 @@ onUnmounted(() => {
 }
 
 .monitor-stand-base {
-  width: 120px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--device-edge);
+  position: relative;
+  width: 132px;
+  height: 9px;
+  border-radius: 3px 3px 8px 8px;
+  background: linear-gradient(180deg, var(--device-highlight), var(--device-edge));
+  box-shadow: 0 5px 10px rgba(0,0,0,.14);
+}
+
+.monitor-stand-base span {
+  position: absolute;
+  top: 2px;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  background: rgba(255,255,255,.18);
 }
 
 /* Mobile phone frame */
@@ -678,14 +732,62 @@ onUnmounted(() => {
   flex-shrink: 0;
   width: clamp(220px, 24vw, 280px);
   aspect-ratio: 280 / 570;
-  padding: 5px;
+  padding: 7px;
   border: 1px solid var(--device-edge);
   border-radius: 42px;
-  background: var(--device-frame);
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.16), inset 0 1px 0 var(--device-highlight);
+  background:
+    linear-gradient(135deg, var(--device-highlight), transparent 24%),
+    linear-gradient(110deg, var(--device-frame), var(--device-edge) 48%, var(--device-frame));
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.22),
+    0 0 0 2px rgba(255,255,255,.07),
+    inset 0 1px 1px rgba(255,255,255,.28);
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.phone-island {
+  position: absolute;
+  z-index: 2;
+  top: 13px;
+  left: 50%;
+  width: 29%;
+  height: 13px;
+  border-radius: 20px;
+  background: #080b09;
+  transform: translateX(-50%);
+  box-shadow: inset 0 1px 1px rgba(255,255,255,.12);
+}
+
+.phone-island span {
+  position: absolute;
+  right: 9px;
+  top: 4px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #263b46;
+}
+
+.phone-button {
+  position: absolute;
+  width: 3px;
+  border-radius: 3px;
+  background: var(--device-highlight);
+  box-shadow: 1px 0 1px rgba(0,0,0,.3);
+}
+
+.phone-button-left {
+  left: -3px;
+  top: 104px;
+  height: 48px;
+}
+
+.phone-button-right {
+  right: -3px;
+  top: 125px;
+  height: 62px;
 }
 
 .phone-frame::before,
@@ -716,8 +818,9 @@ onUnmounted(() => {
   max-width: 100%;
   max-height: 100%;
   overflow: hidden;
-  border-radius: 36px;
-  background: transparent;
+  border-radius: 35px;
+  background: #080b09;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.12);
 }
 
 .phone-screen-image {
@@ -735,7 +838,7 @@ onUnmounted(() => {
 
 .img-fade-enter-active,
 .img-fade-leave-active {
-  transition: opacity 0.18s ease;
+  transition: opacity 0.09s ease;
 }
 
 .img-fade-enter-from,
@@ -852,8 +955,8 @@ h3 {
   }
 
   .monitor {
-    padding: 5px;
-    border-radius: 8px;
+    padding: 10px 6px 5px;
+    border-radius: 11px;
   }
 
   .monitor-screen {
@@ -880,6 +983,11 @@ h3 {
   .phone-frame {
     width: clamp(200px, 60vw, 240px);
     border-radius: 36px;
+  }
+
+  .phone-island {
+    top: 11px;
+    height: 11px;
   }
 
   .phone-screen {
