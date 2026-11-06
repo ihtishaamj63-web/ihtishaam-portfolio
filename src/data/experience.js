@@ -26,6 +26,7 @@ export const experience = [
     ],
     points: [
       'Led and independently developed full-stack projects, overseeing technical direction, implementation, integration and code review.',
+      'Completed Cisco Networking Academy training in Cybersecurity Fundamentals and Data Science.',
     ],
   },
   {
