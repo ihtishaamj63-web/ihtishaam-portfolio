@@ -34,10 +34,6 @@
                 class="certificate-link"
                 type="button"
                 @click="emit('view-certificate', certificate)"
-                @mouseenter="showHint(certificate.label)"
-                @mouseleave="hideHint()"
-                @focus="showHint(certificate.label)"
-                @blur="hideHint()"
               >
                 {{ certificate.label }} <span aria-hidden="true">↗</span>
               </button>
@@ -64,10 +60,8 @@
 
 <script setup>
 import { experience } from '../data/experience'
-import { useCursorHint } from '../composables/useCursorHint'
 
 const emit = defineEmits(['view-certificate'])
-const { showHint, hideHint } = useCursorHint()
 </script>
 
 <style scoped>
