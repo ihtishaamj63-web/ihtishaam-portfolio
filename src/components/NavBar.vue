@@ -80,6 +80,7 @@ const emit = defineEmits(['toggle-theme'])
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
   z-index: 1000;
+  transition: height 0.12s ease;
 }
 
 .nav-inner {
