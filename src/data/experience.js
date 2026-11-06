@@ -6,8 +6,7 @@ export const experience = [
     title: 'Software Development Intern',
     org: 'LC Studio',
     current: true,
-    credentials: ['Scrum Fundamentals Certified · SCRUMstudy · Nov 2026'],
-    points: ['Started after graduating from Life Choices Academy.'],
+    points: ['Scrum Fundamentals Certified (SFC) · SCRUMstudy · November 2026.']
   },
   {
     period: 'Apr 2026',
@@ -24,10 +23,6 @@ export const experience = [
         label: 'View top achiever certificate',
         src: '/LCS_Top_Achiever.pdf',
       },
-    ],
-    credentials: [
-      'Cisco Networking Academy · Cybersecurity',
-      'Cisco Networking Academy · Data Science',
     ],
     points: [
       'Led and independently developed full-stack projects, overseeing technical direction, implementation, integration and code review.',
