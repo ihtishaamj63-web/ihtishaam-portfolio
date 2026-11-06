@@ -127,19 +127,39 @@ button {
 }
 
 .section {
+  position: relative;
   border-top: 1px solid var(--line);
   padding-top: 84px;
   padding-bottom: 96px;
   scroll-margin-top: var(--nav-h);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper-deep) 38%, var(--paper)) 0,
+    var(--paper) 240px
+  );
+}
+
+.section:nth-of-type(even) {
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--paper-deep) 18%, var(--paper)) 0,
+    var(--paper) 220px
+  );
 }
 
 main.motion-ready :is(.hero, .section, .project-card) {
   opacity: 0;
-  transition: opacity 0.45s ease var(--reveal-delay, 0ms);
+  transform: translate3d(0, 34px, 0);
+  transition:
+    opacity 0.75s ease var(--reveal-delay, 0ms),
+    transform 0.85s cubic-bezier(0.2, 0.7, 0.2, 1) var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
 }
 
 main.motion-ready :is(.hero, .section, .project-card).is-visible {
   opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 .section-head {
