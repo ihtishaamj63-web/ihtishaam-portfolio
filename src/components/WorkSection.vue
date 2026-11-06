@@ -512,6 +512,15 @@ onUnmounted(() => {
 
 .showcase {
   min-width: 0;
+  /* Light mode: cool brushed aluminium with a soft silver edge. */
+  --device-frame: #c6ccd0;
+  --device-edge: #858f96;
+  --device-highlight: #f0f2f2;
+  --device-accent: #7d8a91;
+}
+
+.site.dark-mode .showcase {
+  /* Dark mode: deep graphite with a restrained green undertone. */
   --device-frame: #252d27;
   --device-edge: #101612;
   --device-highlight: #59695b;
