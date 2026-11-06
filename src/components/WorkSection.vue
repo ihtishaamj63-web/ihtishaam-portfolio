@@ -131,7 +131,6 @@
                           />
                         </div>
                         <div class="monitor-chin">
-                          <span class="monitor-brand-mark" aria-hidden="true">IJ</span>
                           <div class="monitor-indicator" aria-hidden="true"></div>
                           <span class="monitor-power" aria-hidden="true"></span>
                         </div>
@@ -513,17 +512,10 @@ onUnmounted(() => {
 
 .showcase {
   min-width: 0;
-  --device-frame: #343A40;
-  --device-edge: #252A30;
-  --device-highlight: #505861;
-  --device-accent: #505861;
-}
-
-.site.dark-mode .showcase {
-  --device-frame: #737D87;
-  --device-edge: #5B6570;
-  --device-highlight: #929DA8;
-  --device-accent: #AAB3BC;
+  --device-frame: #252d27;
+  --device-edge: #101612;
+  --device-highlight: #59695b;
+  --device-accent: #a6c98d;
 }
 
 .featured {
@@ -614,8 +606,8 @@ onUnmounted(() => {
   border: 1px solid var(--device-edge);
   border-radius: 15px;
   background:
-    linear-gradient(145deg, var(--device-highlight), transparent 28%),
-    linear-gradient(110deg, var(--device-frame), var(--device-edge) 52%, var(--device-frame));
+    linear-gradient(145deg, rgba(255,255,255,.22), transparent 24%),
+    linear-gradient(110deg, var(--device-highlight) 0%, var(--device-frame) 18%, var(--device-edge) 50%, var(--device-frame) 82%, var(--device-highlight) 100%);
   box-shadow:
     0 22px 42px rgba(0, 0, 0, 0.2),
     0 4px 0 rgba(0, 0, 0, 0.16),
@@ -657,15 +649,6 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-
-.monitor-brand-mark {
-  position: absolute;
-  left: 2px;
-  color: rgba(255,255,255,.56);
-  font-family: var(--mono);
-  font-size: 7px;
-  letter-spacing: .12em;
 }
 
 .monitor-indicator {
@@ -736,8 +719,8 @@ onUnmounted(() => {
   border: 1px solid var(--device-edge);
   border-radius: 42px;
   background:
-    linear-gradient(135deg, var(--device-highlight), transparent 24%),
-    linear-gradient(110deg, var(--device-frame), var(--device-edge) 48%, var(--device-frame));
+    linear-gradient(135deg, rgba(255,255,255,.2), transparent 25%),
+    linear-gradient(110deg, var(--device-highlight) 0%, var(--device-frame) 18%, var(--device-edge) 50%, var(--device-frame) 82%, var(--device-highlight) 100%);
   box-shadow:
     0 24px 48px rgba(0, 0, 0, 0.22),
     0 0 0 2px rgba(255,255,255,.07),
