@@ -27,6 +27,11 @@
           <div class="body">
             <h3>{{ entry.title }}</h3>
             <p class="org">{{ entry.org }}</p>
+            <div v-if="entry.credentials?.length" class="credentials" aria-label="Professional certifications">
+              <span v-for="credential in entry.credentials" :key="credential" class="credential">
+                <span class="credential-mark" aria-hidden="true">✓</span>{{ credential }}
+              </span>
+            </div>
             <div v-if="entry.certificates?.length" class="certificate-links">
               <button
                 v-for="certificate in entry.certificates"
@@ -176,6 +181,28 @@ h3 {
   font-size: 15px;
   color: var(--ink);
   margin: 4px 0 12px;
+}
+
+.credentials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 16px;
+  margin: 2px 0 14px;
+}
+
+.credential {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.015em;
+}
+
+.credential-mark {
+  color: var(--green);
+  font-size: 13px;
 }
 
 .certificate-links {
