@@ -6,7 +6,7 @@ export const experience = [
     title: 'Software Development Intern',
     org: 'LC Studio',
     current: true,
-    points: ['Scrum Fundamentals Certified (SFC) · SCRUMstudy · November 2026.']
+    points: ['Scrum Fundamentals Certified (SFC) · SCRUMstudy · November 2026']
   },
   {
     period: 'Apr 2026',
