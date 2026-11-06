@@ -127,24 +127,10 @@ button {
 }
 
 .section {
-  position: relative;
   border-top: 1px solid var(--line);
   padding-top: 84px;
   padding-bottom: 96px;
   scroll-margin-top: var(--nav-h);
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--paper-deep) 38%, var(--paper)) 0,
-    var(--paper) 240px
-  );
-}
-
-.section:nth-of-type(even) {
-  background: linear-gradient(
-    180deg,
-    color-mix(in srgb, var(--paper-deep) 18%, var(--paper)) 0,
-    var(--paper) 220px
-  );
 }
 
 main.motion-ready :is(.hero, .section) {
